@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import type { UserCardConfig, CubeScheme } from '../types/card';
-import { CUBE_SCHEME_LABELS } from '../data/cardData';
+import type { UserCardConfig, CubeScheme, TaishinScheme } from '../types/card';
+import { CUBE_SCHEME_LABELS, TAISHIN_SCHEME_LABELS } from '../data/cardData';
 import { Settings2, ChevronDown, ChevronUp, Flame, Smartphone, Sparkles, CheckCircle2 } from 'lucide-react';
 
 interface Props {
@@ -19,6 +19,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
   };
 
   const currentCube = CUBE_SCHEME_LABELS[config.cubeScheme];
+  const currentTaishin = TAISHIN_SCHEME_LABELS[config.taishinScheme];
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 mb-6 overflow-hidden">
@@ -34,12 +35,12 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
           <div>
             <div className="text-sm font-semibold text-slate-800 flex items-center gap-2">
               <span>你的4張卡片狀態設定</span>
-              <span className="text-xs font-normal text-slate-500 hidden sm:inline">（隨時點擊調整權益與額度）</span>
+              <span className="text-xs font-normal text-slate-500 hidden sm:inline">（點擊展開切換 CUBE 6方案 / 台新 8方案 / 額度）</span>
             </div>
             <div className="text-xs text-slate-500 flex flex-wrap gap-x-2 gap-y-1 mt-0.5">
               <span>CUBE：<strong className="text-amber-600">{currentCube.name}</strong></span>
               <span>•</span>
-              <span>台新：<strong className="text-zinc-800">{config.taishinScheme === 'daily' ? '天天刷 (含超商)' : '大筆刷'}</strong></span>
+              <span>台新：<strong className="text-zinc-800">{currentTaishin.name}</strong></span>
               <span>•</span>
               <span>SPORT：<strong className={config.sportCalorieMet ? "text-emerald-600" : "text-slate-400"}>{config.sportCalorieMet ? "🔥 7000卡已達標" : "未達標"}</strong></span>
               <span>•</span>
@@ -52,20 +53,20 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
           className="text-slate-400 hover:text-slate-600 p-1 flex items-center gap-1 text-xs font-medium"
           aria-label="Toggle settings"
         >
-          <span className="hidden sm:inline">{isOpen ? '收合' : '展開設定'}</span>
+          <span className="hidden sm:inline">{isOpen ? '收合設定' : '展開完整方案設定'}</span>
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </button>
       </div>
 
       {/* 展開後的自訂面板 */}
       {isOpen && (
-        <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/50 space-y-5">
-          {/* 1. 國泰 CUBE 權益切換 */}
+        <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/50 space-y-6">
+          {/* 1. 國泰 CUBE 權益切換 (6大方案) */}
           <div>
-            <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2 flex items-center justify-between">
+            <label className="text-xs font-bold uppercase tracking-wider block mb-2 flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-amber-700">
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
-                國泰 CUBE 卡：今日設定權益方案（每日可切換一次，23:59前切換整天生效）
+                國泰 CUBE 卡：今日設定權益（每日可切換一次，23:59前切換整天生效）
               </span>
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -98,19 +99,58 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
             </div>
           </div>
 
+          {/* 2. 台新卡 權益切換 (全新 7+1 大刷方案) */}
+          <div>
+            <label className="text-xs font-bold uppercase tracking-wider block mb-2 flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-zinc-800">
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-800 inline-block"></span>
+                台新卡 (Richart / @GoGo / 玫瑰太陽)：全新 7+1 大刷自選權益（Richart Life App 每日切換）
+              </span>
+            </label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+              {(Object.keys(TAISHIN_SCHEME_LABELS) as TaishinScheme[]).map((schemeKey) => {
+                const item = TAISHIN_SCHEME_LABELS[schemeKey];
+                const isSelected = config.taishinScheme === schemeKey;
+                return (
+                  <button
+                    key={schemeKey}
+                    type="button"
+                    onClick={() => updateConfig('taishinScheme', schemeKey)}
+                    className={`p-2.5 rounded-xl border text-left transition-all relative ${
+                      isSelected
+                        ? 'bg-zinc-900 text-white border-zinc-900 shadow-sm ring-1 ring-zinc-900'
+                        : 'bg-white border-slate-200/90 text-slate-700 hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold flex items-center gap-1">
+                        <span>{item.icon}</span> {item.name}
+                      </span>
+                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />}
+                    </div>
+                    <div className={`text-[10px] mt-1 line-clamp-1 ${isSelected ? 'text-zinc-300' : 'text-slate-500'}`}>
+                      {item.tag}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 3. 永豐與扣繳帳戶條件 */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1 border-t border-slate-200/60">
-            {/* 2. 永豐 SPORT 卡設定 */}
+            {/* 永豐 SPORT 卡設定 */}
             <div className="bg-white p-3.5 rounded-xl border border-slate-200">
               <div className="text-xs font-bold text-emerald-800 flex items-center gap-1.5 mb-2.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
-                永豐 SPORT 卡 (最高 7%)
+                永豐 SPORT 卡 (Samsung/Apple Pay 7%)
               </div>
 
               <div className="space-y-2.5">
                 <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
                   <div className="flex items-center gap-2">
                     <Flame className={`w-4 h-4 ${config.sportCalorieMet ? 'text-orange-500' : 'text-slate-400'}`} />
-                    <span className="text-xs font-medium text-slate-700">汗水不白流本月達標 (7000卡)</span>
+                    <span className="text-xs font-medium text-slate-700">汗水/DACARD 達標 7000卡</span>
                   </div>
                   <input
                     type="checkbox"
@@ -123,7 +163,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
                 <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
                   <div className="flex items-center gap-2">
                     <Smartphone className={`w-4 h-4 ${config.sportQuotaAvailable ? 'text-emerald-500' : 'text-slate-400'}`} />
-                    <span className="text-xs font-medium text-slate-700">AP/GP/Samsung Pay 額度充足</span>
+                    <span className="text-xs font-medium text-slate-700">Samsung/Apple Pay 額度充足</span>
                   </div>
                   <input
                     type="checkbox"
@@ -135,7 +175,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
               </div>
             </div>
 
-            {/* 3. 永豐 DAWAY 卡設定 */}
+            {/* 永豐 DAWAY 卡設定 */}
             <div className="bg-white p-3.5 rounded-xl border border-slate-200">
               <div className="text-xs font-bold text-blue-800 flex items-center gap-1.5 mb-2.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>
@@ -174,54 +214,25 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
               </div>
             </div>
 
-            {/* 4. 台新卡設定 (@GoGo / 玫瑰太陽) */}
+            {/* 台新帳戶扣繳設定 */}
             <div className="bg-white p-3.5 rounded-xl border border-slate-200">
-              <div className="text-xs font-bold text-zinc-800 flex items-center justify-between mb-2">
-                <span className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-zinc-700 inline-block"></span>
-                  台新卡 (@GoGo / 玫瑰太陽)
-                </span>
+              <div className="text-xs font-bold text-zinc-800 flex items-center gap-1.5 mb-2.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-zinc-700 inline-block"></span>
+                台新帳戶自動扣繳
               </div>
 
-              <div className="space-y-2">
-                <div>
-                  <div className="text-[11px] font-medium text-slate-500 mb-1">今日權益方案：</div>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    <button
-                      type="button"
-                      onClick={() => updateConfig('taishinScheme', 'daily')}
-                      className={`py-1.5 px-2 rounded-md text-xs font-medium border text-center transition-all ${
-                        config.taishinScheme === 'daily'
-                          ? 'bg-zinc-900 text-white border-zinc-900 shadow-xs'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
-                      }`}
-                    >
-                      ⚡ 天天刷 (超商/加油)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => updateConfig('taishinScheme', 'big')}
-                      className={`py-1.5 px-2 rounded-md text-xs font-medium border text-center transition-all ${
-                        config.taishinScheme === 'big'
-                          ? 'bg-zinc-900 text-white border-zinc-900 shadow-xs'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
-                      }`}
-                    >
-                      🛍️ 大筆刷 (百貨/網購)
-                    </button>
-                  </div>
+              <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
+                <div className="text-xs">
+                  <div className="font-medium text-slate-700">Richart 自動扣繳卡款</div>
+                  <div className="text-[11px] text-slate-400">解鎖 Level 2 (3.3%~3.8% 或 Chill 10%)</div>
                 </div>
-
-                <label className="flex items-center justify-between p-1.5 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
-                  <span className="text-[11px] font-medium text-slate-600">Richart 自動扣繳 (享 3.8%)</span>
-                  <input
-                    type="checkbox"
-                    checked={config.gogoRichartLinked}
-                    onChange={(e) => updateConfig('gogoRichartLinked', e.target.checked)}
-                    className="rounded text-zinc-800 focus:ring-zinc-600 w-4 h-4"
-                  />
-                </label>
-              </div>
+                <input
+                  type="checkbox"
+                  checked={config.gogoRichartLinked}
+                  onChange={(e) => updateConfig('gogoRichartLinked', e.target.checked)}
+                  className="rounded text-zinc-800 focus:ring-zinc-600 w-4 h-4"
+                />
+              </label>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { CardRewardResult, CubeScheme, ScenarioChannel } from '../types/card';
+import type { CardRewardResult, CubeScheme, ScenarioChannel, TaishinScheme } from '../types/card';
 import { CUBE_SCHEME_LABELS } from '../data/cardData';
 import { Trophy, AlertTriangle, ArrowRight, Zap, CheckCircle, Calculator, Info } from 'lucide-react';
 
@@ -7,12 +7,14 @@ interface Props {
   channel: ScenarioChannel;
   results: CardRewardResult[];
   onSwitchCubeScheme: (scheme: CubeScheme) => void;
+  onSwitchTaishinScheme: (scheme: TaishinScheme) => void;
 }
 
 export const RecommendationResult: React.FC<Props> = ({
   channel,
   results,
   onSwitchCubeScheme,
+  onSwitchTaishinScheme,
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1000);
   const [showCalculator, setShowCalculator] = useState<boolean>(true);
@@ -82,19 +84,29 @@ export const RecommendationResult: React.FC<Props> = ({
         </div>
       )}
 
-      {/* 💡 台新權益切換提示（若超商選了大筆刷） */}
+      {/* 💡 台新權益切換提示（如果有更佳權益） */}
       {gogoSuggestion && (
         <div className="bg-gradient-to-r from-zinc-800/10 via-zinc-800/5 to-transparent border-l-4 border-zinc-800 p-4 rounded-xl shadow-xs">
-          <div className="flex items-start gap-2.5">
-            <Zap className="w-5 h-5 text-zinc-800 mt-0.5 shrink-0" />
-            <div>
-              <div className="text-sm font-bold text-zinc-900">
-                台新權益切換提示：切換至【天天刷】
-              </div>
-              <div className="text-xs text-zinc-700 mt-0.5">
-                目前台新設定為「大筆刷」，超商為 0% 回饋！若切換至「天天刷」並出示<strong>台新Pay</strong>掃碼，超商享 <strong className="font-bold underline">3.8%</strong> 台新Point！
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-start gap-2.5">
+              <Zap className="w-5 h-5 text-zinc-800 mt-0.5 shrink-0" />
+              <div>
+                <div className="text-sm font-bold text-zinc-900">
+                  台新權益切換提示：切換至【{gogoSuggestion.recommendedScheme}】
+                </div>
+                <div className="text-xs text-zinc-700 mt-0.5">
+                  若於 Richart Life App 切換為「{gogoSuggestion.recommendedScheme}」，
+                  回饋率可直接飆升至 <strong className="font-bold underline">{gogoSuggestion.potentialRate}%</strong> 台新Point！
+                </div>
               </div>
             </div>
+            <button
+              onClick={() => onSwitchTaishinScheme(gogoSuggestion.recommendedSchemeKey as TaishinScheme)}
+              className="shrink-0 bg-zinc-900 hover:bg-black text-white text-xs font-bold px-3 py-2 rounded-lg shadow-sm flex items-center gap-1 transition-all"
+            >
+              <span>立即一鍵切換為「{gogoSuggestion.recommendedScheme}」</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       )}

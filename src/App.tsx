@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { UserCardConfig, CubeScheme } from './types/card';
+import type { UserCardConfig, CubeScheme, TaishinScheme } from './types/card';
 import { CHANNELS, calculateCardRewards } from './data/cardData';
 import { Header } from './components/Header';
 import { UserConfigBar } from './components/UserConfigBar';
@@ -54,6 +54,13 @@ export function App() {
     }));
   };
 
+  const handleSwitchTaishinScheme = (newScheme: TaishinScheme) => {
+    setConfig((prev) => ({
+      ...prev,
+      taishinScheme: newScheme
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-slate-100/70 text-slate-900 pb-16">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
@@ -95,6 +102,16 @@ export function App() {
             }`}
           >
             🏪 全家超商
+          </button>
+          <button
+            onClick={() => { setSelectedChannelId('drink_chill'); setSearchQuery(''); }}
+            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
+              selectedChannelId === 'drink_chill'
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            🍹 手搖/咖啡 (Chill 10%)
           </button>
           <button
             onClick={() => { setSelectedChannelId('supermarket_px'); setSearchQuery(''); }}
@@ -141,6 +158,7 @@ export function App() {
           channel={currentChannel}
           results={rewards}
           onSwitchCubeScheme={handleSwitchCubeScheme}
+          onSwitchTaishinScheme={handleSwitchTaishinScheme}
         />
 
         {/* 頁尾資訊 */}

@@ -9,8 +9,14 @@ export type CubeScheme =
   | 'finance';   // 來金網
 
 export type TaishinScheme =
-  | 'daily'      // 天天刷 (超商/加油/通勤/藥妝 3.8%)
-  | 'big';       // 大筆刷 (百貨/Outlet/居家 3.8%)
+  | 'daily'      // 天天刷 (超商/加油/通勤/藥妝 3.3%~3.8%)
+  | 'pay'        // Pay著刷 (台新Pay 3.8% 全超商通殺 / LINE Pay)
+  | 'chill'      // Chill刷 (手搖/火鍋/追劇串流 最高 10%)
+  | 'dining'     // 好饗刷 (外送/餐飲/娛樂 3.3%)
+  | 'digital'    // 數趣刷 (網購/線上影音/AI 3.3%)
+  | 'travel'     // 玩旅刷 (海外/機票/訂房 3.3%)
+  | 'big'        // 大筆刷 (百貨/Outlet/裝修 3.3%)
+  | 'holiday';   // 假日刷 (節假日不限通路 2.0%)
 
 export interface UserCardConfig {
   cubeScheme: CubeScheme;
@@ -18,7 +24,7 @@ export interface UserCardConfig {
   sportQuotaAvailable: boolean;   // AP/GP/SP 每月加碼額度尚未用盡
   dawayIsNewUser: boolean;        // 新戶 3% / 舊戶 1.5%
   gogoRichartLinked: boolean;     // 已綁定 Richart 自動扣繳 + 數位帳單
-  taishinScheme: TaishinScheme;   // 台新權益方案 (天天刷 / 大筆刷)
+  taishinScheme: TaishinScheme;   // 台新完整 7+1 權益自選方案
 }
 
 export type PaymentMethod = 
@@ -36,7 +42,7 @@ export type PaymentMethod =
 export interface ScenarioChannel {
   id: string;
   name: string;
-  category: 'gas' | 'convenience' | 'online' | 'food' | 'supermarket' | 'travel' | 'general';
+  category: 'gas' | 'convenience' | 'online' | 'food' | 'supermarket' | 'travel' | 'drink' | 'general';
   icon: string;
   description: string;
   pitfalls: string[]; // 踩坑避雷提醒
@@ -57,7 +63,10 @@ export interface CardRewardResult {
   capWarning?: string; // 封頂上限提醒
   isSchemeDependent?: boolean; // 是否受方案影響
   schemeSuggestion?: {
+    cardName: string;
+    schemeType: 'cube' | 'taishin';
     recommendedScheme: string;
+    recommendedSchemeKey: string;
     potentialRate: number;
     difference: number;
   };

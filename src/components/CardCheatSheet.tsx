@@ -54,26 +54,34 @@ export const CardCheatSheet: React.FC<Props> = ({ isOpen, onClose }) => {
             </ul>
           </div>
 
-          {/* 2. 台新卡 (@GoGo / 玫瑰太陽) */}
+          {/* 2. 台新卡 (Richart / @GoGo / 玫瑰太陽) */}
           <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-zinc-900 text-sm">台新卡 (@GoGo / 玫瑰太陽)</span>
+              <span className="font-bold text-zinc-900 text-sm">台新卡 (全新 7+1 大刷權益)</span>
               <span className="text-xs font-black bg-zinc-900 text-white px-2 py-0.5 rounded-full">
-                天天刷 3.8% 台新Point
+                最高 10% 台新Point
               </span>
             </div>
             <ul className="text-xs text-zinc-800 space-y-1.5">
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-zinc-700 shrink-0 mt-0.5" />
-                <span><strong>超商神操作</strong>：方案切換為<strong>【天天刷】</strong>，於 7-11 與全家打開<strong>「台新Pay」掃碼結帳</strong>，享 <strong>3.8%</strong>！（單筆限額 $3,000）</span>
+                <span><strong>🍹 Chill刷 (10%)</strong>：手搖飲（50嵐/得正/CAFE!N）、燒肉火鍋（詹記/屋馬）、串流（Netflix/Disney+）狂享 <strong>10%</strong>！</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-zinc-700 shrink-0 mt-0.5" />
-                <span><strong>加油與網購</strong>：中油/全國加油走 LINE Pay 或台新Pay 享 3.8%；蝦皮、momo 享 3.8%！</span>
+                <span><strong>📱 Pay著刷 (3.8%)</strong>：四大超商出示<strong>「台新Pay」掃碼結帳</strong>通吃 <strong>3.8%</strong>！（單筆限額 $3,000）</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-zinc-700 shrink-0 mt-0.5" />
+                <span><strong>⚡ 天天刷 (3.3%~3.8%)</strong>：中油直營/全國加油、高鐵台鐵通勤、7-11/全家(台新Pay) 享加碼！</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-zinc-700 shrink-0 mt-0.5" />
+                <span><strong>🍱 好饗刷 (3.3%) & 💻 數趣刷 (3.3%)</strong>：全台餐飲外送 3.3%、綜合網購電商 3.3%！</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                <span><strong>超大地雷</strong>：在超商<strong>絕對不能拿實體卡感應或插卡（直接 0%）</strong>！必須開啟手機「台新Pay」掃碼。</span>
+                <span><strong>超大地雷</strong>：在超商<strong>絕對不能拿實體卡感應或插卡（直接 0%）</strong>！必須出示「台新Pay」掃碼！</span>
               </li>
             </ul>
           </div>
