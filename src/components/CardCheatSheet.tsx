@@ -54,26 +54,26 @@ export const CardCheatSheet: React.FC<Props> = ({ isOpen, onClose }) => {
             </ul>
           </div>
 
-          {/* 2. 台新 @GoGo 卡 (黑狗) */}
+          {/* 2. 台新卡 (@GoGo / 玫瑰太陽) */}
           <div className="p-4 rounded-2xl bg-zinc-50 border border-zinc-200">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-zinc-900 text-sm">台新 @GoGo 黑狗卡</span>
+              <span className="font-bold text-zinc-900 text-sm">台新卡 (@GoGo / 玫瑰太陽)</span>
               <span className="text-xs font-black bg-zinc-900 text-white px-2 py-0.5 rounded-full">
-                精選 3.8% 台新Point
+                天天刷 3.8% 台新Point
               </span>
             </div>
             <ul className="text-xs text-zinc-800 space-y-1.5">
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-zinc-700 shrink-0 mt-0.5" />
-                <span><strong>行動支付與網購</strong>：LINE Pay 掃碼（如中油加油）、蝦皮、momo、酷澎享 3.8%！</span>
+                <span><strong>超商神操作</strong>：方案切換為<strong>【天天刷】</strong>，於 7-11 與全家打開<strong>「台新Pay」掃碼結帳</strong>，享 <strong>3.8%</strong>！（單筆限額 $3,000）</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-zinc-700 shrink-0 mt-0.5" />
-                <span><strong>門檻</strong>：需綁定 Richart 自動扣繳帳單 + 數位帳單。</span>
+                <span><strong>加油與網購</strong>：中油/全國加油走 LINE Pay 或台新Pay 享 3.8%；蝦皮、momo 享 3.8%！</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                <span><strong>超大地雷</strong>：超商（7-11/全家）實體刷卡或感應為 <strong>0% 回饋</strong>，絕對不要在超商拿出黑狗實體卡！</span>
+                <span><strong>超大地雷</strong>：在超商<strong>絕對不能拿實體卡感應或插卡（直接 0%）</strong>！必須開啟手機「台新Pay」掃碼。</span>
               </li>
             </ul>
           </div>

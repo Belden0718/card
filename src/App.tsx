@@ -14,7 +14,8 @@ const DEFAULT_CONFIG: UserCardConfig = {
   sportCalorieMet: true,       // 預設汗水有達標
   sportQuotaAvailable: true,   // 預設本月 $6,000 額度未滿
   dawayIsNewUser: true,        // 預設新戶 3%
-  gogoRichartLinked: true      // 預設有綁 Richart 自動扣繳
+  gogoRichartLinked: true,     // 預設有綁 Richart 自動扣繳
+  taishinScheme: 'daily'       // 預設天天刷（超商台新Pay 3.8%、加油 3.8%）
 };
 
 export function App() {

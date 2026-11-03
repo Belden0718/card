@@ -8,12 +8,17 @@ export type CubeScheme =
   | 'kids'       // 童樂匯
   | 'finance';   // 來金網
 
+export type TaishinScheme =
+  | 'daily'      // 天天刷 (超商/加油/通勤/藥妝 3.8%)
+  | 'big';       // 大筆刷 (百貨/Outlet/居家 3.8%)
+
 export interface UserCardConfig {
   cubeScheme: CubeScheme;
   sportCalorieMet: boolean;       // 汗水不白流 7,000 大卡達標
-  sportQuotaAvailable: boolean;   // AP/GP 每月 $6,000 額度尚未用盡
+  sportQuotaAvailable: boolean;   // AP/GP/SP 每月加碼額度尚未用盡
   dawayIsNewUser: boolean;        // 新戶 3% / 舊戶 1.5%
   gogoRichartLinked: boolean;     // 已綁定 Richart 自動扣繳 + 數位帳單
+  taishinScheme: TaishinScheme;   // 台新權益方案 (天天刷 / 大筆刷)
 }
 
 export type PaymentMethod = 
@@ -21,6 +26,7 @@ export type PaymentMethod =
   | 'google_pay'     // Google Pay 感應
   | 'samsung_pay'    // Samsung Pay 感應
   | 'garmin_pay'     // Garmin Pay 感應
+  | 'taishin_pay'    // 台新Pay 掃碼
   | 'line_pay'       // LINE Pay 條碼
   | 'physical'       // 實體插卡/感應
   | 'online'         // 線上刷卡
@@ -49,9 +55,9 @@ export interface CardRewardResult {
   };
   details: string[]; // 回饋組成細節
   capWarning?: string; // 封頂上限提醒
-  isSchemeDependent?: boolean; // 是否受 CUBE 方案影響
+  isSchemeDependent?: boolean; // 是否受方案影響
   schemeSuggestion?: {
-    recommendedScheme: CubeScheme;
+    recommendedScheme: string;
     potentialRate: number;
     difference: number;
   };

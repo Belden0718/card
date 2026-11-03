@@ -39,6 +39,8 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
             <div className="text-xs text-slate-500 flex flex-wrap gap-x-2 gap-y-1 mt-0.5">
               <span>CUBE：<strong className="text-amber-600">{currentCube.name}</strong></span>
               <span>•</span>
+              <span>台新：<strong className="text-zinc-800">{config.taishinScheme === 'daily' ? '天天刷 (含超商)' : '大筆刷'}</strong></span>
+              <span>•</span>
               <span>SPORT：<strong className={config.sportCalorieMet ? "text-emerald-600" : "text-slate-400"}>{config.sportCalorieMet ? "🔥 7000卡已達標" : "未達標"}</strong></span>
               <span>•</span>
               <span>DAWAY：<strong className="text-blue-600">{config.dawayIsNewUser ? "新戶 3%" : "舊戶 1.5%"}</strong></span>
@@ -172,25 +174,54 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
               </div>
             </div>
 
-            {/* 4. 台新 @GoGo 黑狗卡設定 */}
+            {/* 4. 台新卡設定 (@GoGo / 玫瑰太陽) */}
             <div className="bg-white p-3.5 rounded-xl border border-slate-200">
-              <div className="text-xs font-bold text-zinc-800 flex items-center gap-1.5 mb-2.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-zinc-700 inline-block"></span>
-                台新 @GoGo 黑狗卡 (3.8%)
+              <div className="text-xs font-bold text-zinc-800 flex items-center justify-between mb-2">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-zinc-700 inline-block"></span>
+                  台新卡 (@GoGo / 玫瑰太陽)
+                </span>
               </div>
 
-              <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
-                <div className="text-xs">
-                  <div className="font-medium text-slate-700">Richart 自動扣繳 + 數位帳單</div>
-                  <div className="text-[11px] text-slate-400">解鎖精選通路 3.8%</div>
+              <div className="space-y-2">
+                <div>
+                  <div className="text-[11px] font-medium text-slate-500 mb-1">今日權益方案：</div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => updateConfig('taishinScheme', 'daily')}
+                      className={`py-1.5 px-2 rounded-md text-xs font-medium border text-center transition-all ${
+                        config.taishinScheme === 'daily'
+                          ? 'bg-zinc-900 text-white border-zinc-900 shadow-xs'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      ⚡ 天天刷 (超商/加油)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateConfig('taishinScheme', 'big')}
+                      className={`py-1.5 px-2 rounded-md text-xs font-medium border text-center transition-all ${
+                        config.taishinScheme === 'big'
+                          ? 'bg-zinc-900 text-white border-zinc-900 shadow-xs'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      🛍️ 大筆刷 (百貨/網購)
+                    </button>
+                  </div>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={config.gogoRichartLinked}
-                  onChange={(e) => updateConfig('gogoRichartLinked', e.target.checked)}
-                  className="rounded text-zinc-800 focus:ring-zinc-600 w-4 h-4"
-                />
-              </label>
+
+                <label className="flex items-center justify-between p-1.5 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
+                  <span className="text-[11px] font-medium text-slate-600">Richart 自動扣繳 (享 3.8%)</span>
+                  <input
+                    type="checkbox"
+                    checked={config.gogoRichartLinked}
+                    onChange={(e) => updateConfig('gogoRichartLinked', e.target.checked)}
+                    className="rounded text-zinc-800 focus:ring-zinc-600 w-4 h-4"
+                  />
+                </label>
+              </div>
             </div>
           </div>
         </div>

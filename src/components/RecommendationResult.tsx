@@ -23,6 +23,8 @@ export const RecommendationResult: React.FC<Props> = ({
   // 檢查是否有 CUBE 切換提議
   const cubeResult = results.find(r => r.cardId === 'cube');
   const cubeSuggestion = cubeResult?.schemeSuggestion;
+  const gogoResult = results.find(r => r.cardId === 'gogo');
+  const gogoSuggestion = gogoResult?.schemeSuggestion;
 
   return (
     <div className="space-y-6">
@@ -61,21 +63,38 @@ export const RecommendationResult: React.FC<Props> = ({
               <Zap className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
               <div>
                 <div className="text-sm font-bold text-amber-950">
-                  CUBE 權益切換提示：切換至【{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme].name}】
+                  CUBE 權益切換提示：切換至【{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme as CubeScheme]?.name || cubeSuggestion.recommendedScheme}】
                 </div>
                 <div className="text-xs text-amber-800 mt-0.5">
-                  目前方案僅享 {cubeResult?.rewardRate}%，若切換為「{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme].name}」，
+                  目前方案僅享 {cubeResult?.rewardRate}%，若切換為「{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme as CubeScheme]?.name || cubeSuggestion.recommendedScheme}」，
                   回饋率可直接飆升至 <strong className="font-bold underline">{cubeSuggestion.potentialRate}%</strong> 小樹點無上限！
                 </div>
               </div>
             </div>
             <button
-              onClick={() => onSwitchCubeScheme(cubeSuggestion.recommendedScheme)}
+              onClick={() => onSwitchCubeScheme(cubeSuggestion.recommendedScheme as CubeScheme)}
               className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3 py-2 rounded-lg shadow-sm flex items-center gap-1 transition-all"
             >
-              <span>立即一鍵切換為「{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme].name}」</span>
+              <span>立即一鍵切換為「{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme as CubeScheme]?.name || cubeSuggestion.recommendedScheme}」</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* 💡 台新權益切換提示（若超商選了大筆刷） */}
+      {gogoSuggestion && (
+        <div className="bg-gradient-to-r from-zinc-800/10 via-zinc-800/5 to-transparent border-l-4 border-zinc-800 p-4 rounded-xl shadow-xs">
+          <div className="flex items-start gap-2.5">
+            <Zap className="w-5 h-5 text-zinc-800 mt-0.5 shrink-0" />
+            <div>
+              <div className="text-sm font-bold text-zinc-900">
+                台新權益切換提示：切換至【天天刷】
+              </div>
+              <div className="text-xs text-zinc-700 mt-0.5">
+                目前台新設定為「大筆刷」，超商為 0% 回饋！若切換至「天天刷」並出示<strong>台新Pay</strong>掃碼，超商享 <strong className="font-bold underline">3.8%</strong> 台新Point！
+              </div>
+            </div>
           </div>
         </div>
       )}

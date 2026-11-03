@@ -42,8 +42,9 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🏪',
     description: '超商被銀行列為非一般消費排除通路，回饋規則最嚴格！',
     pitfalls: [
+      '【台新Pay神器】台新若切換至【天天刷】，打開「台新Pay」掃碼享 3.8%（單筆限額 $3,000）！',
+      '【致命地雷】千萬不要拿台新卡直接「實體插卡或Apple Pay感應」，非台新Pay直接 0%！',
       '【致命地雷】7-11 門市的 LINE Pay「不支援」永豐信用卡扣款（刷不過）！',
-      '【致命地雷】千萬不要拿台新黑狗卡實體刷卡或感應，直接 0% 回饋！',
       '【首選】永豐 SPORT 用 Apple Pay / Google Pay / Samsung Pay 手機感應享 7%！',
       '【備選】國泰 CUBE 切換至「集精選」直接感應或實體刷享 3% 小樹點。'
     ]
@@ -53,10 +54,11 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '全家便利商店 (FamilyMart)',
     category: 'convenience',
     icon: '🏪',
-    description: '支援 Apple Pay / Google Pay / Samsung Pay / LINE Pay / 全盈+PAY',
+    description: '支援 Apple Pay / Google Pay / Samsung Pay / LINE Pay / 全盈+PAY / 台新Pay',
     pitfalls: [
-      '千萬不要拿台新黑狗卡實體刷卡，直接 0% 回饋！',
-      '永豐 SPORT 綁定 Apple Pay / Google Pay / Samsung Pay 感應享 7% 回饋最優！',
+      '【台新Pay神器】台新【天天刷】綁定「台新Pay」掃碼享 3.8%（單筆限額 $3,000）！',
+      '【致命地雷】千萬不要拿台新卡實體刷卡或一般感應，直接 0% 回饋！',
+      '【首選】永豐 SPORT 綁定 Apple Pay / Google Pay / Samsung Pay 感應享 7% 回饋最優！',
       '國泰 CUBE 切換至「集精選」直接刷享 3% 無上限。',
       '全家支援永豐 DAWAY 綁 LINE Pay（享 1.5%~3% LP）。'
     ]
@@ -322,45 +324,97 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
 function calculateGoGoReward(channelId: string, config: UserCardConfig): CardRewardResult {
   const isLinked = config.gogoRichartLinked;
   const baseRate = isLinked ? 0.5 : 0.3;
+  const isDailyScheme = config.taishinScheme === 'daily';
 
+  // 加油
   if (channelId === 'gas_cpc' || channelId === 'gas_national') {
     return {
       cardId: 'gogo',
-      cardName: '台新銀行 @GoGo 卡 (黑狗)',
+      cardName: '台新銀行卡 (@GoGo / 玫瑰太陽)',
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
       bestPaymentMethod: {
-        method: 'line_pay',
-        label: '📱 必須使用 LINE Pay 掃碼付款',
-        note: '切勿實體刷卡！實體刷卡僅 0.5%'
+        method: isDailyScheme ? 'line_pay' : 'line_pay',
+        label: isDailyScheme ? '📱 LINE Pay 或 台新Pay 掃碼付款' : '📱 必須使用 LINE Pay 掃碼付款',
+        note: isDailyScheme ? '【天天刷方案】加油享 3.8% 回饋' : '切勿實體刷卡！實體刷卡僅 0.5%'
       },
       details: [
-        '一般消費：0.5%（Richart 扣繳）',
-        '精選行動支付（LINE Pay）加碼：+3.3%',
-        '每期帳單精選加碼上限 1,000 點（折合約可刷 $30,303 封頂）'
+        `【${isDailyScheme ? '天天刷方案' : '精選加碼'}】加油充電：3.8% 台新Point`,
+        '需綁定 Richart / 台新帳戶自動扣繳',
+        '每期帳單加碼上限 1,000 點（折合約可刷 $30,303 封頂）'
       ],
       capWarning: '每期帳單最高折抵 1,000 點 (月消費約 $30,303 封頂)'
     };
   }
 
-  if (channelId.startsWith('convenience_')) {
+  // 超商 (7-11 與 全家)
+  if (channelId === 'convenience_711' || channelId === 'convenience_family') {
+    if (isDailyScheme) {
+      return {
+        cardId: 'gogo',
+        cardName: '台新銀行卡 (@GoGo / 玫瑰太陽)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: isLinked ? 3.8 : baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'taishin_pay',
+          label: '📱 必須使用「台新Pay」掃碼結帳',
+          note: '【天天刷方案】7-11、全家限台新Pay結帳，單筆上限 NT$3,000！實體卡感應為 0%！'
+        },
+        details: [
+          '【天天刷方案】7-11 & 全家綁定「台新Pay」掃碼：3.8% 台新Point',
+          '超商門市單筆限額最高 NT$3,000',
+          '需設定 Richart / 台新帳戶自動扣繳',
+          '⚠️ 絕對不可拿實體卡感應（0%）！代收稅費、悠遊儲值不回饋'
+        ],
+        capWarning: '超商限台新Pay結帳，單筆上限 NT$3,000'
+      };
+    } else {
+      return {
+        cardId: 'gogo',
+        cardName: '台新銀行卡 (@GoGo / 玫瑰太陽)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: 0.0,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'taishin_pay',
+          label: '📱 切換至【天天刷】並用台新Pay',
+          note: '目前為大筆刷方案，超商 0%'
+        },
+        details: [
+          '目前台新權益設定為【大筆刷】，超商非指定通路 0% 回饋',
+          '若於 Richart Life App 切換為【天天刷】，打開台新Pay掃碼即可享 3.8%！'
+        ],
+        warning: '⚠️ 目前為「大筆刷」方案，超商直接刷 0%！切換至「天天刷」並出示台新Pay即可拿 3.8%！',
+        schemeSuggestion: {
+          recommendedScheme: '天天刷',
+          potentialRate: isLinked ? 3.8 : 0.5,
+          difference: isLinked ? 3.8 : 0.5
+        },
+        isBlocked: true
+      };
+    }
+  }
+
+  // 萊爾富 / OK超商
+  if (channelId === 'convenience_hilife_ok') {
     return {
       cardId: 'gogo',
-      cardName: '台新銀行 @GoGo 卡 (黑狗)',
+      cardName: '台新銀行卡 (@GoGo / 玫瑰太陽)',
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: 0.0,
       rewardType: '台新Point',
       bestPaymentMethod: {
         method: 'physical',
-        label: '❌ 不推薦在超商使用黑狗卡',
-        note: '直接刷卡感應 0% 回饋'
+        label: '❌ 萊爾富/OK 實體卡 0%',
+        note: '天天刷主要針對 7-11 與 全家'
       },
       details: [
-        '超商屬於台新銀行非一般消費排除通路，實體卡直接刷為 0% 回饋！',
-        '7-11 若以台新Pay綁定，部分檔期有零星活動，但極易踩雷，強烈建議改用永豐 SPORT 或 CUBE！'
+        '天天刷超商主要針對 7-11 與 全家 (台新Pay)',
+        '萊爾富/OK 建議走永豐 SPORT (Samsung/Apple/Google Pay 感應 7%)'
       ],
-      warning: '⚠️ 絕對不要在超商拿出黑狗卡感應或插卡！0% 回饋！',
+      warning: '萊爾富/OK 實體刷卡為 0% 排除，請使用永豐 SPORT 卡感應 7%！',
       isBlocked: true
     };
   }
