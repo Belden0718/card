@@ -69,7 +69,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
                 國泰 CUBE 卡：今日設定權益（每日可切換一次，23:59前切換整天生效）
               </span>
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
               {(Object.keys(CUBE_SCHEME_LABELS) as CubeScheme[]).map((schemeKey) => {
                 const item = CUBE_SCHEME_LABELS[schemeKey];
                 const isSelected = config.cubeScheme === schemeKey;

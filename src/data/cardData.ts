@@ -5,6 +5,8 @@ export const CUBE_SCHEME_LABELS: Record<CubeScheme, { name: string; tag: string;
   dining: { name: '樂饗購', tag: '餐廳 / 外送 / 百貨 / 藥妝', desc: '國內餐飲、UberEats、foodpanda、新光三越、康是美 3.3%', icon: '🍱' },
   digital: { name: '玩數位', tag: '網購 / 串流 / App Store', desc: '蝦皮、momo、酷澎、Netflix、Disney+、App Store 3.3%', icon: '💻' },
   travel: { name: '趣旅行', tag: '海外實體 / 交通 / 機票', desc: '海外實體 3%、日韓實體、機票、Agoda、Uber叫車 3.3%', icon: '✈️' },
+  japan: { name: '日本賞', tag: '日本實體 / Suica 3.5%~8%', desc: '赴日旅遊指定名店、Suica/ICOCA 儲值、免稅店加碼', icon: '🗾' },
+  birthday: { name: '慶生月', tag: '壽星指定餐飲 / 百貨 10%', desc: '當月壽星專屬，精選餐廳、百貨專櫃最高 10% 小樹點', icon: '🎂' },
   kids: { name: '童樂匯', tag: '婦幼 / 親子樂園', desc: '母嬰婦幼生活用品、親子樂園 3.3%', icon: '🧸' },
   finance: { name: '來金網', tag: '保費 / 理財', desc: '國泰人壽保費、證券等 3%', icon: '💼' }
 };

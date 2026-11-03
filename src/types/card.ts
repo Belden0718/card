@@ -1,12 +1,14 @@
 export type CardId = 'cube' | 'gogo' | 'sport' | 'daway';
 
 export type CubeScheme = 
-  | 'selected'   // 集精選
-  | 'dining'     // 樂饗購
-  | 'digital'    // 玩數位
-  | 'travel'     // 趣旅行
-  | 'kids'       // 童樂匯
-  | 'finance';   // 來金網
+  | 'selected'   // 集精選 (中油直營/超商/全聯/麥當勞 3%~3.3%)
+  | 'dining'     // 樂饗購 (餐廳/外送/百貨 3.3%)
+  | 'digital'    // 玩數位 (網購電商/串流 3.3%)
+  | 'travel'     // 趣旅行 (海外實體/機票訂房 3.3%)
+  | 'japan'      // 日本賞 (日本實體/Suica/人氣藥妝 3.5%~8%)
+  | 'birthday'   // 慶生月 (當月壽星精選餐飲/百貨 最高 10%)
+  | 'kids'       // 童樂匯 (婦幼育兒/遊樂園 3.3%)
+  | 'finance';   // 來金網 (保費/理財 3%)
 
 export type TaishinScheme =
   | 'daily'      // 天天刷 (超商/加油/通勤/藥妝 3.3%~3.8%)
