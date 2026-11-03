@@ -121,7 +121,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
                 <label className="flex items-center justify-between p-2 rounded-lg bg-slate-50 cursor-pointer hover:bg-slate-100/70 transition-colors">
                   <div className="flex items-center gap-2">
                     <Smartphone className={`w-4 h-4 ${config.sportQuotaAvailable ? 'text-emerald-500' : 'text-slate-400'}`} />
-                    <span className="text-xs font-medium text-slate-700">AP/GP $6,000 加碼額度充足</span>
+                    <span className="text-xs font-medium text-slate-700">AP/GP/Samsung Pay 額度充足</span>
                   </div>
                   <input
                     type="checkbox"

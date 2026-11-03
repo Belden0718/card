@@ -16,11 +16,11 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '中油加油 (直營/加盟)',
     category: 'gas',
     icon: '⛽',
-    description: '台灣中油加油站（支援 Apple Pay / Google Pay / LINE Pay / 實體卡）',
+    description: '台灣中油加油站（支援 Apple Pay / Google Pay / Samsung Pay / LINE Pay / 實體卡）',
     pitfalls: [
       '切勿使用台新黑狗卡或永豐DAWAY卡直接實體插卡（僅 0.5%~1%）！',
       '黑狗卡必須用 LINE Pay 掃碼才享 3.8%！',
-      '永豐 SPORT 卡務必用手機 Apple Pay / Google Pay 感應才有最高 7%！'
+      '永豐 SPORT 卡務必用手機 Apple Pay / Google Pay / Samsung Pay 感應才有最高 7%！'
     ]
   },
   {
@@ -28,10 +28,10 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '全國 / 台亞 / 台塑加油站',
     category: 'gas',
     icon: '⛽',
-    description: '非中油加油站（支援 Apple Pay / Google Pay / LINE Pay）',
+    description: '非中油加油站（支援 Apple Pay / Google Pay / Samsung Pay / LINE Pay）',
     pitfalls: [
       '國泰 CUBE 卡的「集精選」僅限中油直營，全國/台亞刷 CUBE 僅有一般消費 0.3%！',
-      '台亞/全國加油站建議走永豐 SPORT (AP/GP感應 7%) 或 黑狗卡 (LINE Pay 3.8%)。'
+      '台亞/全國加油站建議走永豐 SPORT (AP/GP/SP感應 7%) 或 黑狗卡 (LINE Pay 3.8%)。'
     ]
   },
   // 超商
@@ -44,7 +44,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【致命地雷】7-11 門市的 LINE Pay「不支援」永豐信用卡扣款（刷不過）！',
       '【致命地雷】千萬不要拿台新黑狗卡實體刷卡或感應，直接 0% 回饋！',
-      '【首選】永豐 SPORT 用 Apple Pay / Google Pay 手機感應享 7%！',
+      '【首選】永豐 SPORT 用 Apple Pay / Google Pay / Samsung Pay 手機感應享 7%！',
       '【備選】國泰 CUBE 切換至「集精選」直接感應或實體刷享 3% 小樹點。'
     ]
   },
@@ -53,10 +53,10 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '全家便利商店 (FamilyMart)',
     category: 'convenience',
     icon: '🏪',
-    description: '支援 Apple Pay / Google Pay / LINE Pay / 全盈+PAY',
+    description: '支援 Apple Pay / Google Pay / Samsung Pay / LINE Pay / 全盈+PAY',
     pitfalls: [
       '千萬不要拿台新黑狗卡實體刷卡，直接 0% 回饋！',
-      '永豐 SPORT 綁定 Apple Pay / Google Pay 感應享 7% 回饋最優！',
+      '永豐 SPORT 綁定 Apple Pay / Google Pay / Samsung Pay 感應享 7% 回饋最優！',
       '國泰 CUBE 切換至「集精選」直接刷享 3% 無上限。',
       '全家支援永豐 DAWAY 綁 LINE Pay（享 1.5%~3% LP）。'
     ]
@@ -69,7 +69,7 @@ export const CHANNELS: ScenarioChannel[] = [
     description: '超商一般刷卡皆為 0% 回饋排除',
     pitfalls: [
       '國泰 CUBE 的「集精選」未涵蓋萊爾富/OK（僅 7-11 與全家）！',
-      '建議使用永豐 SPORT 綁定 Apple Pay / Google Pay 感應（享 7%），或黑狗卡綁 LINE Pay。'
+      '建議使用永豐 SPORT 綁定 Apple Pay / Google Pay / Samsung Pay 感應（享 7%），或黑狗卡綁 LINE Pay。'
     ]
   },
   // 網購
@@ -444,13 +444,13 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
 
   // 永豐 SPORT 回饋結構：
   // 1. 基本 1% 無上限
-  // 2. 運動達標 (7000卡) +1% (每月上限 50 豐點，消費 $5,000 封頂)
-  // 3. 指定支付（Apple Pay / Google Pay 感應）+5% (每月上限 300 豐點，消費 $6,000 封頂)
+  // 2. 運動達標 (7,000~10,000卡) +1% (每月上限 50 豐點，消費 $5,000 封頂)
+  // 3. 指定支付（Apple Pay / Google Pay / Samsung Pay / Garmin Pay 感應）+5% (每月上限 300 豐點，消費 $6,000 封頂)
   // 最高合計 7%
 
-  // 判斷通路是否支援 Apple Pay / Google Pay 感應：
+  // 判斷通路是否支援行動感應支付（AP / GP / Samsung Pay）：
   // 超商 (7-11, 全家, 萊爾富, OK)、加油站 (中油直營/全國)、家樂福、國內實體餐廳皆支援
-  const supportsAP = (
+  const supportsContactless = (
     channelId.startsWith('gas_') ||
     channelId.startsWith('convenience_') ||
     channelId === 'dining_restaurant' ||
@@ -476,7 +476,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
     };
   }
 
-  if (supportsAP) {
+  if (supportsContactless) {
     if (isCalorieMet && hasQuota) {
       return {
         cardId: 'sport',
@@ -486,13 +486,13 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardType: '豐點',
         bestPaymentMethod: {
           method: 'apple_pay',
-          label: '📱 務必使用 Apple Pay / Google Pay 感應支付',
+          label: '📱 務必使用 Apple Pay / Google Pay / Samsung Pay 感應支付',
           note: '感應即享 7% 封頂，切勿出示 LINE Pay 或實體刷'
         },
         details: [
           '基本回饋：1%（無上限）',
-          '運動達標（7,000卡）：+1%（上限 50 點，限額 $5,000）',
-          '指定行動支付（AP/GP 感應）：+5%（上限 300 點，限額 $6,000）',
+          '運動達標加碼：+1%（上限 50 點，限額 $5,000）',
+          '指定行動支付（AP/GP/Samsung Pay 感應）：+5%（上限 300 點，限額 $6,000）',
           '合計最高 7.0% 豐點！'
         ],
         capWarning: '🔥 每月消費 NT$6,000 內享 7%，超過後降為 1%~2%'
@@ -506,7 +506,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardType: '豐點',
         bestPaymentMethod: {
           method: 'apple_pay',
-          label: 'Apple Pay / Google Pay 感應',
+          label: 'Apple Pay / Google Pay / Samsung Pay 感應',
           note: '本月 $6,000 額度已用盡，降為 2%'
         },
         details: [
@@ -524,14 +524,14 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardType: '豐點',
         bestPaymentMethod: {
           method: 'apple_pay',
-          label: 'Apple Pay / Google Pay 感應',
-          note: '尚未達標 7,000 卡'
+          label: 'Apple Pay / Google Pay / Samsung Pay 感應',
+          note: '尚未達標運動門檻'
         },
         details: [
           '僅基本回饋 1%（無上限）',
-          '⚠️ 汗水不白流本月尚未達標 7,000 大卡，無法拿 +1% 與 +5% 加碼！'
+          '⚠️ 運動數據本月尚未達標，無法拿 +1% 與 +5% 加碼！'
         ],
-        warning: '汗水不白流尚未達標 7,000 大卡！達標後可升級為 7%！'
+        warning: '運動數據尚未達標！達標後可升級為 7%！'
       };
     }
   }

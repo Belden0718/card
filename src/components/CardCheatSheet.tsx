@@ -41,7 +41,7 @@ export const CardCheatSheet: React.FC<Props> = ({ isOpen, onClose }) => {
             <ul className="text-xs text-emerald-950 space-y-1.5">
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>超商/加油之神</strong>：7-11、全家、中油加油只要走 <strong>Apple Pay / Google Pay 感應</strong>，享最高 7%！</span>
+                <span><strong>超商/加油之神</strong>：7-11、全家、中油加油只要走 <strong>Apple Pay / Google Pay / Samsung Pay 感應</strong>，享最高 7%！</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />

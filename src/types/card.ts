@@ -19,6 +19,8 @@ export interface UserCardConfig {
 export type PaymentMethod = 
   | 'apple_pay'      // Apple Pay 感應
   | 'google_pay'     // Google Pay 感應
+  | 'samsung_pay'    // Samsung Pay 感應
+  | 'garmin_pay'     // Garmin Pay 感應
   | 'line_pay'       // LINE Pay 條碼
   | 'physical'       // 實體插卡/感應
   | 'online'         // 線上刷卡
