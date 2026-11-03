@@ -1,32 +1,67 @@
-# React + TypeScript + Vite
+# 💳 卡友聰明刷 - 4大信用卡消費回饋即時決策器
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+專為解決台灣信用卡「**天天換權益**」、「**特殊通路0%排除**」、「**回饋封頂上限**」痛點設計的即時決策工具。
 
-Currently, two official plugins are available:
+針對你手中的 **4 大主力神卡** 量身打造：
+1. **國泰世華 CUBE 卡**（集精選 / 樂饗購 / 玩數位 / 趣旅行 / 童樂匯 / 來金網）
+2. **台新銀行 @GoGo 黑狗卡**（Richart 扣繳精選行動支付 & 網購 3.8%）
+3. **永豐銀行 SPORT 卡**（汗水不白流 7,000 大卡 + Apple/Google Pay 感應最高 7%）
+4. **永豐銀行 DAWAY 卡**（LINE Pay 主力新戶 3% / 舊戶 1.5%）
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ⚡ 核心功能
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. ⛽ 加油與 🏪 超商「秒選最佳卡片」
+- **加油場景**：
+  - 中油加油站：首選 **永豐 SPORT 卡**（Apple Pay 感應 **7%**）或 **台新黑狗卡**（LINE Pay 掃碼 **3.8%**）。
+  - 若已切換 CUBE「集精選」，享中油直營 **3.3%** 小樹點無上限！
+- **超商場景（7-11 / 全家）**：
+  - 避免 0% 地雷！直接推薦 **永豐 SPORT 卡**（Apple Pay / Google Pay 感應 **7%**）。
+  - 備選 **國泰 CUBE 卡**（切換至「集精選」實體感應 **3%** 無上限）。
 
-## Expanding the Oxlint configuration
+### 2. 💡 國泰 CUBE 權益切換動態提示
+- 當你選取「中油加油」或「7-11」，但當前方案非「集精選」時，系統會跳出高亮提醒：
+  > *「提示：只要在今天 23:59 前切換為【集精選】，回饋可從 0% 直接飆升至 3.0%~3.3% 小樹點無上限！」*
+- 支援一鍵快速模擬切換測試。
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### 3. ⚠️ 關鍵防雷與避坑指南
+- **7-11 地雷**：7-11 門市的 LINE Pay **不支援永豐信用卡**扣款！請勿使用 DAWAY 綁 LINE Pay。
+- **超商 0% 地雷**：超商屬於非一般消費，**千萬不要拿台新黑狗卡直接實體刷卡感應（0%）**！
+- **中油地雷**：在中油刷黑狗卡請務必出示 **LINE Pay 條碼**（3.8%），實體插卡僅 0.5%！
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### 4. 💰 消費金額即時試算機
+- 輸入預計消費金額（例：$1,000 元），系統即時算出 4 張卡分別可獲得的點數/現金回饋。
+
+---
+
+## 🚀 啟動與使用方式
+
+本專案採用 **Vite + React + TypeScript + Tailwind CSS** 開發，手機版介面極度滑順，可直接加入手機主畫面（PWA 體驗）。
+
+### 1. 本地啟動開發伺服器
+```bash
+npm run dev
 ```
+啟動後在瀏覽器開啟 `http://localhost:5173`。
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 2. 打包正式版本
+```bash
+npm run build
+```
+產生靜態檔案於 `dist/` 目錄，可直接部署至 GitHub Pages、Vercel、Cloudflare Pages 或 Netlify。
+
+---
+
+## 📂 專案結構
+```
+card/
+├── src/
+│   ├── components/         # UI 互動組件 (包含狀態切換列、情境選擇網格、決策推薦面板、速查表)
+│   ├── data/               # 4大信用卡權益、通路規則與避雷邏輯 (cardData.ts)
+│   ├── types/              # 資料型別定義 (card.ts)
+│   ├── App.tsx             # 核心應用程式進入點與狀態整合
+│   └── main.tsx
+├── package.json
+└── vite.config.ts
+```
