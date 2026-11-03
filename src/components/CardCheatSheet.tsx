@@ -124,10 +124,39 @@ export const CardCheatSheet: React.FC<Props> = ({ isOpen, onClose }) => {
                 <span><strong>LINE Pay 主力</strong>：新戶綁定 LINE Pay 享 3.0% LINE POINTS，舊戶 1.5%。</span>
               </li>
               <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" />
+                <span><strong>上限注意</strong>：新戶加碼 +2% 每期上限 800 點（折合每月消費 NT$40,000 封頂），超額後降為 1% 無上限。</span>
+              </li>
+              <li className="flex items-start gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
                 <span><strong>超大地雷</strong>：<strong>7-ELEVEN 門市的 LINE Pay 目前不支援永豐信用卡！</strong>（刷不過）。</span>
               </li>
             </ul>
+          </div>
+
+          {/* 5. 封頂上限全景橫向對照表 */}
+          <div className="p-4 rounded-2xl bg-slate-900 text-white">
+            <div className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-1.5">
+              <span>📊 4大信用卡封頂上限與門檻總盤點</span>
+            </div>
+            <div className="space-y-2 text-xs">
+              <div className="flex items-start justify-between py-1 border-b border-white/10">
+                <span className="font-bold text-amber-300">國泰 CUBE 卡</span>
+                <span className="text-right text-emerald-400 font-semibold">✅ 方案內回饋無上限（刷多少賺多少）</span>
+              </div>
+              <div className="flex items-start justify-between py-1 border-b border-white/10">
+                <span className="font-bold text-zinc-300">台新 Richart 卡</span>
+                <span className="text-right text-emerald-400 font-semibold">✅ 7+1方案無上限（⚠️超商限單筆$3,000）</span>
+              </div>
+              <div className="flex items-start justify-between py-1 border-b border-white/10">
+                <span className="font-bold text-emerald-300">永豐 SPORT 卡</span>
+                <span className="text-right text-amber-300 font-semibold">⚠️ 每月 NT$6,000 封頂（超額降為 1% 無上限）</span>
+              </div>
+              <div className="flex items-start justify-between py-1">
+                <span className="font-bold text-blue-300">永豐 DAWAY 卡</span>
+                <span className="text-right text-amber-300 font-semibold">⚠️ 新戶每月 NT$40,000 封頂（超額降為 1% 無上限）</span>
+              </div>
+            </div>
           </div>
         </div>
 

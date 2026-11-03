@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { CardRewardResult, CubeScheme, ScenarioChannel, TaishinScheme } from '../types/card';
-import { CUBE_SCHEME_LABELS } from '../data/cardData';
-import { Trophy, AlertTriangle, ArrowRight, Zap, CheckCircle, Calculator, Info } from 'lucide-react';
+import { CUBE_SCHEME_LABELS, calculateExactRewardPoints } from '../data/cardData';
+import { Trophy, AlertTriangle, ArrowRight, Zap, CheckCircle, Calculator, Info, ShieldCheck } from 'lucide-react';
 
 interface Props {
   channel: ScenarioChannel;
@@ -167,8 +167,16 @@ export const RecommendationResult: React.FC<Props> = ({
             )}
           </div>
 
+          {/* 上限與封頂規則徽章 */}
+          {bestCard.capInfo && (
+            <div className="mt-3 px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 text-xs text-indigo-100">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>封頂上限規則：<strong className="text-white font-bold">{bestCard.capInfo.capNote}</strong></span>
+            </div>
+          )}
+
           {/* 回饋邏輯拆解 */}
-          <div className="mt-4 pt-3 flex flex-wrap gap-2">
+          <div className="mt-3 pt-3 flex flex-wrap gap-2">
             {bestCard.details.map((detail, idx) => (
               <span
                 key={idx}
@@ -222,7 +230,7 @@ export const RecommendationResult: React.FC<Props> = ({
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {results.map((res) => {
-              const estimatedReward = Math.round((calcAmount * res.rewardRate) / 100);
+              const exact = calculateExactRewardPoints(calcAmount, res);
               const isBest = res.cardId === bestCard.cardId;
 
               return (
@@ -242,12 +250,22 @@ export const RecommendationResult: React.FC<Props> = ({
                   <div className={`text-xl font-black ${
                     isBest ? 'text-amber-600' : res.isBlocked ? 'text-slate-400' : 'text-slate-800'
                   }`}>
-                    {res.isBlocked ? '0' : estimatedReward}
+                    {res.isBlocked ? '0' : exact.points}
                     <span className="text-xs font-normal text-slate-500 ml-0.5">點/元</span>
                   </div>
                   <div className="text-[10px] text-slate-400 mt-0.5">
                     ({res.rewardRate.toFixed(1)}% {res.rewardType})
                   </div>
+                  {exact.isCapped && exact.capNote && (
+                    <div className="text-[10px] text-amber-700 bg-amber-100/90 px-1.5 py-0.5 rounded mt-1.5 font-bold leading-tight">
+                      {exact.capNote}
+                    </div>
+                  )}
+                  {!exact.isCapped && !res.isBlocked && res.rewardRate > 0 && (
+                    <div className="text-[10px] text-emerald-600 mt-1 font-semibold">
+                      {res.capInfo?.isUnlimited ? '✅ 回饋無上限' : '✅ 未達上限'}
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -298,6 +316,10 @@ export const RecommendationResult: React.FC<Props> = ({
                       </div>
                       <div className="text-xs text-slate-600 mt-1 flex items-center gap-1.5 font-medium">
                         <span>{card.bestPaymentMethod.label}</span>
+                      </div>
+                      <div className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1">
+                        <span className="font-semibold text-slate-700">封頂上限：</span>
+                        <span>{card.capInfo?.capNote || '依銀行公告規範'}</span>
                       </div>
                     </div>
                   </div>

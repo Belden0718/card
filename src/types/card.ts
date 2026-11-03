@@ -50,6 +50,14 @@ export interface ScenarioChannel {
   pitfalls: string[]; // 踩坑避雷提醒
 }
 
+export interface CapInfo {
+  isUnlimited: boolean;           // 是否無上限
+  monthlySpendCap?: number;       // 每月消費封頂上限 (NT$)
+  pointCap?: number;              // 每月回饋點數上限
+  perTxCap?: number;              // 單筆消費限額 (NT$)
+  capNote: string;                // 易懂說明 (例如: "每月消費滿 NT$6,000 封頂", "回饋無上限")
+}
+
 export interface CardRewardResult {
   cardId: CardId;
   cardName: string;
@@ -62,7 +70,8 @@ export interface CardRewardResult {
     note?: string;
   };
   details: string[]; // 回饋組成細節
-  capWarning?: string; // 封頂上限提醒
+  capInfo?: CapInfo; // 完整封頂與上限機制
+  capWarning?: string; // 封頂上限提示標籤
   isSchemeDependent?: boolean; // 是否受方案影響
   schemeSuggestion?: {
     cardName: string;

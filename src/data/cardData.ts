@@ -227,6 +227,86 @@ export function calculateCardRewards(channelId: string, config: UserCardConfig):
   // 4. 永豐 DAWAY 卡計算
   results.push(calculateDawayReward(channelId, config));
 
+  // 統一確保每張卡片具備權威、精準的封頂上限資訊 (capInfo)
+  for (const r of results) {
+    if (r.cardId === 'cube') {
+      r.capInfo = {
+        isUnlimited: true,
+        capNote: r.rewardRate > 0.3 ? '✅ 方案回饋無上限（消費無上限）' : '✅ 基礎消費無上限'
+      };
+      if (r.rewardRate > 0.3) r.capWarning = '✅ 回饋無上限';
+    } else if (r.cardId === 'gogo') {
+      if (r.bestPaymentMethod.method === 'taishin_pay') {
+        r.capInfo = {
+          isUnlimited: true,
+          perTxCap: 3000,
+          capNote: '✅ 方案無上限（⚠️ 超商門市限單筆 NT$3,000）'
+        };
+        r.capWarning = '方案無上限（超商限單筆 $3,000）';
+      } else {
+        r.capInfo = {
+          isUnlimited: true,
+          capNote: '✅ 方案回饋無上限（消費無上限）'
+        };
+        if (r.rewardRate >= 3.0) r.capWarning = '✅ 回饋無上限';
+      }
+    } else if (r.cardId === 'sport') {
+      if (r.rewardRate === 7.0) {
+        r.capInfo = {
+          isUnlimited: false,
+          monthlySpendCap: 6000,
+          pointCap: 350,
+          capNote: '⚠️ 每月消費滿 NT$6,000 封頂（$0~$5,000享7%、$5,001~$6,000享6%、超過降為1%）'
+        };
+        r.capWarning = '⚠️ 每月消費滿 NT$6,000 封頂';
+      } else if (r.rewardRate === 2.0) {
+        r.capInfo = {
+          isUnlimited: true,
+          capNote: '⚠️ 指定加碼額度已滿，目前享 2% 豐點'
+        };
+        r.capWarning = '加碼額度已滿，降為 2%';
+      } else if (r.isBlocked) {
+        r.capInfo = {
+          isUnlimited: false,
+          capNote: '❌ 本通路為非一般消費 0% 排除'
+        };
+      } else {
+        r.capInfo = {
+          isUnlimited: true,
+          capNote: '基本回饋 1% 無上限'
+        };
+      }
+    } else if (r.cardId === 'daway') {
+      if (r.rewardRate === 3.0) {
+        r.capInfo = {
+          isUnlimited: false,
+          monthlySpendCap: 40000,
+          pointCap: 800,
+          capNote: '⚠️ 新戶加碼每月滿 NT$40,000 封頂（超額降為 1% 無上限）'
+        };
+        r.capWarning = '⚠️ 新戶加碼月刷 $40,000 封頂';
+      } else if (r.rewardRate === 1.5) {
+        r.capInfo = {
+          isUnlimited: false,
+          monthlySpendCap: 60000,
+          pointCap: 300,
+          capNote: '⚠️ 舊戶加碼每期上限 300 點（超額降為 1% 無上限）'
+        };
+        r.capWarning = '加碼每期上限 300 點';
+      } else if (r.isBlocked) {
+        r.capInfo = {
+          isUnlimited: false,
+          capNote: '❌ 門市無法使用或 0% 排除'
+        };
+      } else {
+        r.capInfo = {
+          isUnlimited: true,
+          capNote: '一般消費 1% 無上限'
+        };
+      }
+    }
+  }
+
   // 排序：先比回饋率降序，若相同則無上限/非排除優先
   return results.sort((a, b) => {
     if (b.rewardRate !== a.rewardRate) {
@@ -234,6 +314,56 @@ export function calculateCardRewards(channelId: string, config: UserCardConfig):
     }
     return (a.isBlocked ? 1 : 0) - (b.isBlocked ? 1 : 0);
   });
+}
+
+/**
+ * 依據各卡官方封頂上限與階梯遞減規則，精準計算回饋點數
+ */
+export function calculateExactRewardPoints(amount: number, res: CardRewardResult): { points: number; isCapped: boolean; capNote?: string } {
+  if (res.rewardRate <= 0 || res.isBlocked) {
+    return { points: 0, isCapped: false };
+  }
+
+  // 1. 永豐 SPORT 卡階梯封頂:
+  // 前 $5,000 享 7% (1% + 1% + 5% = 350 點)
+  // $5,001 ~ $6,000 享 6% (1% + 5% = 60 點)
+  // 超過 $6,000 享 1% 無上限
+  if (res.cardId === 'sport' && res.rewardRate === 7.0) {
+    if (amount <= 5000) {
+      return { points: Math.round(amount * 0.07), isCapped: false };
+    } else if (amount <= 6000) {
+      const p = 5000 * 0.07 + (amount - 5000) * 0.06;
+      return { points: Math.round(p), isCapped: true, capNote: '超額 NT$5,000，扣除運動加碼後享 6%' };
+    } else {
+      const p = 5000 * 0.07 + 1000 * 0.06 + (amount - 6000) * 0.01;
+      return { points: Math.round(p), isCapped: true, capNote: '已達指定感應加碼 NT$6,000 封頂，超額降為 1%' };
+    }
+  }
+
+  // 2. 永豐 DAWAY 卡新戶 LINE Pay 階梯封頂:
+  // 前 $40,000 享 3% (加碼 2% 上限 800 點 + 基本 1% 400 點 = 1,200 點)
+  // 超過 $40,000 享 1% 無上限
+  if (res.cardId === 'daway' && res.rewardRate === 3.0) {
+    if (amount <= 40000) {
+      return { points: Math.round(amount * 0.03), isCapped: false };
+    } else {
+      const p = 40000 * 0.03 + (amount - 40000) * 0.01;
+      return { points: Math.round(p), isCapped: true, capNote: '已達新戶加碼月刷 NT$40,000 封頂，超額降為 1%' };
+    }
+  }
+
+  // 3. 台新超商門市單筆限額提醒
+  if (res.cardId === 'gogo' && res.bestPaymentMethod.method === 'taishin_pay' && amount > 3000) {
+    return {
+      points: Math.round((amount * res.rewardRate) / 100),
+      isCapped: true,
+      capNote: '⚠️ 注意：超商門市台新Pay單筆限額 NT$3,000，超過請拆單'
+    };
+  }
+
+  // 4. 無上限卡片 (國泰 CUBE & 台新 7+1大刷)
+  const points = Math.round((amount * res.rewardRate) / 100);
+  return { points, isCapped: false };
 }
 
 function calculateCubeReward(channelId: string, config: UserCardConfig): CardRewardResult {
