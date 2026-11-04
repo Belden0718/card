@@ -2,11 +2,25 @@
 
 :root {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
   background-color: #f8fafc;
   color: #0f172a;
   min-height: 100vh;
+  /* 支援 iPhone 底部 Home Bar 與動態島安全距離 */
+  padding-bottom: env(safe-area-inset-bottom);
+  touch-action: manipulation;
+}
+
+/* 隱藏行動端橫向滾動條但保持滾動 */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

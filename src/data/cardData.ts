@@ -148,6 +148,50 @@ export const CHANNELS: ScenarioChannel[] = [
       '【CUBE 3.3%】國泰 CUBE 切換至「樂饗購」即享 3.3% 小樹點無上限！'
     ]
   },
+  // 速食連鎖 (摩斯漢堡)
+  {
+    id: 'fastfood_mos',
+    name: '摩斯漢堡 MOS Burger',
+    category: 'food',
+    icon: '🍔',
+    description: '全台實體門市、自助點餐機、MOS Order App（支援 Apple Pay / LINE Pay / 信用卡）',
+    pitfalls: [
+      '【永豐首選 7%】門市櫃台或自助點餐機使用 Apple Pay / Google Pay / Samsung Pay 感應，SPORT 卡最高享 7%！',
+      '【台新神技 3.8%】切換【Pay著刷】門市出示 LINE Pay 條碼掃碼享 3.8%（亦可切換【好饗刷】實體刷 3.3%）！',
+      '【百貨美食街避坑】若摩斯開在百貨/車站內，實體刷卡常被列為「百貨」而排除餐飲回饋！強烈建議直接走 LINE Pay 掃碼最穩！',
+      '【CUBE 3.3%】國泰 CUBE 切換至「樂饗購」享 3.3% 小樹點無上限（或當期秋日遊專屬加碼最高 3.5%）！',
+      '【DAWAY 3%】永豐 DAWAY 綁定 LINE Pay 門市掃碼，新戶享 3% / 舊戶 1.5% LINE POINTS！',
+      '【MOS App 線上點餐】MOS Order App 線上點餐主要支援信用卡綁卡線上刷（不支援 LINE Pay），建議選 CUBE 樂饗購 3.3% 或台新！'
+    ]
+  },
+  // 速食連鎖 (麥當勞)
+  {
+    id: 'fastfood_mcdonalds',
+    name: "麥當勞 McDonald's",
+    category: 'food',
+    icon: '🍟',
+    description: '全台實體門市、自助點餐機、得來速、麥當勞 APP（支援 LINE Pay / 信用卡 / 點點卡）',
+    pitfalls: [
+      '【致命小額地雷】麥當勞實體刷卡機走 NCCC「小額支付平台」，千萬不要直接拿台新或永豐「實體卡直接插卡或感應」，直接被銀行列為 0% 排除！',
+      '【破解首選 LINE Pay 3.8%】臨櫃或自助點餐機出示「LINE Pay 條碼掃碼」，台新切換【Pay著刷】享 3.8%！永豐 DAWAY 新戶享 3%！',
+      '【CUBE 樂饗購 3.3%】國泰 CUBE 卡有特別將麥當勞納入樂饗購餐飲加碼，門市刷卡或麥當勞 APP 手機點餐享 3.3% 小樹點無上限！',
+      '【點點卡雙賺密技】使用 CUBE 樂饗購線上儲值麥當勞點點卡拿 3.3%，結帳再扣點點卡累積 M Point 點數！'
+    ]
+  },
+  // 速食連鎖 (肯德基 & 必勝客)
+  {
+    id: 'fastfood_kfc',
+    name: '肯德基 KFC / 必勝客 PK雙饗',
+    category: 'food',
+    icon: '🍗',
+    description: '全台實體門市、自助點餐機、PK雙饗卡 APP / 官網線上訂餐（支援 Apple Pay / LINE Pay / 街口）',
+    pitfalls: [
+      '【永豐 SPORT 7%】門市櫃台/自助機使用 Apple Pay / Google Pay / Samsung Pay 感應，SPORT 卡最高享 7%！',
+      '【台新雙方案 3.8%】門市或線上出示 LINE Pay 條碼切換【Pay著刷】享 3.8%！實體刷卡切換【好饗刷】享 3.3%！',
+      '【CUBE 樂饗購 3.3%】CUBE 切換「樂饗購」，門市實體刷卡或 PK App 線上訂餐享 3.3% 小樹點無上限！',
+      '【PK App 三重疊加】先在 PK雙饗卡 App 輸入 5 碼優惠代碼折價，搭配線上刷 CUBE 3.3% 或 LINE Pay 3.8%，再賺 PK App 2.5% 紅利點數！'
+    ]
+  },
   // 餐廳
   {
     id: 'dining_restaurant',
@@ -340,15 +384,24 @@ export function calculateExactRewardPoints(amount: number, res: CardRewardResult
     }
   }
 
-  // 2. 永豐 DAWAY 卡新戶 LINE Pay 階梯封頂:
-  // 前 $40,000 享 3% (加碼 2% 上限 800 點 + 基本 1% 400 點 = 1,200 點)
-  // 超過 $40,000 享 1% 無上限
+  // 2. 永豐 DAWAY 卡新戶 / 舊戶 LINE Pay 階梯封頂:
+  // 新戶: 前 $40,000 享 3% (加碼 2% 上限 800 點 + 基本 1% 400 點 = 1,200 點)，超額降為 1%
   if (res.cardId === 'daway' && res.rewardRate === 3.0) {
     if (amount <= 40000) {
       return { points: Math.round(amount * 0.03), isCapped: false };
     } else {
       const p = 40000 * 0.03 + (amount - 40000) * 0.01;
       return { points: Math.round(p), isCapped: true, capNote: '已達新戶加碼月刷 NT$40,000 封頂，超額降為 1%' };
+    }
+  }
+
+  // 舊戶: 前 $60,000 享 1.5% (加碼 0.5% 上限 300 點)，超額降為 1%
+  if (res.cardId === 'daway' && res.rewardRate === 1.5) {
+    if (amount <= 60000) {
+      return { points: Math.round(amount * 0.015), isCapped: false };
+    } else {
+      const p = 60000 * 0.015 + (amount - 60000) * 0.01;
+      return { points: Math.round(p), isCapped: true, capNote: '已達舊戶加碼月刷 NT$60,000 封頂，超額降為 1%' };
     }
   }
 
@@ -432,15 +485,29 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     } else {
       warning = '目前非「樂饗購」方案，僅 0.3%！建議今天切換至樂饗購享 3.3%！';
     }
-  } else if (channelId === 'dining_restaurant' || channelId === 'dining_hotpot') {
+  } else if (channelId === 'dining_restaurant' || channelId === 'dining_hotpot' || channelId === 'fastfood_mos' || channelId === 'fastfood_mcdonalds' || channelId === 'fastfood_kfc') {
     recommendedScheme = 'dining';
     potentialRate = 3.3;
     if (scheme === 'dining') {
       rate = 3.3;
       isTargetScheme = true;
-      details = ['【樂饗購方案】國內餐飲實體消費：3.3% 小樹點（無上限）'];
+      if (channelId === 'fastfood_mos') {
+        details = ['【樂饗購方案】摩斯漢堡餐飲消費：3.3% 小樹點（無上限）', '支援門市感應、自助機與 MOS App 線上刷卡'];
+      } else if (channelId === 'fastfood_mcdonalds') {
+        details = ['【樂饗購方案】麥當勞官方認列餐飲：3.3% 小樹點（無上限）', '支援門市實體感應與麥當勞 APP 手機點餐'];
+      } else if (channelId === 'fastfood_kfc') {
+        details = ['【樂饗購方案】肯德基/必勝客官方認列：3.3% 小樹點（無上限）', '支援門市實體感應與 PK雙饗卡 App 線上訂餐'];
+      } else {
+        details = ['【樂饗購方案】國內餐飲實體消費：3.3% 小樹點（無上限）'];
+      }
     } else {
-      warning = '聚餐消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！';
+      warning = channelId === 'fastfood_mcdonalds'
+        ? '麥當勞消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！'
+        : channelId === 'fastfood_kfc'
+          ? '肯德基消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！'
+          : channelId === 'fastfood_mos'
+            ? '摩斯漢堡消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！'
+            : '聚餐消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！';
     }
   } else if (channelId === 'online_shopee_momo' || channelId === 'online_coupang') {
     recommendedScheme = 'digital';
@@ -794,6 +861,180 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
     }
   }
 
+  // 6.5. 摩斯漢堡 MOS Burger
+  if (channelId === 'fastfood_mos') {
+    if (currentScheme === 'pay') {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: isLinked ? 3.8 : baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'line_pay',
+          label: '📱 門市櫃台出示 LINE Pay 條碼結帳',
+          note: '【Pay著刷】LINE Pay 享 3.8%（可避開百貨美食街門市餐飲排除）'
+        },
+        details: [
+          '【Pay著刷】門市出示 LINE Pay 條碼結帳：3.8% 台新Point',
+          '走 LINE Pay 掃碼可避開部分百貨商場門市餐飲排除'
+        ]
+      };
+    } else if (currentScheme === 'dining') {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: isLinked ? 3.3 : baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'apple_pay',
+          label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+          note: '【好饗刷】餐飲享 3.3%'
+        },
+        details: [
+          '【好饗刷】摩斯漢堡餐飲消費：3.3% 台新Point',
+          '⚠️ 若為百貨公司/美食街/車站內之門市，實體刷卡可能被歸類為百貨排除'
+        ]
+      };
+    } else {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'line_pay',
+          label: '建議切換至【Pay著刷】(3.8%) 或【好饗刷】(3.3%)',
+          note: '目前僅一般消費'
+        },
+        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】摩斯僅 ${baseRate}%`],
+        schemeSuggestion: {
+          cardName: '台新卡',
+          schemeType: 'taishin',
+          recommendedScheme: 'Pay著刷',
+          recommendedSchemeKey: 'pay',
+          potentialRate: isLinked ? 3.8 : baseRate,
+          difference: Number((3.8 - baseRate).toFixed(1))
+        },
+        warning: '摩斯漢堡建議切換至【Pay著刷】出示 LINE Pay 拿 3.8%！'
+      };
+    }
+  }
+
+  // 6.6. 麥當勞 McDonald's
+  if (channelId === 'fastfood_mcdonalds') {
+    if (currentScheme === 'pay') {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: isLinked ? 3.8 : baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'line_pay',
+          label: '📱 門市櫃台/自助機出示 LINE Pay 條碼結帳',
+          note: '【Pay著刷】出示 LINE Pay 享 3.8%（破解小額支付 0% 地雷）'
+        },
+        details: [
+          '【Pay著刷】出示 LINE Pay 條碼掃碼結帳：3.8% 台新Point',
+          '🔥 走 LINE Pay 掃碼可成功繞過 NCCC 小額支付 0% 排除！',
+          '⚠️ 千萬不要拿台新實體卡直接感應或插卡（直接 0% 排除）'
+        ]
+      };
+    } else {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: 0.0,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'line_pay',
+          label: '📱 請切換至【Pay著刷】並出示 LINE Pay 條碼',
+          note: '麥當勞實體刷卡走小額支付為 0% 排除'
+        },
+        details: [
+          '麥當勞櫃台刷卡機屬於小額支付平台，實體刷卡直接為 0% 排除',
+          '若切換至【Pay著刷】並出示「LINE Pay 條碼」掃碼，即可享 3.8% 回饋！'
+        ],
+        schemeSuggestion: {
+          cardName: '台新卡',
+          schemeType: 'taishin',
+          recommendedScheme: 'Pay著刷',
+          recommendedSchemeKey: 'pay',
+          potentialRate: isLinked ? 3.8 : baseRate,
+          difference: isLinked ? 3.8 : baseRate
+        },
+        warning: '⚠️ 麥當勞實體刷卡為小額支付 0% 排除！請切換至【Pay著刷】出示 LINE Pay 條碼結帳拿 3.8%！',
+        isBlocked: true
+      };
+    }
+  }
+
+  // 6.7. 肯德基 KFC / 必勝客
+  if (channelId === 'fastfood_kfc') {
+    if (currentScheme === 'pay') {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: isLinked ? 3.8 : baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'line_pay',
+          label: '📱 門市或線上訂餐出示 LINE Pay 條碼結帳',
+          note: '【Pay著刷】LINE Pay 享 3.8%'
+        },
+        details: [
+          '【Pay著刷】出示 LINE Pay 條碼結帳：3.8% 台新Point',
+          '支援肯德基門市現場與 PK雙饗卡線上訂餐'
+        ]
+      };
+    } else if (currentScheme === 'dining') {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: isLinked ? 3.3 : baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'apple_pay',
+          label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+          note: '【好饗刷】餐飲享 3.3%'
+        },
+        details: [
+          '【好饗刷】肯德基餐飲消費：3.3% 台新Point',
+          '⚠️ 若位於百貨美食街櫃位，建議走 LINE Pay 避開百貨排除'
+        ]
+      };
+    } else {
+      return {
+        cardId: 'gogo',
+        cardName: '台新卡 (Richart / @GoGo)',
+        cardColor: 'from-zinc-800 to-neutral-950',
+        rewardRate: baseRate,
+        rewardType: '台新Point',
+        bestPaymentMethod: {
+          method: 'line_pay',
+          label: '建議切換至【Pay著刷】(3.8%) 或【好饗刷】(3.3%)',
+          note: '目前僅一般消費'
+        },
+        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】肯德基僅 ${baseRate}%`],
+        schemeSuggestion: {
+          cardName: '台新卡',
+          schemeType: 'taishin',
+          recommendedScheme: 'Pay著刷',
+          recommendedSchemeKey: 'pay',
+          potentialRate: isLinked ? 3.8 : baseRate,
+          difference: Number((3.8 - baseRate).toFixed(1))
+        },
+        warning: '肯德基建議切換至【Pay著刷】出示 LINE Pay 拿 3.8%！'
+      };
+    }
+  }
+
   // 7. 網購 (蝦皮 / momo / 酷澎)
   if (channelId === 'online_shopee_momo' || channelId === 'online_coupang') {
     if (currentScheme === 'digital') {
@@ -968,12 +1209,35 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
   const supportsContactless = (
     channelId.startsWith('gas_') ||
     channelId.startsWith('convenience_') ||
+    channelId === 'fastfood_mos' ||
+    channelId === 'fastfood_kfc' ||
     channelId === 'dining_restaurant' ||
     channelId === 'dining_hotpot' ||
     channelId === 'drink_chill' ||
     channelId === 'supermarket_carrefour' ||
     channelId === 'general_store'
   );
+
+  if (channelId === 'fastfood_mcdonalds') {
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: 0.0,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '❌ 麥當勞小額支付平台 0% 排除',
+        note: '實體感應無回饋'
+      },
+      details: [
+        '麥當勞屬於 NCCC 小額支付平台特約商店，永豐信用卡直接刷卡或感應為 0% 排除',
+        '建議改用台新切換【Pay著刷】(LINE Pay 3.8%)、永豐 DAWAY (LINE Pay 3%) 或國泰 CUBE (樂饗購 3.3%)！'
+      ],
+      warning: '⚠️ 麥當勞走實體刷卡為小額支付 0% 排除！請改用 LINE Pay 或 CUBE 樂饗購！',
+      isBlocked: true
+    };
+  }
 
   if (channelId === 'supermarket_px') {
     return {
@@ -1130,6 +1394,70 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       details: [
         `LINE Pay 綁定消費：${lpRate}% LINE POINTS`,
         isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'fastfood_mos') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市櫃台/自助機出示 LINE Pay 條碼',
+        note: '摩斯門市支援 LINE Pay 條碼'
+      },
+      details: [
+        `摩斯門市出示 LINE Pay 支付：${lpRate}% LINE POINTS`,
+        isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '⚠️ 若直接拿實體卡感應或插卡僅享 1% 一般消費'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'fastfood_mcdonalds') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市櫃台/自助機出示 LINE Pay 條碼',
+        note: '走 LINE Pay 掃碼完美破解小額 0% 地雷'
+      },
+      details: [
+        `麥當勞出示 LINE Pay 條碼：${lpRate}% LINE POINTS`,
+        isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '🔥 出示 LINE Pay 成功避開小額支付 0% 陷阱！',
+        '⚠️ 千萬不要拿實體卡感應或插卡（實體直接 0%）'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'fastfood_kfc') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市或線上訂餐出示 LINE Pay 條碼',
+        note: '肯德基/PK雙饗卡支援 LINE Pay'
+      },
+      details: [
+        `肯德基出示 LINE Pay 條碼：${lpRate}% LINE POINTS`,
+        isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '⚠️ 純實體卡刷卡僅 1% 一般消費'
       ],
       capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
     };

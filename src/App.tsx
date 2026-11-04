@@ -7,13 +7,13 @@ import { QuickScenarioGrid } from './components/QuickScenarioGrid';
 import { RecommendationResult } from './components/RecommendationResult';
 import { CardCheatSheet } from './components/CardCheatSheet';
 
-const STORAGE_KEY = 'credit_card_advisor_config_v1';
+const STORAGE_KEY = 'credit_card_advisor_config_v2';
 
 const DEFAULT_CONFIG: UserCardConfig = {
   cubeScheme: 'selected',      // 預設集精選（涵蓋加油與超商）
   sportCalorieMet: true,       // 預設汗水有達標
   sportQuotaAvailable: true,   // 預設本月 $6,000 額度未滿
-  dawayIsNewUser: true,        // 預設新戶 3%
+  dawayIsNewUser: false,       // 已非新戶，預設舊戶 1.5%
   gogoRichartLinked: true,     // 預設有綁 Richart 自動扣繳
   taishinScheme: 'daily'       // 預設天天刷（超商台新Pay 3.8%、加油 3.8%）
 };
@@ -112,6 +112,36 @@ export function App() {
             }`}
           >
             🍹 手搖/咖啡 (Chill 10%)
+          </button>
+          <button
+            onClick={() => { setSelectedChannelId('fastfood_mos'); setSearchQuery(''); }}
+            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
+              selectedChannelId === 'fastfood_mos'
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            🍔 摩斯漢堡
+          </button>
+          <button
+            onClick={() => { setSelectedChannelId('fastfood_mcdonalds'); setSearchQuery(''); }}
+            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
+              selectedChannelId === 'fastfood_mcdonalds'
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            🍟 麥當勞
+          </button>
+          <button
+            onClick={() => { setSelectedChannelId('fastfood_kfc'); setSearchQuery(''); }}
+            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
+              selectedChannelId === 'fastfood_kfc'
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+            }`}
+          >
+            🍗 肯德基
           </button>
           <button
             onClick={() => { setSelectedChannelId('supermarket_px'); setSearchQuery(''); }}
