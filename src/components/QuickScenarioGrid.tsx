@@ -1,7 +1,7 @@
 import React from 'react';
 import { CHANNELS } from '../data/cardData';
 import type { ScenarioChannel } from '../types/card';
-import { Fuel, Store, ShoppingBag, Utensils, ShoppingCart, Plane, Search, Sparkles } from 'lucide-react';
+import { Fuel, Store, ShoppingBag, Utensils, ShoppingCart, Plane, Search, Sparkles, Building2 } from 'lucide-react';
 
 interface Props {
   selectedChannelId: string;
@@ -21,12 +21,13 @@ export const QuickScenarioGrid: React.FC<Props> = ({
 
   const categories = [
     { id: 'all', label: '全部通路', icon: Sparkles },
-    { id: 'gas', label: '⛽ 加油消費', icon: Fuel, highlight: true },
+    { id: 'gas', label: '⛽ 加油充電', icon: Fuel, highlight: true },
     { id: 'convenience', label: '🏪 超商消費', icon: Store, highlight: true },
-    { id: 'online', label: '🛍️ 網購電商', icon: ShoppingBag },
+    { id: 'online', label: '🛍️ 網購數位', icon: ShoppingBag },
     { id: 'food', label: '🍱 外送餐飲', icon: Utensils },
-    { id: 'supermarket', label: '🛒 全聯量販', icon: ShoppingCart },
-    { id: 'travel', label: '✈️ 出國海外', icon: Plane }
+    { id: 'supermarket', label: '🛒 超市量販', icon: ShoppingCart },
+    { id: 'department', label: '🏬 百貨家居/藥妝', icon: Building2 },
+    { id: 'travel', label: '✈️ 旅遊出行/交通', icon: Plane, highlight: true }
   ];
 
   const filteredChannels = CHANNELS.filter((ch) => {
@@ -48,7 +49,7 @@ export const QuickScenarioGrid: React.FC<Props> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="搜尋通路關鍵字（如：中油、7-11、全家、外送、蝦皮、全聯...）"
+            placeholder="搜尋通路關鍵字（如：高鐵、Agoda、機票、Uber、雄獅、福懋、速邁樂、中油、ChatGPT、Netflix、蝦皮...）"
             className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all placeholder:text-slate-400"
           />
           {searchQuery && (

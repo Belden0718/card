@@ -1,14 +1,15 @@
 export type CardId = 'cube' | 'gogo' | 'sport' | 'daway';
 
 export type CubeScheme = 
-  | 'selected'   // 集精選 (中油直營/超商/全聯/麥當勞 3%~3.3%)
+  | 'selected'   // 集精選 (中油直營/超商/全聯/萬家福 3%~3.3%)
   | 'dining'     // 樂饗購 (餐廳/外送/百貨 3.3%)
   | 'digital'    // 玩數位 (網購電商/串流 3.3%)
   | 'travel'     // 趣旅行 (海外實體/機票訂房 3.3%)
   | 'japan'      // 日本賞 (日本實體/Suica/人氣藥妝 3.5%~8%)
   | 'birthday'   // 慶生月 (當月壽星精選餐飲/百貨 最高 10%)
   | 'kids'       // 童樂匯 (婦幼育兒/遊樂園 3.3%)
-  | 'finance';   // 來金網 (保費/理財 3%)
+  | 'finance'    // 來金網 (保費/理財 3%)
+  | 'formosa';   // 台塑家 (台塑/台亞/福懋/速邁樂 2% + 汽油天天降價)
 
 export type TaishinScheme =
   | 'daily'      // 天天刷 (超商/加油/通勤/藥妝 3.3%~3.8%)
@@ -44,7 +45,7 @@ export type PaymentMethod =
 export interface ScenarioChannel {
   id: string;
   name: string;
-  category: 'gas' | 'convenience' | 'online' | 'food' | 'supermarket' | 'travel' | 'drink' | 'general';
+  category: 'gas' | 'convenience' | 'online' | 'food' | 'supermarket' | 'department' | 'travel' | 'drink' | 'general';
   icon: string;
   description: string;
   pitfalls: string[]; // 踩坑避雷提醒
@@ -64,6 +65,8 @@ export interface CardRewardResult {
   cardColor: string;
   rewardRate: number; // e.g. 7.0 for 7%
   rewardType: string; // e.g. "豐點", "小樹點", "台新Point", "LINE POINTS"
+  requiredSchemeName?: string; // 最佳方案名稱，如 "玩數位"、"集精選"、"Pay著刷"
+  requiredSchemeTag?: string;  // 易讀方案標籤，如 "切換【玩數位】"、"切換【Pay著刷】"
   bestPaymentMethod: {
     method: PaymentMethod;
     label: string;

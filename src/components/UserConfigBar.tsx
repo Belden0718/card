@@ -18,9 +18,6 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
     });
   };
 
-  const currentCube = CUBE_SCHEME_LABELS[config.cubeScheme];
-  const currentTaishin = TAISHIN_SCHEME_LABELS[config.taishinScheme];
-
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 mb-6 overflow-hidden">
       {/* 頂部快速狀態條 */}
@@ -34,17 +31,17 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
           </div>
           <div>
             <div className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-              <span>你的4張卡片狀態設定</span>
-              <span className="text-xs font-normal text-slate-500 hidden sm:inline">（點擊展開切換 CUBE 6方案 / 台新 8方案 / 額度）</span>
+              <span>你的 4 張卡片條件設定</span>
+              <span className="text-xs font-normal text-slate-500 hidden sm:inline">（查詢通路時自動匹配最佳方案；點擊展開調整帳戶條件）</span>
             </div>
             <div className="text-xs text-slate-500 flex flex-wrap gap-x-2 gap-y-1 mt-0.5">
-              <span>CUBE：<strong className="text-amber-600">{currentCube.name}</strong></span>
-              <span>•</span>
-              <span>台新：<strong className="text-zinc-800">{currentTaishin.name}</strong></span>
+              <span>⚡ 方案決策：<strong className="text-indigo-600">全自動匹配 No.1 最佳方案</strong></span>
               <span>•</span>
               <span>SPORT：<strong className={config.sportCalorieMet ? "text-emerald-600" : "text-slate-400"}>{config.sportCalorieMet ? "🔥 7000卡已達標" : "未達標"}</strong></span>
               <span>•</span>
               <span>DAWAY：<strong className="text-blue-600">{config.dawayIsNewUser ? "新戶 3%" : "舊戶 1.5%"}</strong></span>
+              <span>•</span>
+              <span>台新：<strong className={config.gogoRichartLinked ? "text-emerald-600" : "text-slate-400"}>{config.gogoRichartLinked ? "已綁 Richart" : "未綁帳戶"}</strong></span>
             </div>
           </div>
         </div>
@@ -61,7 +58,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
       {/* 展開後的自訂面板 */}
       {isOpen && (
         <div className="p-4 sm:p-5 border-t border-slate-100 bg-slate-50/50 space-y-6">
-          {/* 1. 國泰 CUBE 權益切換 (6大方案) */}
+          {/* 1. 國泰 CUBE 權益切換 (9大方案) */}
           <div>
             <label className="text-xs font-bold uppercase tracking-wider block mb-2 flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-amber-700">
@@ -69,7 +66,7 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
                 國泰 CUBE 卡：今日設定權益（每日可切換一次，23:59前切換整天生效）
               </span>
             </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-2">
               {(Object.keys(CUBE_SCHEME_LABELS) as CubeScheme[]).map((schemeKey) => {
                 const item = CUBE_SCHEME_LABELS[schemeKey];
                 const isSelected = config.cubeScheme === schemeKey;

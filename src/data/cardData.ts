@@ -1,14 +1,15 @@
 import type { CardRewardResult, CubeScheme, ScenarioChannel, TaishinScheme, UserCardConfig } from '../types/card';
 
 export const CUBE_SCHEME_LABELS: Record<CubeScheme, { name: string; tag: string; desc: string; icon: string }> = {
-  selected: { name: '集精選', tag: '中油 / 超商 / 全聯 / 麥當勞', desc: '中油直營、7-11、全家、全聯、家樂福等指定 3%~3.3%', icon: '⭐' },
+  selected: { name: '集精選', tag: '中油 / 超商 / 全聯 / IKEA', desc: '中油直營、7-11、全家、全聯、萬家福、IKEA、智慧充電 3%~3.3%', icon: '⭐' },
   dining: { name: '樂饗購', tag: '餐廳 / 外送 / 百貨 / 藥妝', desc: '國內餐飲、UberEats、foodpanda、新光三越、康是美 3.3%', icon: '🍱' },
-  digital: { name: '玩數位', tag: '網購 / 串流 / App Store', desc: '蝦皮、momo、酷澎、Netflix、Disney+、App Store 3.3%', icon: '💻' },
+  digital: { name: '玩數位', tag: '網購 / 串流 / App / AI', desc: '蝦皮、momo、酷澎、淘寶、Netflix、App Store、ChatGPT 3.3%', icon: '💻' },
   travel: { name: '趣旅行', tag: '海外實體 / 交通 / 機票', desc: '海外實體 3%、日韓實體、機票、Agoda、Uber叫車 3.3%', icon: '✈️' },
   japan: { name: '日本賞', tag: '日本實體 / Suica 3.5%~8%', desc: '赴日旅遊指定名店、Suica/ICOCA 儲值、免稅店加碼', icon: '🗾' },
   birthday: { name: '慶生月', tag: '壽星指定餐飲 / 百貨 10%', desc: '當月壽星專屬，精選餐廳、百貨專櫃最高 10% 小樹點', icon: '🎂' },
   kids: { name: '童樂匯', tag: '婦幼 / 親子樂園', desc: '母嬰婦幼生活用品、親子樂園 3.3%', icon: '🧸' },
-  finance: { name: '來金網', tag: '保費 / 理財', desc: '國泰人壽保費、證券等 3%', icon: '💼' }
+  finance: { name: '來金網', tag: '保費 / 理財', desc: '國泰人壽保費、證券等 3%', icon: '💼' },
+  formosa: { name: '台塑家', tag: '福懋/速邁樂/台塑/台亞 2%', desc: '台塑石油、台亞、福懋、統一速邁樂加油站 2% 小樹點無上限 + 天天汽油每公升降價優惠', icon: '⛽' }
 };
 
 export const TAISHIN_SCHEME_LABELS: Record<TaishinScheme, { name: string; tag: string; desc: string; icon: string }> = {
@@ -29,23 +30,65 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '中油加油 (直營/加盟)',
     category: 'gas',
     icon: '⛽',
-    description: '台灣中油加油站（支援 Samsung Pay / Apple Pay / Google Pay / LINE Pay / 台新Pay）',
+    description: '台灣中油加油站（支援 Samsung Pay / Apple Pay / Google Pay / LINE Pay / 中油Pay / 台新Pay）',
     pitfalls: [
-      '【永豐首選】永豐 SPORT 用 Samsung Pay / Apple Pay / Google Pay 手機感應享最高 7%！',
-      '【台新雙方案】台新切換【天天刷】或【Pay著刷】走 LINE Pay / 台新Pay 享 3.8%！',
-      '【CUBE無上限】CUBE 切換至【集精選】，中油直營享 3.3% 小樹點無上限！',
-      '切勿使用台新或永豐DAWAY直接「實體插卡」（實體僅 0.5%~1%）！'
+      '【直營 vs 加盟陷阱】國泰 CUBE「集精選 3.3%」嚴格限制「台灣中油直營店」！若在千越、台糖、車容坊等「加盟站」刷 CUBE 僅有 0.3%！',
+      '【永豐 SPORT 7% 不挑站】永豐 SPORT 綁定 Apple Pay / Google Pay 手機感應享最高 7%，直營或加盟通通適用，不用費心辨別直營站！',
+      '【台新 3.8% 雙方案】台新切換【天天刷】或【Pay著刷】，出示中油Pay / LINE Pay / 台新Pay 掃碼享 3.8%！',
+      '【避雷】切勿直接拿台新或永豐 DAWAY 實體插卡結帳（實體僅 0.5%~1%）。'
+    ]
+  },
+  {
+    id: 'gas_formosa',
+    name: '福懋加油站 (台塑體系 / 台亞 / 台塑石油)',
+    category: 'gas',
+    icon: '⛽',
+    description: '福懋興業加油站、台亞石油、台塑石油直營與加盟體系（支援 Apple Pay / Google Pay / 實體刷卡 / 台塑石油Pay）',
+    pitfalls: [
+      '【CUBE 2% + 降價首選】國泰 CUBE 切換專屬【台塑家】權益，享 2% 小樹點無上限！現場天天汽油每公升降 1.2 元起，亦可搭配台塑石油 Pay 累積 F 幣！',
+      '【永豐 SPORT 7% 感應之神】自助機台或人工島使用 Apple Pay / Google Pay / Samsung Pay 感應付款，達標享最高 7% 豐點（月刷 $6,000 封頂）！比 2% 更賺！',
+      '【台新未涵蓋福懋】台新「天天刷」加油名單僅限中油直營、全國、台亞直營；福懋加油站未列入指定名單，實體刷卡僅享一般消費 0.3%~0.5%！',
+      '【避開第三方電支】在福懋刷 CUBE 台塑家時，嚴禁使用 LINE Pay、街口等第三方電支條碼付款，否則直接被排除 2% 加碼降為 0.3%！'
+    ]
+  },
+  {
+    id: 'gas_smile',
+    name: '速邁樂加油站 (統一精工 Smile)',
+    category: 'gas',
+    icon: '⛽',
+    description: '統一集團旗下統一精工速邁樂加油中心（支援 Apple Pay / Google Pay / 實體刷卡 / OPEN 錢包 / icash Pay）',
+    pitfalls: [
+      '【CUBE 2% + 降價】國泰 CUBE 切換【台塑家】權益方案（限本島站點），刷卡享 2% 小樹點無上限 + 天天汽油每公升降價優惠！',
+      '【⚠️ 速邁樂三大地雷】1. 速邁樂「不支援」台塑石油 Pay！2. 切勿使用 OPEN 錢包或 icash Pay 等第三方電支掃碼扣款（會被排除 CUBE 2% 回饋）！3. 速邁樂站內會員降價與 CUBE 降價通常互斥二選一。',
+      '【永豐 SPORT 7% 不挑站】使用 Apple Pay / Google Pay / Samsung Pay 感應付款，達標享最高 7% 豐點（月刷 $6,000 封頂）！免算降價最簡單無腦！',
+      '【台新未列入】速邁樂加油站不在台新「天天刷」指定名單中，實體刷卡僅 0.3%~0.5% 一般消費。'
     ]
   },
   {
     id: 'gas_national',
-    name: '全國 / 台亞 / 台塑加油站',
+    name: '全國加油站 (National)',
     category: 'gas',
     icon: '⛽',
-    description: '非中油加油站（支援 Samsung / Apple / Google Pay / LINE Pay）',
+    description: '全國加油站連鎖站點（支援 Apple Pay / Google Pay / LINE Pay / 街口 / 實體刷卡）',
     pitfalls: [
-      '國泰 CUBE 卡的「集精選」僅限中油直營，全國/台亞刷 CUBE 僅有一般消費 0.3%！',
-      '首選永豐 SPORT (Samsung/Apple Pay感應 7%) 或 台新 (LINE Pay 3.8%)。'
+      '【CUBE 0.3% 踩雷】全國加油站「不在」國泰 CUBE「集精選」或「台塑家」加碼名單中，刷 CUBE 僅享一般消費 0.3%！',
+      '【永豐 SPORT 7% 首選】自助機台或人工島使用 Samsung / Apple / Google Pay 感應享最高 7% 豐點！',
+      '【台新 3.8% 掃碼】全國加油站支援 LINE Pay，台新切換【Pay著刷】走 LINE Pay 掃碼享 3.8%（亦在天天刷名單中）！',
+      '【DAWAY 3%】走 LINE Pay 付款，新戶享 3% LINE POINTS。'
+    ]
+  },
+  // 充電與行車出行
+  {
+    id: 'ev_charging_parking',
+    name: '電動車充電 / 智慧停車 (EVOASIS/U-POWER/車麻吉/uTagGo)',
+    category: 'gas',
+    icon: '⚡',
+    description: 'U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging充電站；車麻吉、uTagGo智慧停車',
+    pitfalls: [
+      '【CUBE 3.0% 首選】國泰 CUBE 切換【集精選】，指定充電站與車麻吉/uTagGo享 3% 小樹點無上限！',
+      '【台新 3.3%】台新切換【天天刷】（加油/充電/交通出行）享 3.3% 台新Point！',
+      '【避雷注意】車麻吉中油加油消費不列入集精選（加油請直接刷中油直營）；uTagGo 月租停車排除。',
+      '【永豐 DAWAY 3%】App 內付款若支援 LINE Pay 享新戶 3% / 舊戶 1.5%。'
     ]
   },
   // 超商
@@ -56,12 +99,12 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🏪',
     description: '超商被列為非一般消費排除通路，回饋規則極為嚴格！',
     pitfalls: [
-      '【永豐霸主 7%】永豐 SPORT 綁定 Samsung Pay / Apple Pay / Google Pay 感應享 7% 封頂！',
+      '【致命地雷 1】7-11 門市不支援永豐信用卡與 Apple Pay（未合作刷不過），且超商屬小額支付 0% 排除，千萬不要用 SPORT 卡！',
       '【台新Pay神器 3.8%】台新切換【天天刷】或【Pay著刷】，打開「台新Pay」掃碼享 3.8%（單筆上限 $3,000）！',
       '【CUBE 3.0%】CUBE 切換【集精選】，直接感應/實體刷享 3% 無上限。',
-      '【致命地雷 1】千萬不要拿台新卡直接「實體刷卡或Apple Pay感應」，非台新Pay直接 0%！',
-      '【致命地雷 2】7-11 門市的 LINE Pay「不支援」永豐信用卡扣款（刷不過）！',
-      '【致命地雷 3】CUBE 卡若未切換至「集精選」，在 7-11 直接 0% 排除！'
+      '【致命地雷 2】千萬不要拿台新卡直接「實體刷卡或Apple Pay感應」，非台新Pay直接 0%！',
+      '【致命地雷 3】7-11 門市的 LINE Pay「不支援」永豐信用卡扣款（刷不過）！',
+      '【致命地雷 4】CUBE 卡若未切換至「集精選」，在 7-11 直接 0% 排除！'
     ]
   },
   {
@@ -71,7 +114,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🏪',
     description: '支援 Samsung Pay / Apple Pay / Google Pay / LINE Pay / 全盈+PAY / 台新Pay',
     pitfalls: [
-      '【永豐首選】永豐 SPORT 綁定 Samsung / Apple / Google Pay 感應享 7%！',
+      '【永豐超商 0% 排除】全家雖然可刷永豐卡，但超商屬於非一般消費小額排除通路，SPORT 卡 Apple Pay 拿不到 7%（直接 0%）！',
       '【台新Pay 3.8%】台新【天天刷】或【Pay著刷】出示「台新Pay」掃碼享 3.8%（單筆限額 $3,000）！',
       '【CUBE 3.0%】國泰 CUBE 切換至「集精選」直接刷享 3% 無上限。',
       '【避雷】全家千萬不要拿台新實體卡直接感應（0%），一定要出示台新Pay條碼！'
@@ -82,11 +125,12 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '萊爾富 / OK 便利商店',
     category: 'convenience',
     icon: '🏪',
-    description: '超商一般刷卡皆為 0% 回饋排除',
+    description: '超商一般刷卡皆為 0% 回饋排除，僅特定行動支付有回饋',
     pitfalls: [
-      '國泰 CUBE 的「集精選」未涵蓋萊爾富/OK（僅 7-11 與全家）！',
-      '【台新Pay 3.8%】台新切換至【Pay著刷】，使用台新Pay掃碼享有 3.8%！',
-      '【永豐 SPORT 7%】使用 Samsung Pay / Apple Pay / Google Pay 感應享 7%！'
+      '【國泰 CUBE 0% 排除】CUBE「集精選」只有 7-11 與全家，萊爾富/OK 刷 CUBE 直接 0% 排除！',
+      '【台新Pay唯一解 3.8%】台新切換至【Pay著刷】，出示「台新Pay」掃碼享 3.8%（單筆限額 $3,000）！',
+      '【永豐全系列 0% 排除】萊爾富與 OK 屬於超商小額支付，永豐 SPORT 與 DAWAY 直接 0% 排除！',
+      '【實體感應地雷】萊爾富與 OK 千萬不要拿任何信用卡直接插卡或 Apple Pay 感應（一律 0% 排除）！'
     ]
   },
   // 手搖飲與精緻聚會
@@ -114,15 +158,40 @@ export const CHANNELS: ScenarioChannel[] = [
   },
   // 網購
   {
-    id: 'online_shopee_momo',
-    name: '蝦皮購物 / momo 購物網',
+    id: 'online_shopee',
+    name: '蝦皮購物 Shopee',
     category: 'online',
-    icon: '🛍️',
-    description: '大型綜合電商平台',
+    icon: '🦐',
+    description: '全台最大 C2C/B2C 電商平台（蝦皮商城 / 蝦皮直送 / 個人賣場）',
     pitfalls: [
-      '【台新 3.8%】台新【數趣刷】或【Pay著刷】(走LINE Pay) 享 3.3%~3.8%！',
-      '【CUBE 3.3%】國泰 CUBE 切換至「玩數位」享 3.3% 小樹點無上限！',
-      '【DAWAY 3%】永豐 DAWAY 若走 LINE Pay 結帳，新戶享 3% LINE POINTS。'
+      '【CUBE 3.3% 無上限】國泰 CUBE 切換「玩數位」，線上刷卡享 3.3% 小樹點無上限，大額採購第一首選！',
+      '【台新 3.3% 直刷】蝦皮大部分訂單不支援 LINE Pay，台新請切換【數趣刷】直接輸入卡號結帳享 3.3%！',
+      '【避開永豐】永豐 SPORT/DAWAY 直刷僅 1%，且無法使用行動支付加碼。'
+    ]
+  },
+  {
+    id: 'online_momo',
+    name: 'momo 購物網',
+    category: 'online',
+    icon: '🍑',
+    description: '綜合 B2C 購物網（家電、日常用品、美妝等，支援 LINE Pay）',
+    pitfalls: [
+      '【台新 3.8% 首選】結帳付款選擇「LINE Pay」，台新切換【Pay著刷】享最高 3.8% 台新Point！',
+      '【CUBE 3.3% 大額無上限】切換「玩數位」直接刷卡享 3.3% 小樹點無上限，高單價商品採購首選！',
+      '【永豐 DAWAY 3%】結帳選擇 LINE Pay 付款，新戶享 3% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'online_pchome',
+    name: 'PChome 24h 購物',
+    category: 'online',
+    icon: '📦',
+    description: '3C 家電與 24h 到貨電商平台（支援 LINE Pay / 信用卡）',
+    pitfalls: [
+      '【台新 3.8% 首選】結帳選擇「LINE Pay」付款，台新切換【Pay著刷】享最高 3.8% 台新Point！若直接刷卡切【數趣刷】享 3.3%！',
+      '【CUBE 3.3% 大額無上限】切換「玩數位」直接輸入卡號刷卡享 3.3% 小樹點無上限，高單價 3C 電腦採購第一首選！',
+      '【CUBE 避坑提醒】在 PChome 刷 CUBE 千萬不能分期（分期降為 0.3%），也不要買儲值金/票券（整單降為 0.3%），且不可走 LINE Pay 扣款！',
+      '【永豐 DAWAY 3%】結帳選擇 LINE Pay 付款，新戶享 3% LINE POINTS。'
     ]
   },
   {
@@ -130,10 +199,64 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '酷澎 Coupang',
     category: 'online',
     icon: '🚀',
-    description: '日韓進口與火箭速配電商',
+    description: '日韓進口與火箭速配電商平台（支援 LINE Pay / 信用卡）',
     pitfalls: [
-      '台新切換【數趣刷】享 3.3%~3.8%。',
-      'CUBE 切換「玩數位」享 3.3% 無上限。'
+      '【台新 3.8% 首選】結帳付款方式選擇「LINE Pay」，台新切換【Pay著刷】享最高 3.8% 台新Point！',
+      '【CUBE 3.3% 無上限】切換「玩數位」直接輸入卡號刷卡享 3.3% 小樹點無上限！',
+      '【永豐 DAWAY 3%】結帳選擇 LINE Pay 付款，新戶享 3% LINE POINTS。',
+      '【火箭跨境提醒】若選購「火箭跨境」海外商品，可能產生 1.5% 海外交易手續費。'
+    ]
+  },
+  {
+    id: 'online_taobao',
+    name: '淘寶 / 天貓 (Taobao 跨境網購)',
+    category: 'online',
+    icon: '🛍️',
+    description: '淘寶 App、天貓跨境電商購物結帳',
+    pitfalls: [
+      '【CUBE 3.3% 首選】國泰 CUBE 切換【玩數位】享 3.3% 小樹點無上限！',
+      '【台新 3.3%】台新切換【數趣刷】享 3.3% 台新Point！',
+      '【DAWAY 3%】永豐 DAWAY 跨境海外消費享 3% LINE POINTS 無上限。',
+      '【手續費提醒】淘寶結帳會有 1.5% 國際手續費，刷 3.3% 或 3% 可完美覆蓋！'
+    ]
+  },
+  {
+    id: 'streaming_media',
+    name: '串流影音與音樂 (Netflix/Disney+/YouTube/Spotify)',
+    category: 'online',
+    icon: '🎬',
+    description: 'Netflix、Disney+、YouTube Premium、Spotify、Max(HBO) 等線上串流訂閱',
+    pitfalls: [
+      '【台新 Chill刷 10% 狂暴首選】台新卡切換【Chill刷】（指定影音串流），Netflix/Disney+ 享 10.0% 台新Point！',
+      '【CUBE 3.3% 無上限】國泰 CUBE 切換【玩數位】享 3.3% 小樹點無上限！',
+      '【海外手續費說明】部分串流（如 Netflix、Spotify）主機設於海外，帳單會收取 1.5% 手續費；台新 10% 扣除後仍淨賺 8.5%！',
+      '【SPORT / DAWAY】走線上扣款僅一般消費 1%~2%。'
+    ]
+  },
+  {
+    id: 'digital_stores',
+    name: 'App Store / Google Play (手遊課金 / 軟體訂閱 / iCloud)',
+    category: 'online',
+    icon: '📱',
+    description: 'Apple 媒體服務（App Store、Apple Music、iCloud、Apple One）；Google Play 應用程式與手遊課金',
+    pitfalls: [
+      '【CUBE 3.3% 大課長首選】國泰 CUBE 切換【玩數位】，App Store 與 Google Play 享 3.3% 小樹點無上限！課金大戶首選！',
+      '【台新 3.3%】台新切換【數趣刷】（指定數位娛樂），App Store / Google Play 享 3.3% 台新Point！',
+      '【致命避雷】Apple 實體直營店（台北 101/A13）或官網購買 iPhone/Mac 硬體設備「不屬於」玩數位（買硬體切勿誤刷玩數位）！',
+      '【SPORT / DAWAY】App Store 與 Google Play 線上扣款僅一般消費 1%~2%。'
+    ]
+  },
+  {
+    id: 'ai_software',
+    name: 'AI 工具與雲端生產力 (ChatGPT/Cursor/Claude/Notion/Canva)',
+    category: 'online',
+    icon: '🤖',
+    description: 'ChatGPT (OpenAI)、Claude、Cursor、Perplexity、Gemini、Notion、Canva、Duolingo 等 AI 與生產力軟體',
+    pitfalls: [
+      '【CUBE 3.3% 業界最強】國泰 CUBE 領先納入！切換【玩數位】享各大 AI 工具訂閱 3.3% 小樹點無上限！',
+      '【台新 3.3%】台新切換【數趣刷】（AI 服務與線上軟體），ChatGPT / Cursor 享 3.3% 台新Point！',
+      '【DAWAY 3%】永豐 DAWAY 美元外幣扣款享海外消費 3% LINE POINTS 無上限！',
+      '【海外手續費說明】AI 服務大多為海外扣款（以美元計價），帳單會有 1.5% 交易手續費，使用 3.3% 信用卡可倒賺 1.8%！'
     ]
   },
   // 外送
@@ -219,27 +342,175 @@ export const CHANNELS: ScenarioChannel[] = [
   },
   {
     id: 'supermarket_carrefour',
-    name: '家樂福 / 大潤發',
+    name: '萬家福 / 大全聯',
     category: 'supermarket',
     icon: '🏬',
-    description: '大型量販超市',
+    description: '大型量販超市（含萬家福量販、樂家康超市、大全聯量販）',
     pitfalls: [
       '永豐 SPORT 卡使用 Samsung Pay / Apple Pay 感應享 7%！',
-      '台新切換【天天刷】(家樂福等指定量販) 享 3.3%！',
-      '國泰 CUBE 切換至「集精選」，家樂福享 3% 無上限。'
+      '台新切換【天天刷】(萬家福/大全聯等指定量販) 享 3.3%！',
+      '國泰 CUBE 切換至「集精選」，萬家福享 3% 無上限。'
     ]
   },
-  // 海外
+  {
+    id: 'supermarket_lopia',
+    name: 'LOPIA 台灣日系超市',
+    category: 'supermarket',
+    icon: '🥩',
+    description: '日本人氣生鮮肉品超市（新北中和環球、台中LaLaport、桃園等店）',
+    pitfalls: [
+      '【CUBE 3.0% 首選】國泰 CUBE 正式納入【集精選】，門市實體刷卡享 3.0% 小樹點無上限！',
+      '【永豐 SPORT 7%】門市收銀機台支援 Apple Pay / Google Pay 感應，達標享最高 7%！',
+      '【台新 3.3%】若門市設立於百貨商場（如中和環球、台中LaLaport），台新切換【大筆刷】或【天天刷】享 3.3%！',
+      '【注意】部分 LOPIA 特殊生鮮櫃位僅收現金，結帳前請留意該收銀台標示。'
+    ]
+  },
+  // 百貨家居與藥妝
+  {
+    id: 'department_store',
+    name: '全台指定百貨 (新光三越/SOGO/遠百/微風/台北101/漢神)',
+    category: 'department',
+    icon: '🏬',
+    description: '新光三越、遠東SOGO、遠東百貨、微風廣場、台北101、漢神百貨、京站、統一時代、美麗華等大型百貨',
+    pitfalls: [
+      '【CUBE 週年慶/精品首選】國泰 CUBE 切換【樂饗購】享 3.3% 小樹點無上限！大額消費不封頂！',
+      '【台新 3.3%】台新切換【大筆刷】享 3.3%（新光三越、遠東SOGO、微風、台北101等）！',
+      '【SPORT 7% 限額】若專櫃支援 Apple Pay / Google Pay 感應，SPORT 卡享 7%（每月限額 $6,000）！',
+      '【避雷注意】部分百貨館內獨立租賃特約店、部分精品專櫃（獨立收銀機台）若非百貨自營機台，可能不列入加碼名單，建議結帳時確認發票為百貨抬頭。'
+    ]
+  },
+  {
+    id: 'home_ikea',
+    name: 'IKEA 宜家家居 (門市 / 餐廳 / 官網)',
+    category: 'department',
+    icon: '🪑',
+    description: '全台 IKEA 實體門市、IKEA 餐廳用餐、線上購物官網',
+    pitfalls: [
+      '【台新 3.3% 首選】台新切換【大筆刷】（指定居家裝修：IKEA、特力屋）享 3.3% 台新Point！',
+      '【CUBE 3.0%】國泰 CUBE 切換【集精選】享 3.0% 小樹點無上限！大額家具採購不封頂！',
+      '【永豐 SPORT 7%】門市使用 Apple Pay / Google Pay 感應付款，達標享最高 7% 回饋（月刷 $6,000 封頂）！',
+      '【永豐 DAWAY 3%】出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶享 1.5% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'drugstore_cosmetics',
+    name: '生活藥妝 (康是美/屈臣氏/寶雅/松本清)',
+    category: 'department',
+    icon: '💄',
+    description: '康是美、屈臣氏、寶雅 POYA、松本清、Tomod\'s、日藥本舖等連鎖生活藥妝',
+    pitfalls: [
+      '【永豐 SPORT 7% 首選】門市使用 Apple Pay / Google Pay / Samsung Pay 感應付款，達標享最高 7% 回饋！',
+      '【國泰 CUBE 3.3%】切換至【樂饗購】享 3.3% 小樹點無上限，大額醫美保養首選！',
+      '【台新 3.3%】台新切換【天天刷】（涵蓋康是美、屈臣氏等）享 3.3% 台新Point！',
+      '【永豐 DAWAY 3%】出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶享 1.5% LINE POINTS。'
+    ]
+  },
+  // 旅遊與交通出行 (趣旅行核心通路)
+  {
+    id: 'transit_rail',
+    name: '台灣高鐵與台鐵 (THSR / 台灣鐵路)',
+    category: 'travel',
+    icon: '🚄',
+    description: '台灣高鐵（官網 / T-EX App / 車站售票機/臨櫃）、台鐵火車（官網 / e-Booking / 車站窗口）',
+    pitfalls: [
+      '【⚠️ 高鐵有加碼、台鐵沒有！】國泰 CUBE「趣旅行 3.3%」嚴格限制「台灣高鐵」！台鐵火車「不在」加碼名單中，刷台鐵僅有一般消費 0.3%！',
+      '【台鐵/高鐵雙通吃首選】台新切換【天天刷】，高鐵與台鐵通通享有 3.3%~3.8% 台新Point 無上限！通勤族與返鄉最穩首選！',
+      '【永豐 SPORT 7% 感應之神】在車站自動售票機或窗口購票，使用 Apple Pay / Google Pay / Samsung Pay 感應付款享 7% 豐點（月刷 $6,000 封頂）！比 3.3% 更賺！線上 App 刷卡僅 1%~2%。',
+      '【永豐 DAWAY 3%】若在車站售票窗口使用 LINE Pay 條碼掃碼，新戶享 3% / 舊戶 1.5% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'travel_airlines',
+    name: '全球指定航空公司 (華航/長榮/星宇/虎航/日航/酷航)',
+    category: 'travel',
+    icon: '🛫',
+    description: '國籍航空（華航、長榮、星宇、台灣虎航、國泰航空）與外籍/廉航（日航、全日空、酷航、樂桃、捷星、大韓航空等）官網或官方 App 直購機票',
+    pitfalls: [
+      '【CUBE 3.3% 大額購票神卡】國泰 CUBE 切換【趣旅行】，全球指定航空官網刷卡享 3.3% 小樹點無上限！幾萬塊機票回饋完全不封頂！',
+      '【⚠️ 分期直接降為 0.3%】各大航空公司官網常跳出分期 0 利率促銷，CUBE 卡「只要辦理分期」立即喪失 3.3% 加碼，直接降為 0.3%！務必選擇「一次付清」！',
+      '【台新 3.3%】台新切換【玩旅刷】（指定航空），享 3.3% 台新Point！',
+      '【避開永豐 SPORT】航空公司線上購票無法使用手機感應支付，SPORT 卡僅一般消費 1%~2%，且機票金額常遠超 $6,000 上限！',
+      '【永豐 DAWAY 3%】若為外籍航空公司（國外主機外幣計價結帳），DAWAY 享海外消費 3% LINE POINTS 無上限。'
+    ]
+  },
+  {
+    id: 'travel_booking_ota',
+    name: '訂房平台與行程票券 (Agoda/Booking/Trip.com/Klook/KKday)',
+    category: 'travel',
+    icon: '🏨',
+    description: 'Agoda、Booking.com、Trip.com、Airbnb、Hotels.com、Expedia、Klook 客路、KKday 國內外訂房與旅遊體驗票券',
+    pitfalls: [
+      '【CUBE 3.3% 無上限】國泰 CUBE 切換【趣旅行】，線上預訂享 3.3% 小樹點無上限！搭配國泰專屬 Agoda 連結常有額外 7%~10% 現折！',
+      '【⚠️ 訂房三大地雷】1. 切勿選擇「到店付款」（若店家刷卡機非指定平台，加碼恐失效）；2. 務必避開 DCC「動態貨幣轉換」（國外訂房請選外幣結帳，若選台幣會被加收 1.5% 且匯率極差）；3. 勿分期（分期降為 0.3%）！',
+      '【台新 3.3% / 3.8%】台新切換【玩旅刷】享 3.3%！若在 Klook / KKday 結帳選擇 LINE Pay，切換【Pay著刷】享 3.8%！',
+      '【永豐 DAWAY 3%】Klook/KKday 結帳選 LINE Pay 享新戶 3% / 舊戶 1.5%；Agoda/Booking 外幣扣款享 3% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'travel_agencies',
+    name: '各大旅行社 (雄獅旅遊/可樂旅遊/易遊網/東南旅遊)',
+    category: 'travel',
+    icon: '🗺️',
+    description: '雄獅旅遊、可樂旅遊、易遊網 ezTravel、東南旅遊、五福旅遊、燦星旅遊、山富旅遊等官網與直營門市團體行程與自由行',
+    pitfalls: [
+      '【CUBE 3.3% 團費大額無上限首選】國泰 CUBE 切換【趣旅行】，刷各大直營旅行社享 3.3% 小樹點無上限！數萬至十幾萬團費回饋不封頂！',
+      '【⚠️ 旅行社分期大陷阱】旅行社業務常推 3期/6期 0利率分期，CUBE 卡只要分期就「直接降為 0.3%」，幾千塊小樹點瞬間泡湯！請務必一次付清！',
+      '【台新 3.3%】台新切換【玩旅刷】（雄獅/可樂/易遊網等指定旅行社），享 3.3% 台新Point！',
+      '【永豐卡不適用大額團費】永豐 SPORT 卡 $6,000 即封頂，DAWAY 卡在國內旅行社僅一般消費 1%，強烈建議刷 CUBE 或台新！'
+    ]
+  },
+  {
+    id: 'transit_taxi',
+    name: '計程車與叫車平台 (Uber / 台灣大車隊 55688 / yoxi / Grab)',
+    category: 'travel',
+    icon: '🚕',
+    description: 'Uber 網約車、台灣大車隊 55688、yoxi (和泰)、Grab 境外叫車、LINE GO',
+    pitfalls: [
+      '【永豐 SPORT 7% 車上感應首選】台灣大車隊、yoxi 車內刷卡機支援 Apple Pay / Google Pay / Samsung Pay 感應，SPORT 卡運動達標享 7% 豐點（月刷 $6,000 封頂）！',
+      '【台新 3.8% 掃碼神器】台灣大車隊、LINE GO 結帳選擇 LINE Pay 條碼，台新切換【Pay著刷】享 3.8%（切天天刷享 3.3%）！',
+      '【CUBE 3.3% 無上限】國泰 CUBE 切換【趣旅行】，Uber、台灣大車隊、yoxi、Grab 綁卡直刷享 3.3% 小樹點無上限！',
+      '【永豐 DAWAY 3%】出示 LINE Pay 付款，新戶享 3% / 舊戶 1.5% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'transit_car_rental',
+    name: '租車與共享交通 (iRent / 和運租車 / 格上租車)',
+    category: 'travel',
+    icon: '🚗',
+    description: 'iRent 共享汽機車、和運租車、格上租車、GoShare、WeMo 等自駕出行與租車服務',
+    pitfalls: [
+      '【CUBE 3.3% 首選】國泰 CUBE 切換【趣旅行】，指定租車（iRent、和運、格上）享 3.3% 小樹點無上限！',
+      '【台新 3.3%】台新切換【天天刷】（交通出行租車）享 3.3% 台新Point！',
+      '【永豐 SPORT 7% 限門市感應】和運/格上實體門市臨櫃使用 Apple Pay / Google Pay 感應享 7%（$6,000 封頂）；App 內扣款無感應加碼僅 1%~2%。',
+      '【DAWAY】一般消費 1%（若門市支援 LINE Pay 享新戶 3%）。'
+    ]
+  },
+  {
+    id: 'transit_japan_ic',
+    name: '日本交通卡儲值 (Apple 錢包 Suica / PASMO / ICOCA)',
+    category: 'travel',
+    icon: '🍏',
+    description: 'iPhone / Apple Watch「Apple 錢包」直接在線上以信用卡加值 Suica (西瓜卡)、PASMO、ICOCA 日本交通卡',
+    pitfalls: [
+      '【CUBE 日本賞 / 趣旅行 必備神卡】國泰 CUBE 切換【日本賞】加值享 3.5%~8% 小樹點！切換【趣旅行】亦享 3.0% 小樹點無上限！赴日自由行交通首選！',
+      '【台新 3.3%】台新切換【玩旅刷】（Apple 錢包外幣線上加值認列海外消費），享 3.3% 台新Point！',
+      '【永豐 DAWAY 3%】外幣海外消費認列 3% LINE POINTS 無上限！',
+      '【避開永豐 SPORT】線上錢包儲值無法觸發實體感應 +5%，且部分系統不認列為一般消費，僅 1% 甚至 0%！',
+      '【手續費提醒】Apple 錢包加值日本交通卡為日圓外幣交易，會產生 1.5% 海外交易手續費，以 CUBE 或 DAWAY 扣抵後仍倒賺！'
+    ]
+  },
   {
     id: 'travel_overseas',
-    name: '海外實體消費 (日韓旅遊 / 歐美)',
+    name: '海外實體消費 (日韓旅遊 / 歐美 / 東京迪士尼 / USJ)',
     category: 'travel',
     icon: '✈️',
-    description: '國外實體店面外幣消費（需扣 1.5% 國際手續費）',
+    description: '國外實體店面外幣消費、日本三大樂園（東京迪士尼、大阪環球影城、哈利波特影城）、海外飯店現場付款（需扣 1.5% 國際手續費）',
     pitfalls: [
-      '【台新 玩旅刷】台新切換至【玩旅刷】，海外實體與線上消費享 3.3%！',
-      '【CUBE 趣旅行】國泰 CUBE 切換至「趣旅行」或「日本賞」，海外實體享 3%~3.5% 無上限！',
-      '永豐 DAWAY 卡海外消費享最高 3% LINE POINTS。'
+      '【CUBE 趣旅行 / 日本賞 3%~3.5% 無上限】國泰 CUBE 切換【趣旅行】海外實體享 3.0%~3.3% 無上限；若去日本切換【日本賞】精選實體與名店高達 3.5%~8%！大額出國採購精品必備！',
+      '【台新 玩旅刷 3.3%】台新切換【玩旅刷】，海外實體與線上外幣消費享 3.3% 台新Point！',
+      '【永豐 DAWAY 3%】海外外幣消費最高享 3% LINE POINTS 無上限，無腦出國刷卡！',
+      '【永豐 SPORT 7% 限額 $6,000】國外實體店若支援 Apple Pay / Google Pay 感應，達標享最高 7% 豐點，但每月限額 $6,000，超過後請換 CUBE 或台新！',
+      '【⚠️ 避開 DCC 雙幣陷阱】在國外刷卡若店員詢問「要刷台幣還是當地貨幣」，務必堅定回答「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
     ]
   },
   // 一般
@@ -419,126 +690,373 @@ export function calculateExactRewardPoints(amount: number, res: CardRewardResult
   return { points, isCapped: false };
 }
 
-function calculateCubeReward(channelId: string, config: UserCardConfig): CardRewardResult {
-  const scheme = config.cubeScheme;
+function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRewardResult {
   let rate = 0.3; // 基礎回饋
   let isTargetScheme = false;
-  let recommendedScheme: CubeScheme = 'selected';
-  let potentialRate = 3.0;
+  let requiredSchemeName: string | undefined = undefined;
+  let requiredSchemeTag: string | undefined = undefined;
   let details: string[] = ['基本回饋：0.3% 小樹點（無上限）'];
   let warning: string | undefined = undefined;
   let isBlocked = false;
+  let bestPaymentLabel = '實體感應 / Apple Pay';
+  let bestPaymentNote: string | undefined = '一般消費 0.3%';
 
   if (channelId === 'gas_cpc') {
-    recommendedScheme = 'selected';
-    potentialRate = 3.3;
-    if (scheme === 'selected') {
-      rate = 3.3;
-      isTargetScheme = true;
-      details = ['【集精選方案】中油直營消費：3.3% 小樹點（無上限）'];
-    } else {
-      warning = '目前非「集精選」方案，僅有 0.3% 基本回饋！請於 23:59 前切換！';
-    }
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '💳 中油直營門市實體感應 / Apple Pay';
+    bestPaymentNote = '切換至【集精選】方案（限直營站）；當天 23:59 前切換即可';
+    details = [
+      '【集精選方案】中油直營門市消費：3.3% 小樹點（無上限）',
+      '⚠️ 致命避坑：CUBE「集精選」嚴格排除中油加盟站（加盟門市僅享 0.3% 基本回饋）！'
+    ];
+  } else if (channelId === 'gas_formosa' || channelId === 'gas_smile') {
+    rate = 2.0;
+    isTargetScheme = true;
+    requiredSchemeName = '台塑家';
+    requiredSchemeTag = '方案：【台塑家】';
+    bestPaymentLabel = channelId === 'gas_smile'
+      ? '💳 實體感應 / Apple Pay / Google Pay'
+      : '💳 實體感應 / Apple Pay / 台塑石油 Pay';
+    bestPaymentNote = channelId === 'gas_smile'
+      ? '切換至【台塑家】享 2.0% 小樹點無上限 + 汽油天天降價（⚠️ 速邁樂不適用台塑石油Pay與OPEN錢包）'
+      : '切換至【台塑家】享 2.0% 小樹點無上限 + 汽油天天降價；可搭配台塑石油 Pay 累積 F 幣';
+    details = [
+      `【台塑家方案】${channelId === 'gas_smile' ? '統一速邁樂加油站（限本島）' : '福懋 / 台亞 / 台塑加油站'}：2.0% 小樹點（無上限）`,
+      '天天享有汽油每公升降價優惠（自助加油降 1.2 元起，以站點現場公告為準）',
+      channelId === 'gas_smile'
+        ? '⚠️ 速邁樂特別提醒：不支援台塑石油 Pay，且切勿使用 OPEN 錢包或 icash Pay 掃碼付款（第三方電支會排除 2% 回饋）！'
+        : '可搭配綁定「台塑石油 Pay」支付累積台塑 F 幣，享雙重優惠！'
+    ];
+  } else if (channelId === 'gas_national') {
+    rate = 0.3;
+    isTargetScheme = false;
+    bestPaymentLabel = '實體感應 / 插卡';
+    bestPaymentNote = '全國加油站非台塑體系，僅一般消費 0.3%';
+    details = [
+      '⚠️ 全國加油站「未列入」國泰 CUBE「集精選」或「台塑家」加碼名單',
+      'CUBE 加油加碼僅限「中油直營店 (集精選 3.3%)」與「台塑體系/福懋/速邁樂 (台塑家 2%)」',
+      '強烈建議改用永豐 SPORT（Apple Pay 感應 7%）或台新卡（LINE Pay 3.8%）！'
+    ];
+    warning = '⚠️ 全國加油站不在 CUBE 加碼名單中，僅 0.3%！建議改刷 SPORT (7%) 或台新 (3.8%)！';
   } else if (channelId === 'convenience_711' || channelId === 'convenience_family') {
-    recommendedScheme = 'selected';
-    potentialRate = 3.0;
-    if (scheme === 'selected') {
-      rate = 3.0;
-      isTargetScheme = true;
-      details = ['【集精選方案】7-11 / 全家實體感應：3.0% 小樹點（無上限）'];
-    } else {
-      rate = 0.0;
-      isBlocked = true;
-      warning = '⚠️ 超商屬於排除通路！若「未切換至集精選」，直接 0% 回饋！切記於今天切換！';
-      details = ['非集精選方案時，超商列為非一般消費 0% 回饋'];
-    }
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '📱 門市實體感應 / Apple Pay';
+    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限（需於當天 23:59 前切換）';
+    details = [
+      '【集精選方案】7-11 / 全家實體感應：3.0% 小樹點（無上限）',
+      '⚠️ 必須切換至「集精選」方案！若非集精選，超商列為非一般消費直接 0% 排除！'
+    ];
+  } else if (channelId === 'convenience_hilife_ok') {
+    rate = 0.0;
+    isBlocked = true;
+    bestPaymentLabel = '❌ 門市 0% 排除';
+    bestPaymentNote = '萊爾富/OK 未列入集精選名單';
+    details = [
+      '⚠️ 萊爾富與 OK 超商「未列入」國泰 CUBE「集精選」指定加碼名單',
+      '超商門市在國泰信用卡條款中為非一般消費小額排除通路，0% 回饋',
+      '建議改用台新卡（切換【Pay著刷】出示「台新Pay」享 3.8%）！'
+    ];
+    warning = '⚠️ 萊爾富/OK 不在 CUBE 集精選加碼名單中，且為 0% 排除！請改用台新Pay (3.8%)！';
   } else if (channelId === 'supermarket_px') {
-    recommendedScheme = 'selected';
-    potentialRate = 3.0;
-    if (scheme === 'selected') {
-      rate = 3.0;
-      isTargetScheme = true;
-      details = ['【集精選方案】全聯實體刷卡/感應：3.0% 小樹點（無上限）'];
-    } else {
-      rate = 0.0;
-      isBlocked = true;
-      warning = '⚠️ 全聯為非一般消費！若未切換「集精選」，直接 0%！';
-      details = ['非集精選時全聯為 0% 回饋'];
-    }
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '💳 全聯實體刷卡 / 全聯感應';
+    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    details = [
+      '【集精選方案】全聯實體刷卡/感應：3.0% 小樹點（無上限）',
+      '⚠️ 必須切換至「集精選」！全聯在其他方案為非一般消費 0%！'
+    ];
   } else if (channelId === 'supermarket_carrefour') {
-    recommendedScheme = 'selected';
-    potentialRate = 3.0;
-    if (scheme === 'selected') {
-      rate = 3.0;
-      isTargetScheme = true;
-      details = ['【集精選方案】家樂福消費：3.0% 小樹點（無上限）'];
-    } else {
-      warning = '家樂福未切換「集精選」僅享基本回饋 0.3%';
-    }
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '💳 實體刷卡 / Apple Pay 感應';
+    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    details = ['【集精選方案】萬家福消費：3.0% 小樹點（無上限）'];
+  } else if (channelId === 'supermarket_lopia') {
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    details = [
+      '【集精選方案】LOPIA 日系超市消費：3.0% 小樹點（無上限）',
+      '官方正式納入集精選名單，生鮮肉品採買享 3% 無上限！'
+    ];
+  } else if (channelId === 'home_ikea') {
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '💳 門市實體刷卡 / 官網線上刷卡';
+    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    details = [
+      '【集精選方案】IKEA 宜家家居全門市與官網：3.0% 小樹點（無上限）',
+      '涵蓋實體家具賣場、IKEA 餐廳用餐、官網線上購物'
+    ];
+  } else if (channelId === 'ev_charging_parking') {
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】';
+    bestPaymentLabel = '📱 綁定各 App 自動扣款 / 現場感應';
+    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    details = [
+      '【集精選方案】指定智慧出行享 3.0% 小樹點（無上限）',
+      '指定充電站：U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging',
+      '指定智慧停車：車麻吉（不含加油）、uTagGo（不含月租）'
+    ];
   } else if (channelId === 'food_delivery') {
-    recommendedScheme = 'dining';
-    potentialRate = 3.3;
-    if (scheme === 'dining') {
-      rate = 3.3;
-      isTargetScheme = true;
-      details = ['【樂饗購方案】Uber Eats / foodpanda：3.3% 小樹點（無上限）'];
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '樂饗購';
+    requiredSchemeTag = '方案：【樂饗購】';
+    bestPaymentLabel = '💻 線上刷卡 / Apple Pay';
+    bestPaymentNote = '切換至【樂饗購】方案享 3.3% 小樹點無上限';
+    details = ['【樂饗購方案】Uber Eats / foodpanda：3.3% 小樹點（無上限）'];
+  } else if (
+    channelId === 'dining_restaurant' ||
+    channelId === 'dining_hotpot' ||
+    channelId === 'fastfood_mos' ||
+    channelId === 'fastfood_mcdonalds' ||
+    channelId === 'fastfood_kfc' ||
+    channelId === 'drink_chill' ||
+    channelId === 'department_store' ||
+    channelId === 'drugstore_cosmetics'
+  ) {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '樂饗購';
+    requiredSchemeTag = '方案：【樂饗購】';
+    bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+    bestPaymentNote = '切換至【樂饗購】方案享 3.3% 小樹點無上限';
+    if (channelId === 'fastfood_mos') {
+      details = [
+        '【樂饗購方案】摩斯漢堡餐飲消費：3.3% 小樹點（無上限）',
+        '支援門市感應、自助機與 MOS App 線上刷卡'
+      ];
+    } else if (channelId === 'fastfood_mcdonalds') {
+      details = [
+        '【樂饗購方案】麥當勞官方認列餐飲：3.3% 小樹點（無上限）',
+        '支援門市實體感應與麥當勞 APP 手機點餐'
+      ];
+    } else if (channelId === 'fastfood_kfc') {
+      details = [
+        '【樂饗購方案】肯德基/必勝客官方認列：3.3% 小樹點（無上限）',
+        '支援門市實體感應與 PK雙饗卡 App 線上訂餐'
+      ];
+    } else if (channelId === 'drink_chill') {
+      details = [
+        '【樂饗購方案】手搖茶飲與咖啡：3.3% 小樹點（無上限）',
+        '💡 提示：若追求極致回饋，台新卡切換【Chill刷】可享狂暴 10%！'
+      ];
+    } else if (channelId === 'dining_hotpot') {
+      details = [
+        '【樂饗購方案】燒肉火鍋餐廳：3.3% 小樹點（無上限）',
+        '💡 提示：指定名店（詹記、屋馬、碳佐麻里）台新卡切換【Chill刷】可達 10%！'
+      ];
+    } else if (channelId === 'department_store') {
+      details = [
+        '【樂饗購方案】全台指定百貨消費：3.3% 小樹點（無上限）',
+        '涵蓋新光三越、遠東SOGO、遠東百貨、微風廣場、台北101、漢神百貨等',
+        '🔥 週年慶與精品大額採購首選，小樹點回饋無上限！'
+      ];
+    } else if (channelId === 'drugstore_cosmetics') {
+      details = [
+        '【樂饗購方案】指定連鎖藥妝：3.3% 小樹點（無上限）',
+        '涵蓋康是美、屈臣氏、寶雅 POYA、松本清、Tomod\'s、日藥本舖',
+        '醫美節或大額保養品補貨首選，小樹點回饋無上限！'
+      ];
     } else {
-      warning = '目前非「樂饗購」方案，僅 0.3%！建議今天切換至樂饗購享 3.3%！';
+      details = ['【樂饗購方案】國內餐飲實體消費：3.3% 小樹點（無上限）'];
     }
-  } else if (channelId === 'dining_restaurant' || channelId === 'dining_hotpot' || channelId === 'fastfood_mos' || channelId === 'fastfood_mcdonalds' || channelId === 'fastfood_kfc') {
-    recommendedScheme = 'dining';
-    potentialRate = 3.3;
-    if (scheme === 'dining') {
-      rate = 3.3;
-      isTargetScheme = true;
-      if (channelId === 'fastfood_mos') {
-        details = ['【樂饗購方案】摩斯漢堡餐飲消費：3.3% 小樹點（無上限）', '支援門市感應、自助機與 MOS App 線上刷卡'];
-      } else if (channelId === 'fastfood_mcdonalds') {
-        details = ['【樂饗購方案】麥當勞官方認列餐飲：3.3% 小樹點（無上限）', '支援門市實體感應與麥當勞 APP 手機點餐'];
-      } else if (channelId === 'fastfood_kfc') {
-        details = ['【樂饗購方案】肯德基/必勝客官方認列：3.3% 小樹點（無上限）', '支援門市實體感應與 PK雙饗卡 App 線上訂餐'];
-      } else {
-        details = ['【樂饗購方案】國內餐飲實體消費：3.3% 小樹點（無上限）'];
-      }
-    } else {
-      warning = channelId === 'fastfood_mcdonalds'
-        ? '麥當勞消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！'
-        : channelId === 'fastfood_kfc'
-          ? '肯德基消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！'
-          : channelId === 'fastfood_mos'
-            ? '摩斯漢堡消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！'
-            : '聚餐消費建議切換至「樂饗購」，可享 3.3% 小樹點無上限！';
-    }
-  } else if (channelId === 'online_shopee_momo' || channelId === 'online_coupang') {
-    recommendedScheme = 'digital';
-    potentialRate = 3.3;
-    if (scheme === 'digital') {
-      rate = 3.3;
-      isTargetScheme = true;
-      details = ['【玩數位方案】各大綜合電商消費：3.3% 小樹點（無上限）'];
-    } else {
-      warning = '網購電商建議切換至「玩數位」，可享 3.3% 小樹點無上限！';
-    }
+  } else if (
+    channelId === 'online_shopee_momo' ||
+    channelId === 'online_shopee' ||
+    channelId === 'online_momo' ||
+    channelId === 'online_pchome' ||
+    channelId === 'online_coupang'
+  ) {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '玩數位';
+    requiredSchemeTag = '方案：【玩數位】';
+    const mallName =
+      channelId === 'online_shopee'
+        ? '蝦皮購物'
+        : channelId === 'online_momo'
+          ? 'momo 購物網'
+          : channelId === 'online_pchome'
+            ? 'PChome 24h 購物'
+            : channelId === 'online_coupang'
+              ? '酷澎 Coupang'
+              : '各大綜合電商';
+    bestPaymentLabel = '💻 線上直接輸入卡號一次付清';
+    bestPaymentNote = '切換至【玩數位】享 3.3% 小樹點無上限；⚠️ 勿分期、勿買儲值卡、勿走第三方支付';
+    details = [
+      `【玩數位方案】${mallName}消費：3.3% 小樹點（無上限）`,
+      '✅ 官方指定加碼通路，大額採購不封頂！',
+      '⚠️ 避坑提醒：必須「直接輸入卡號一次付清」；若辦理分期付款、購買儲值金/禮券，或走第三方支付（LINE Pay/街口），將降為 0.3%！'
+    ];
+  } else if (channelId === 'online_taobao') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '玩數位';
+    requiredSchemeTag = '方案：【玩數位】';
+    bestPaymentLabel = '💻 淘寶 App 線上刷卡一次付清';
+    bestPaymentNote = '切換至【玩數位】享 3.3% 小樹點無上限';
+    details = [
+      '【玩數位方案】淘寶/天貓購物：3.3% 小樹點（無上限）',
+      '淘寶 App 跨境刷卡享 3.3% 小樹點無上限，可抵扣 1.5% 跨境手續費！'
+    ];
+  } else if (channelId === 'streaming_media') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '玩數位';
+    requiredSchemeTag = '方案：【玩數位】';
+    bestPaymentLabel = '💻 線上刷卡設定續訂';
+    bestPaymentNote = '切換至【玩數位】享 3.3% 小樹點無上限；💡 台新Chill刷最高享10%';
+    details = [
+      '【玩數位方案】指定串流娛樂：3.3% 小樹點（無上限）',
+      '涵蓋 Netflix、Disney+、Spotify、YouTube Premium、Max 等',
+      '💡 提示：若追求極致回饋，台新卡切換【Chill刷】可享狂暴 10%！'
+    ];
+  } else if (channelId === 'digital_stores') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '玩數位';
+    requiredSchemeTag = '方案：【玩數位】';
+    bestPaymentLabel = '📱 綁定 Apple ID 或 Google 帳戶線上扣款';
+    bestPaymentNote = '切換至【玩數位】享 3.3% 小樹點無上限';
+    details = [
+      '【玩數位方案】Apple 媒體服務與 Google Play：3.3% 小樹點（無上限）',
+      '涵蓋 App Store 手遊課金、Apple Music、iCloud、Apple One、Google Play',
+      '⚠️ 避坑提醒：僅限線上數位內容/應用程式/雲端；Apple 實體店及官網購買硬體設備不列入！'
+    ];
+  } else if (channelId === 'ai_software') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '玩數位';
+    requiredSchemeTag = '方案：【玩數位】';
+    bestPaymentLabel = '💻 AI 工具官網線上刷卡';
+    bestPaymentNote = '切換至【玩數位】享 3.3% 小樹點無上限';
+    details = [
+      '【玩數位方案】指定 AI 服務與軟體雲端：3.3% 小樹點（無上限）',
+      '涵蓋 ChatGPT (OpenAI)、Claude、Cursor、Perplexity、Notion、Canva、Duolingo 等',
+      '🔥 國泰官方指定加碼通路，大額/年繳訂閱回饋不封頂！'
+    ];
+  } else if (channelId === 'transit_rail') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '🚄 高鐵官網 / T-EX App / 車站售票機實體感應';
+    bestPaymentNote = '切換至【趣旅行】享高鐵 3.3% 小樹點無上限；⚠️ 台鐵僅 0.3%';
+    details = [
+      '【趣旅行方案】台灣高鐵購票：3.3% 小樹點（無上限）',
+      '涵蓋高鐵官網、T-EX 行動購票 App、高鐵車站售票窗口與自動售票機',
+      '⚠️ 重大地雷提醒：台鐵火車「不屬於」趣旅行加碼通路，刷台鐵僅享一般消費 0.3%！刷台鐵請改用台新卡（天天刷 3.3%~3.8%）！'
+    ];
+    warning = '⚠️ 僅「台灣高鐵」享 3.3%！「台鐵（火車）」不在加碼名單中，刷 CUBE 僅有 0.3%！';
+  } else if (channelId === 'travel_airlines') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '✈️ 航空公司官網 / App 線上刷卡（務必一次付清）';
+    bestPaymentNote = '切換至【趣旅行】享 3.3% 小樹點無上限；⚠️ 切勿辦理分期';
+    details = [
+      '【趣旅行方案】指定航空公司購票：3.3% 小樹點（無上限）',
+      '涵蓋國籍航空（華航、長榮、星宇、台灣虎航、國泰航空）與外籍/廉航（日航、全日空、酷航、樂桃、捷星等）官網直購',
+      '⚠️ 避坑提醒：機票結帳「切勿選擇分期付款」！分期（含 0 利率促銷）將直接被排除加碼降為 0.3% 一般消費！'
+    ];
+  } else if (channelId === 'travel_booking_ota') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '🏨 訂房網 / Klook 線上信用卡結帳（選外幣 / 一次付清）';
+    bestPaymentNote = '切換至【趣旅行】享 3.3% 小樹點無上限；可搭配國泰 Agoda 專屬折扣';
+    details = [
+      '【趣旅行方案】指定訂房與票券平台：3.3% 小樹點（無上限）',
+      '涵蓋 Agoda、Booking.com、Trip.com、Airbnb、Hotels.com、Expedia、Klook、KKday 等',
+      '💡 疊加優惠：透過國泰專屬 Agoda 連結常享額外 7%~10% 現折優惠！',
+      '⚠️ 避坑提醒：訂房請選擇線上預付與外幣計價，避開現場到店付款與 DCC 動態貨幣轉換；且切勿分期（分期降為 0.3%）！'
+    ];
+  } else if (channelId === 'travel_agencies') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '🗺️ 旅行社官網或直營門市刷卡（務必一次付清）';
+    bestPaymentNote = '切換至【趣旅行】享 3.3% 小樹點無上限；⚠️ 切勿辦理分期';
+    details = [
+      '【趣旅行方案】指定知名旅行社：3.3% 小樹點（無上限）',
+      '涵蓋雄獅旅遊、可樂旅遊、易遊網 ezTravel、東南旅遊、五福旅遊、燦星旅遊、山富旅遊等直營通路',
+      '🔥 大額團費首選：數萬至數十萬團費全額享 3.3% 小樹點，回饋完全不封頂！',
+      '⚠️ 避坑提醒：切勿辦理 3 期 / 6 期等 0 利率分期付款！辦理分期直接降為 0.3%！'
+    ];
+  } else if (channelId === 'transit_taxi') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '🚕 Uber / yoxi / 台灣大車隊 綁卡直刷或 Apple Pay';
+    bestPaymentNote = '切換至【趣旅行】享 3.3% 小樹點無上限';
+    details = [
+      '【趣旅行方案】指定計程車與叫車：3.3% 小樹點（無上限）',
+      '涵蓋 Uber、yoxi、台灣大車隊 (55688)、Grab 叫車服務',
+      '💡 若搭乘台灣大車隊，車上實體機使用永豐 SPORT 感應最高享 7%（$6,000 封頂）！'
+    ];
+  } else if (channelId === 'transit_car_rental') {
+    rate = 3.3;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '🚗 iRent App 綁卡 / 和運與格上門市實體刷卡';
+    bestPaymentNote = '切換至【趣旅行】享 3.3% 小樹點無上限';
+    details = [
+      '【趣旅行方案】指定租車與共享運具：3.3% 小樹點（無上限）',
+      '涵蓋 iRent、和運租車、格上租車',
+      '⚠️ 注意：門市刷卡請勿分期，一次付清享 3.3% 無上限！'
+    ];
+  } else if (channelId === 'transit_japan_ic') {
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行 / 日本賞';
+    requiredSchemeTag = '方案：【趣旅行 / 日本賞】';
+    bestPaymentLabel = '🍏 iPhone Apple 錢包直接線上加值';
+    bestPaymentNote = '切換至【趣旅行】享 3.0% / 切換【日本賞】享 3.5%~8% 小樹點無上限';
+    details = [
+      '【趣旅行方案】Apple 錢包加值日本交通卡：3.0% 小樹點（無上限）',
+      '【日本賞方案】加碼可達 3.5%~8% 小樹點！日本自由行最強交通神操作！',
+      '涵蓋 Apple 錢包內的 Suica（西瓜卡）、PASMO、ICOCA 線上直接儲值',
+      '💡 屬於日圓外幣線上交易（需 1.5% 手續費），扣除後仍倒賺！'
+    ];
   } else if (channelId === 'travel_overseas') {
-    recommendedScheme = 'travel';
-    potentialRate = 3.0;
-    if (scheme === 'travel') {
-      rate = 3.0;
-      isTargetScheme = true;
-      details = ['【趣旅行方案】海外實體外幣消費：3.0% 小樹點（無上限）'];
-    } else {
-      warning = '出國刷卡請切換至「趣旅行」或當期海外賞方案。';
-    }
+    rate = 3.0;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行 / 日本賞';
+    requiredSchemeTag = '方案：【趣旅行 / 日本賞】';
+    bestPaymentLabel = '✈️ 海外實體感應 / 插卡外幣消費（選當地貨幣）';
+    bestPaymentNote = '切換至【趣旅行】享 3.0%~3.3% / 日本實體切【日本賞】最高 3.5%~8%';
+    details = [
+      '【趣旅行方案】全球海外實體外幣消費：3.0%~3.3% 小樹點（無上限）',
+      '涵蓋海外當地餐廳、百貨精品、實體飯店，以及日本三大樂園（東京迪士尼、大阪環球影城、哈利波特影城）',
+      '💡 日本當地精選名店建議切換【日本賞】可享 3.5%~8% 更高回饋！',
+      '⚠️ 避坑提醒：在國外刷卡請務必選擇「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
+    ];
   }
-
-  const schemeSuggestion = (!isTargetScheme && potentialRate > rate) ? {
-    cardName: '國泰 CUBE 卡',
-    schemeType: 'cube' as const,
-    recommendedScheme: CUBE_SCHEME_LABELS[recommendedScheme].name,
-    recommendedSchemeKey: recommendedScheme,
-    potentialRate,
-    difference: Number((potentialRate - rate).toFixed(1))
-  } : undefined;
 
   return {
     cardId: 'cube',
@@ -546,15 +1064,25 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     cardColor: 'from-amber-500 to-yellow-600',
     rewardRate: rate,
     rewardType: '小樹點',
+    requiredSchemeName,
+    requiredSchemeTag,
     bestPaymentMethod: {
-      method: (channelId === 'food_delivery' || channelId.startsWith('online')) ? 'online' : 'physical',
-      label: (channelId === 'food_delivery' || channelId.startsWith('online')) ? '線上刷卡 / Apple Pay' : '實體感應 / Apple Pay',
-      note: '當天 23:59 前切換方案即可適用全日消費'
+      method: (
+        channelId === 'food_delivery' ||
+        channelId.startsWith('online') ||
+        channelId === 'streaming_media' ||
+        channelId === 'digital_stores' ||
+        channelId === 'ai_software' ||
+        channelId === 'travel_airlines' ||
+        channelId === 'travel_booking_ota' ||
+        channelId === 'transit_japan_ic'
+      ) ? 'online' : 'physical',
+      label: bestPaymentLabel,
+      note: bestPaymentNote
     },
     details,
     capWarning: isTargetScheme ? '✅ 本通路回饋無上限！' : undefined,
     isSchemeDependent: true,
-    schemeSuggestion,
     warning,
     isBlocked
   };
@@ -562,576 +1090,439 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
 
 function calculateTaishinReward(channelId: string, config: UserCardConfig): CardRewardResult {
   const isLinked = config.gogoRichartLinked;
-  const currentScheme = config.taishinScheme;
   const baseRate = isLinked ? 0.5 : 0.3;
 
-  // 1. 加油情境 (中油 / 全國)
+  // 1. 加油情境 (中油直營/加盟 / 全國)
   if (channelId === 'gas_cpc' || channelId === 'gas_national') {
-    if (currentScheme === 'daily' || currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 出示 LINE Pay 或 台新Pay 掃碼付款',
-          note: currentScheme === 'daily' ? '【天天刷】加油充電享 3.8%' : '【Pay著刷】行動支付享 3.8%'
-        },
-        details: [
-          `【${TAISHIN_SCHEME_LABELS[currentScheme].name}】加油消費：${isLinked ? 3.8 : baseRate}% 台新Point`,
-          '需綁定 Richart / 台新帳戶自動扣繳',
-          '每期帳單精選加碼上限 1,000 點（折合月刷約 $30,303 封頂）'
-        ],
-        capWarning: '每期帳單加碼上限 1,000 點 (月刷約 $30,303 封頂)',
-        isSchemeDependent: true
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 建議切換至【天天刷】或【Pay著刷】',
-          note: '目前方案加油僅一般消費'
-        },
-        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】方案非加油加碼，僅享一般消費 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: '天天刷',
-          recommendedSchemeKey: 'daily',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: Number((3.8 - baseRate).toFixed(1))
-        },
-        warning: `目前為「${TAISHIN_SCHEME_LABELS[currentScheme].name}」，加油僅 ${baseRate}%！切換至「天天刷」享 3.8%！`
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷 / Pay著刷',
+      requiredSchemeTag: '方案：【天天刷 / Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 出示 LINE Pay / 中油Pay / 台新Pay 掃碼付款',
+        note: '切換至【天天刷】或【Pay著刷】加油享 3.8%'
+      },
+      details: [
+        `【天天刷 / Pay著刷】加油消費：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '需綁定 Richart / 台新帳戶自動扣繳',
+        '中油（直營與加盟皆可）與全國加油站皆享 3.8%',
+        '每期帳單精選加碼上限 1,000 點（折合月刷約 $30,303 封頂）'
+      ],
+      capWarning: '每期帳單加碼上限 1,000 點 (月刷約 $30,303 封頂)',
+      isSchemeDependent: true
+    };
+  }
+
+  // 1.1 福懋加油站 (台塑體系) - 台新天天刷僅限台亞直營，福懋未列入加碼
+  if (channelId === 'gas_formosa') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: baseRate,
+      rewardType: '台新Point',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '實體感應 / 插卡',
+        note: '福懋未列入天天刷指定加油名單，僅一般消費'
+      },
+      details: [
+        `一般消費基本回饋：${baseRate}% 台新Point`,
+        '⚠️ 台新「天天刷」加油加碼僅限中油直營、全國加油站、台亞直營店；福懋加油站不在天天刷加碼名單中！',
+        '💡 建議改刷：永豐 SPORT（Apple Pay 感應 7%）或國泰 CUBE（【台塑家】2% + 汽油天天降價）！'
+      ],
+      warning: '⚠️ 福懋加油站不在台新天天刷加碼名單中，僅 0.3%~0.5%！建議改刷 SPORT (7%) 或 CUBE 台塑家 (2%+降價)！'
+    };
+  }
+
+  // 1.2 速邁樂加油站 (統一精工) - 台新未列入指定名單
+  if (channelId === 'gas_smile') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: baseRate,
+      rewardType: '台新Point',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '實體感應 / 插卡',
+        note: '速邁樂未列入天天刷名單，僅一般消費'
+      },
+      details: [
+        `一般消費基本回饋：${baseRate}% 台新Point`,
+        '⚠️ 速邁樂加油中心未列入台新「天天刷」指定名單中，實體刷卡僅享基本回饋',
+        '💡 建議改刷：永豐 SPORT（Apple Pay 感應 7% 首選）或國泰 CUBE（【台塑家】2% + 降價）！'
+      ],
+      warning: '⚠️ 速邁樂未列入台新天天刷加碼名單中，僅 0.3%~0.5%！建議改刷 SPORT (7%) 或 CUBE 台塑家 (2%+降價)！'
+    };
   }
 
   // 2. 超商情境 (7-11 與 全家)
   if (channelId === 'convenience_711' || channelId === 'convenience_family') {
-    if (currentScheme === 'pay' || currentScheme === 'daily') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'taishin_pay',
-          label: '📱 必須使用「台新Pay」掃碼結帳',
-          note: `【${TAISHIN_SCHEME_LABELS[currentScheme].name}】7-11與全家限台新Pay！單筆限額 NT$3,000，實體感應直接 0%！`
-        },
-        details: [
-          `【${TAISHIN_SCHEME_LABELS[currentScheme].name}】超商綁定「台新Pay」掃碼：${isLinked ? 3.8 : baseRate}% 台新Point`,
-          '超商門市單筆限額最高 NT$3,000',
-          '需綁定 Richart / 台新帳戶自動扣繳',
-          '⚠️ 實體卡感應或一般刷卡為 0% 排除！代收稅費、悠遊儲值不回饋'
-        ],
-        capWarning: '超商限台新Pay，單筆限額 NT$3,000',
-        isSchemeDependent: true
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: 0.0,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'taishin_pay',
-          label: '📱 切換至【Pay著刷】或【天天刷】並用台新Pay',
-          note: `目前為「${TAISHIN_SCHEME_LABELS[currentScheme].name}」，超商 0%`
-        },
-        details: [
-          `目前台新設定為【${TAISHIN_SCHEME_LABELS[currentScheme].name}】，超商非指定通路為 0% 回饋`,
-          '若切換為【Pay著刷】或【天天刷】，打開台新Pay掃碼即可享 3.8% 回饋！'
-        ],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Pay著刷',
-          recommendedSchemeKey: 'pay',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: isLinked ? 3.8 : baseRate
-        },
-        warning: `⚠️ 目前為「${TAISHIN_SCHEME_LABELS[currentScheme].name}」，超商直接 0%！切換至「Pay著刷」或「天天刷」並出示台新Pay即可拿 3.8%！`,
-        isBlocked: true
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷 / 天天刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 天天刷】',
+      bestPaymentMethod: {
+        method: 'taishin_pay',
+        label: '📱 必須使用「台新Pay」掃碼結帳',
+        note: '切換至【Pay著刷】或【天天刷】出示台新Pay！單筆限額 NT$3,000，實體感應直接 0%！'
+      },
+      details: [
+        `【Pay著刷 / 天天刷】超商綁定「台新Pay」掃碼：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '超商門市單筆限額最高 NT$3,000',
+        '需綁定 Richart / 台新帳戶自動扣繳',
+        '⚠️ 實體卡感應或一般刷卡為 0% 排除！代收稅費、悠遊儲值不回饋'
+      ],
+      capWarning: '超商限台新Pay，單筆限額 NT$3,000',
+      isSchemeDependent: true
+    };
   }
 
   // 3. 萊爾富 / OK 超商
   if (channelId === 'convenience_hilife_ok') {
-    if (currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'taishin_pay',
-          label: '📱 必須使用「台新Pay」掃碼結帳',
-          note: '【Pay著刷】四大超商通吃台新Pay 3.8%！'
-        },
-        details: [
-          '【Pay著刷】四大超商綁台新Pay享 3.8% 台新Point',
-          '超商單筆上限 NT$3,000'
-        ],
-        capWarning: '超商限台新Pay，單筆限額 NT$3,000'
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: 0.0,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'taishin_pay',
-          label: '📱 切換至【Pay著刷】用台新Pay',
-          note: '萊爾富/OK 僅【Pay著刷】加碼'
-        },
-        details: ['萊爾富/OK 需切換至【Pay著刷】綁台新Pay才享 3.8%'],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Pay著刷',
-          recommendedSchemeKey: 'pay',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: isLinked ? 3.8 : baseRate
-        },
-        warning: '萊爾富/OK 請切換至【Pay著刷】使用台新Pay掃碼，或使用永豐 SPORT 感應 7%！',
-        isBlocked: true
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'taishin_pay',
+        label: '📱 必須使用「台新Pay」掃碼結帳',
+        note: '切換至【Pay著刷】四大超商通吃台新Pay 3.8%！'
+      },
+      details: [
+        `【Pay著刷】四大超商綁台新Pay享 ${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '萊爾富與 OK 超商需切換至【Pay著刷】',
+        '超商單筆上限 NT$3,000'
+      ],
+      capWarning: '超商限台新Pay，單筆限額 NT$3,000',
+      isSchemeDependent: true
+    };
   }
 
   // 4. 手搖飲 / 咖啡名店 (50嵐/得正/CAFE!N)
   if (channelId === 'drink_chill') {
-    if (currentScheme === 'chill') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 10.0 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '📱 實體感應 / Apple Pay / LINE Pay 皆可',
-          note: '【Chill刷神方案】指定手搖飲與咖啡享狂暴 10% 回饋！'
-        },
-        details: [
-          '【Chill刷方案】50嵐、得正、CAFE!N、五桐號、龜記等享 10% 台新Point！',
-          '需綁定 Richart 自動扣繳'
-        ],
-        capWarning: 'Chill刷每月有指定加碼上限'
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '📱 切換至【Chill刷】',
-          note: '切換即享 10% 回饋'
-        },
-        details: [`目前為「${TAISHIN_SCHEME_LABELS[currentScheme].name}」，手搖飲僅 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Chill刷',
-          recommendedSchemeKey: 'chill',
-          potentialRate: isLinked ? 10.0 : baseRate,
-          difference: Number((10.0 - baseRate).toFixed(1))
-        },
-        warning: '🔥 買手搖咖啡強烈建議切換至【Chill刷】，回饋直接衝上 10%！'
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 10.0 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Chill刷',
+      requiredSchemeTag: '方案：【Chill刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '📱 實體感應 / Apple Pay / LINE Pay 皆可',
+        note: '【Chill刷神方案】指定手搖飲與咖啡享狂暴 10% 回饋！'
+      },
+      details: [
+        `【Chill刷方案】50嵐、得正、CAFE!N、五桐號、龜記等享 ${isLinked ? 10 : baseRate}% 台新Point！`,
+        '需綁定 Richart 自動扣繳'
+      ],
+      capWarning: 'Chill刷每月有指定加碼上限',
+      isSchemeDependent: true
+    };
   }
 
   // 5. 燒肉火鍋名店 (詹記/屋馬/碳佐麻里)
   if (channelId === 'dining_hotpot') {
-    if (currentScheme === 'chill') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 10.0 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '💳 實體刷卡或 Apple/Samsung Pay 感應',
-          note: '【Chill刷名店】詹記、屋馬、碳佐麻里享 10%！'
-        },
-        details: [
-          '【Chill刷方案】微醺聚會指定燒肉火鍋享 10% 台新Point！',
-          '需綁定 Richart 自動扣繳'
-        ]
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: currentScheme === 'dining' ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '切換至【Chill刷】拿 10%',
-          note: '名店專屬加碼'
-        },
-        details: [
-          currentScheme === 'dining' ? '【好饗刷】享全台餐飲 3.3%' : `目前方案僅 ${baseRate}%`,
-          '若切換為【Chill刷】，指定名店（詹記/屋馬）可享最高 10%！'
-        ],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Chill刷',
-          recommendedSchemeKey: 'chill',
-          potentialRate: 10.0,
-          difference: Number((10.0 - (currentScheme === 'dining' ? 3.3 : baseRate)).toFixed(1))
-        }
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 10.0 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Chill刷',
+      requiredSchemeTag: '方案：【Chill刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【Chill刷名店】詹記、屋馬、碳佐麻里享 10%！'
+      },
+      details: [
+        `【Chill刷方案】微醺聚會指定燒肉火鍋享 ${isLinked ? 10 : baseRate}% 台新Point！`,
+        '需綁定 Richart 自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
   }
 
   // 6. 外送 (Uber Eats / foodpanda)
   if (channelId === 'food_delivery') {
-    if (currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 外送結帳選擇 LINE Pay 付款',
-          note: '【Pay著刷】LINE Pay 享 3.8%'
-        },
-        details: ['【Pay著刷】外送選擇 LINE Pay 付款：3.8% 台新Point']
-      };
-    } else if (currentScheme === 'dining') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'online',
-          label: '線上刷卡直接輸入卡號',
-          note: '【好饗刷】外送享 3.3%'
-        },
-        details: ['【好饗刷】外送平台消費：3.3% 台新Point']
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '建議切換至【好饗刷】或【Pay著刷】',
-          note: '目前僅一般消費'
-        },
-        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】方案外送僅 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Pay著刷',
-          recommendedSchemeKey: 'pay',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: Number((3.8 - baseRate).toFixed(1))
-        }
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 外送結帳選擇 LINE Pay 付款',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷】外送選擇 LINE Pay 付款：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '若走卡號線上刷卡可切換【好饗刷】享 3.3%'
+      ],
+      isSchemeDependent: true
+    };
   }
 
   // 6.5. 摩斯漢堡 MOS Burger
   if (channelId === 'fastfood_mos') {
-    if (currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 門市櫃台出示 LINE Pay 條碼結帳',
-          note: '【Pay著刷】LINE Pay 享 3.8%（可避開百貨美食街門市餐飲排除）'
-        },
-        details: [
-          '【Pay著刷】門市出示 LINE Pay 條碼結帳：3.8% 台新Point',
-          '走 LINE Pay 掃碼可避開部分百貨商場門市餐飲排除'
-        ]
-      };
-    } else if (currentScheme === 'dining') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'apple_pay',
-          label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
-          note: '【好饗刷】餐飲享 3.3%'
-        },
-        details: [
-          '【好饗刷】摩斯漢堡餐飲消費：3.3% 台新Point',
-          '⚠️ 若為百貨公司/美食街/車站內之門市，實體刷卡可能被歸類為百貨排除'
-        ]
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '建議切換至【Pay著刷】(3.8%) 或【好饗刷】(3.3%)',
-          note: '目前僅一般消費'
-        },
-        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】摩斯僅 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Pay著刷',
-          recommendedSchemeKey: 'pay',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: Number((3.8 - baseRate).toFixed(1))
-        },
-        warning: '摩斯漢堡建議切換至【Pay著刷】出示 LINE Pay 拿 3.8%！'
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市櫃台出示 LINE Pay 條碼結帳',
+        note: '【Pay著刷】LINE Pay 享 3.8%（可避開百貨美食街門市餐飲排除）'
+      },
+      details: [
+        `【Pay著刷】門市出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '走 LINE Pay 掃碼可避開部分百貨商場門市餐飲排除；實體刷卡切【好饗刷】享 3.3%'
+      ],
+      isSchemeDependent: true
+    };
   }
 
   // 6.6. 麥當勞 McDonald's
   if (channelId === 'fastfood_mcdonalds') {
-    if (currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 門市櫃台/自助機出示 LINE Pay 條碼結帳',
-          note: '【Pay著刷】出示 LINE Pay 享 3.8%（破解小額支付 0% 地雷）'
-        },
-        details: [
-          '【Pay著刷】出示 LINE Pay 條碼掃碼結帳：3.8% 台新Point',
-          '🔥 走 LINE Pay 掃碼可成功繞過 NCCC 小額支付 0% 排除！',
-          '⚠️ 千萬不要拿台新實體卡直接感應或插卡（直接 0% 排除）'
-        ]
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: 0.0,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 請切換至【Pay著刷】並出示 LINE Pay 條碼',
-          note: '麥當勞實體刷卡走小額支付為 0% 排除'
-        },
-        details: [
-          '麥當勞櫃台刷卡機屬於小額支付平台，實體刷卡直接為 0% 排除',
-          '若切換至【Pay著刷】並出示「LINE Pay 條碼」掃碼，即可享 3.8% 回饋！'
-        ],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Pay著刷',
-          recommendedSchemeKey: 'pay',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: isLinked ? 3.8 : baseRate
-        },
-        warning: '⚠️ 麥當勞實體刷卡為小額支付 0% 排除！請切換至【Pay著刷】出示 LINE Pay 條碼結帳拿 3.8%！',
-        isBlocked: true
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市櫃台/自助機出示 LINE Pay 條碼結帳',
+        note: '【Pay著刷】出示 LINE Pay 享 3.8%（破解小額支付 0% 地雷）'
+      },
+      details: [
+        `【Pay著刷】出示 LINE Pay 條碼掃碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '🔥 走 LINE Pay 掃碼可成功繞過 NCCC 小額支付 0% 排除！',
+        '⚠️ 千萬不要拿台新實體卡直接感應或插卡（直接 0% 排除）'
+      ],
+      isSchemeDependent: true
+    };
   }
 
   // 6.7. 肯德基 KFC / 必勝客
   if (channelId === 'fastfood_kfc') {
-    if (currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 門市或線上訂餐出示 LINE Pay 條碼結帳',
-          note: '【Pay著刷】LINE Pay 享 3.8%'
-        },
-        details: [
-          '【Pay著刷】出示 LINE Pay 條碼結帳：3.8% 台新Point',
-          '支援肯德基門市現場與 PK雙饗卡線上訂餐'
-        ]
-      };
-    } else if (currentScheme === 'dining') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'apple_pay',
-          label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
-          note: '【好饗刷】餐飲享 3.3%'
-        },
-        details: [
-          '【好饗刷】肯德基餐飲消費：3.3% 台新Point',
-          '⚠️ 若位於百貨美食街櫃位，建議走 LINE Pay 避開百貨排除'
-        ]
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '建議切換至【Pay著刷】(3.8%) 或【好饗刷】(3.3%)',
-          note: '目前僅一般消費'
-        },
-        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】肯德基僅 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: 'Pay著刷',
-          recommendedSchemeKey: 'pay',
-          potentialRate: isLinked ? 3.8 : baseRate,
-          difference: Number((3.8 - baseRate).toFixed(1))
-        },
-        warning: '肯德基建議切換至【Pay著刷】出示 LINE Pay 拿 3.8%！'
-      };
-    }
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市或線上訂餐出示 LINE Pay 條碼結帳',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷】出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '支援肯德基門市現場與 PK雙饗卡線上訂餐；實體感應切【好饗刷】享 3.3%'
+      ],
+      isSchemeDependent: true
+    };
   }
 
-  // 7. 網購 (蝦皮 / momo / 酷澎)
-  if (channelId === 'online_shopee_momo' || channelId === 'online_coupang') {
-    if (currentScheme === 'digital') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'online',
-          label: '💻 線上刷卡直接輸卡號',
-          note: '【數趣刷】綜合電商享 3.3%'
-        },
-        details: ['【數趣刷】各大綜合電商消費：3.3% 台新Point']
-      };
-    } else if (currentScheme === 'pay') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.8 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'line_pay',
-          label: '📱 網購結帳選擇 LINE Pay 付款',
-          note: '【Pay著刷】LINE Pay 享 3.8%'
-        },
-        details: ['【Pay著刷】若走 LINE Pay 結帳享 3.8% 台新Point']
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'online',
-          label: '建議切換至【數趣刷】或【Pay著刷】',
-          note: '目前僅一般消費'
-        },
-        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】網購僅 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: '數趣刷',
-          recommendedSchemeKey: 'digital',
-          potentialRate: isLinked ? 3.3 : baseRate,
-          difference: Number((3.3 - baseRate).toFixed(1))
-        }
-      };
-    }
+  // 7. 蝦皮購物
+  if (channelId === 'online_shopee') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '數趣刷',
+      requiredSchemeTag: '方案：【數趣刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 線上刷卡直接輸卡號',
+        note: '【數趣刷】蝦皮購物享 3.3%（蝦皮多數訂單不支援 LINE Pay）'
+      },
+      details: [
+        `【數趣刷】蝦皮購物刷卡：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '⚠️ 蝦皮大部分訂單不支援 LINE Pay，切換【數趣刷】直接輸入卡號最划算！'
+      ],
+      isSchemeDependent: true
+    };
   }
 
-  // 8. 海外實體
-  if (channelId === 'travel_overseas') {
-    if (currentScheme === 'travel') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '✈️ 海外實體感應 / 插卡',
-          note: '【玩旅刷】海外消費 3.3%'
-        },
-        details: ['【玩旅刷】海外實體與線上外幣消費：3.3% 台新Point']
-      };
-    } else {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '建議切換至【玩旅刷】',
-          note: '海外必切'
-        },
-        details: [`目前【${TAISHIN_SCHEME_LABELS[currentScheme].name}】海外僅 ${baseRate}%`],
-        schemeSuggestion: {
-          cardName: '台新卡',
-          schemeType: 'taishin',
-          recommendedScheme: '玩旅刷',
-          recommendedSchemeKey: 'travel',
-          potentialRate: isLinked ? 3.3 : baseRate,
-          difference: Number((3.3 - baseRate).toFixed(1))
-        }
-      };
-    }
+  // 7.5. momo / PChome / 酷澎
+  if (channelId === 'online_momo' || channelId === 'online_pchome' || channelId === 'online_coupang') {
+    const platformName = channelId === 'online_momo' ? 'momo 購物網' : channelId === 'online_pchome' ? 'PChome 24h' : '酷澎 Coupang';
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 結帳付款方式選擇 LINE Pay',
+        note: `【Pay著刷】${platformName} 走 LINE Pay 享 3.8%`
+      },
+      details: [
+        `【Pay著刷】${platformName} 結帳選 LINE Pay：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `🔥 ${platformName} 支援 LINE Pay 結帳，享台新最高 3.8% 加碼！`,
+        '💡 建議小額優先用台新走 LINE Pay 享 3.8%；超過 3 萬大額採購可改刷 CUBE 玩數位 3.3% 無上限！'
+      ],
+      capWarning: '每期帳單加碼上限 1,000 點 (月刷約 $30,303 封頂)',
+      isSchemeDependent: true
+    };
   }
 
-  // 9. 全聯門市 (排除)
+  // 7.6. 綜合電商
+  if (channelId === 'online_shopee_momo') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 網購結帳選擇 LINE Pay 付款',
+        note: '【Pay著刷】LINE Pay 享 3.8%（無 LINE Pay 時切【數趣刷】直接刷卡享 3.3%）'
+      },
+      details: [
+        `【Pay著刷】若走 LINE Pay 結帳享 ${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '若電商不支援 LINE Pay，切換為【數趣刷】直接刷卡享 3.3%'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 7.7. 淘寶 / 天貓
+  if (channelId === 'online_taobao') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '數趣刷',
+      requiredSchemeTag: '方案：【數趣刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 淘寶 App 線上刷卡直接輸卡號',
+        note: '【數趣刷】淘寶/天貓享 3.3%'
+      },
+      details: [
+        `【數趣刷方案】淘寶天貓跨境購物：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 7.8. 串流影音 (Chill刷 10% 狂暴神卡)
+  if (channelId === 'streaming_media') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 10.0 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Chill刷',
+      requiredSchemeTag: '方案：【Chill刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 線上設定訂閱自動扣繳',
+        note: '【Chill刷神卡】Netflix / Disney+ 享狂暴 10%！'
+      },
+      details: [
+        `【Chill刷方案】Netflix、Disney+ 影音訂閱：${isLinked ? 10 : baseRate}% 台新Point！`,
+        '涵蓋 Netflix、Disney+ 等指定串流娛樂',
+        '每期帳單加碼上限 1,000 點（月刷 $11,111 封頂）',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      capWarning: '每期帳單加碼上限 1,000 點 (月刷 $11,111 封頂)',
+      isSchemeDependent: true
+    };
+  }
+
+  // 7.9. 數位商店 (App Store / Google Play)
+  if (channelId === 'digital_stores') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '數趣刷',
+      requiredSchemeTag: '方案：【數趣刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '📱 綁定 Apple ID / Google 帳號線上扣款',
+        note: '【數趣刷】App Store / Google Play 享 3.3%'
+      },
+      details: [
+        `【數趣刷方案】數位商店與手遊課金：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '涵蓋 App Store、Apple 媒體服務、Google Play',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 7.10. AI 工具與軟體雲端 (ChatGPT / Cursor / Claude)
+  if (channelId === 'ai_software') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '數趣刷',
+      requiredSchemeTag: '方案：【數趣刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 AI 官網綁定線上刷卡直接扣繳',
+        note: '【數趣刷】AI 服務與生產力軟體享 3.3%'
+      },
+      details: [
+        `【數趣刷方案】AI 服務與線上軟體：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '涵蓋 ChatGPT、Claude、Cursor、Perplexity 等',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 8. 全聯門市 (排除)
   if (channelId === 'supermarket_px') {
     return {
       cardId: 'gogo',
@@ -1150,39 +1541,364 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
     };
   }
 
-  // 10. 家樂福 (天天刷支援)
+  // 9. 萬家福 / 大全聯 (天天刷支援)
   if (channelId === 'supermarket_carrefour') {
-    if (currentScheme === 'daily') {
-      return {
-        cardId: 'gogo',
-        cardName: '台新卡 (Richart / @GoGo)',
-        cardColor: 'from-zinc-800 to-neutral-950',
-        rewardRate: isLinked ? 3.3 : baseRate,
-        rewardType: '台新Point',
-        bestPaymentMethod: {
-          method: 'physical',
-          label: '實體刷卡或感應',
-          note: '【天天刷】指定量販 3.3%'
-        },
-        details: ['【天天刷】家樂福等指定量販：3.3% 台新Point']
-      };
-    }
-  }
-
-  // 11. 節假日通用
-  if (currentScheme === 'holiday') {
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
       cardColor: 'from-zinc-800 to-neutral-950',
-      rewardRate: 2.0,
+      rewardRate: isLinked ? 3.3 : baseRate,
       rewardType: '台新Point',
+      requiredSchemeName: '天天刷',
+      requiredSchemeTag: '方案：【天天刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '實體感應 / 線上刷卡',
-        note: '【假日刷】週六日不限通路 2%'
+        label: '💳 實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【天天刷】萬家福/大全聯指定量販 3.3%'
       },
-      details: ['【假日刷方案】節假日國內一般消費：2.0% 回饋']
+      details: [`【天天刷】萬家福/大全聯等指定量販：${isLinked ? 3.3 : baseRate}% 台新Point`],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10. 高鐵與台鐵 (天天刷)
+  if (channelId === 'transit_rail') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷',
+      requiredSchemeTag: '方案：【天天刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '🚄 車站售票機/窗口感應或 App 線上扣款',
+        note: '【天天刷】高鐵與台鐵通通享 3.3% 台新Point'
+      },
+      details: [
+        `【天天刷方案】高鐵與台鐵火車購票：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋台灣高鐵（官網/T-EX/售票機）與台鐵火車（官網/e-Booking/窗口）',
+        '🔥 台新大勝 CUBE：CUBE 僅高鐵有 3.3%（台鐵僅 0.3%），台新卡高鐵、台鐵雙通吃！'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.1. 全球航空公司購票 (玩旅刷)
+  if (channelId === 'travel_airlines') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '玩旅刷',
+      requiredSchemeTag: '方案：【玩旅刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '✈️ 航空公司官網線上刷卡',
+        note: '【玩旅刷】指定航空公司 3.3%'
+      },
+      details: [
+        `【玩旅刷方案】指定航空公司購票：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋華航、長榮、星宇、台灣虎航、國泰航空、日本航空、ANA等航空公司官網直購'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.2. 訂房平台與行程票券 (玩旅刷 / Pay著刷)
+  if (channelId === 'travel_booking_ota') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '玩旅刷 / Pay著刷',
+      requiredSchemeTag: '方案：【玩旅刷 / Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '🏨 若支援 LINE Pay (如 Klook/KKday) 切【Pay著刷】3.8%；直刷切【玩旅刷】3.3%',
+        note: 'Agoda/Booking 線上刷卡切換【玩旅刷】享 3.3%'
+      },
+      details: [
+        `【Pay著刷方案】Klook / KKday 選擇 LINE Pay 掃碼：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `【玩旅刷方案】Agoda / Booking.com / Trip.com 線上刷卡：${isLinked ? 3.3 : baseRate}% 台新Point`
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.3. 知名旅行社 (玩旅刷)
+  if (channelId === 'travel_agencies') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '玩旅刷',
+      requiredSchemeTag: '方案：【玩旅刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '🗺️ 旅行社官網或實體門市刷卡',
+        note: '【玩旅刷】雄獅/可樂/易遊網等享 3.3%'
+      },
+      details: [
+        `【玩旅刷方案】指定知名旅行社：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋雄獅旅遊、可樂旅遊、易遊網 ezTravel、東南旅遊等官網與門市消費'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.4. 計程車與叫車平台 (天天刷 / Pay著刷)
+  if (channelId === 'transit_taxi') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷 / Pay著刷',
+      requiredSchemeTag: '方案：【天天刷 / Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '🚕 出示 LINE Pay 條碼（台灣大車隊/LINE GO）享 3.8%；App 綁卡切【天天刷】3.3%',
+        note: '台灣大車隊、yoxi、Uber 通通有加碼'
+      },
+      details: [
+        `【Pay著刷方案】台灣大車隊 / LINE GO 出示 LINE Pay：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `【天天刷方案】Uber / yoxi / 台灣大車隊 App 綁卡或刷卡：${isLinked ? 3.3 : baseRate}% 台新Point`
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.5. 租車與共享交通 (天天刷)
+  if (channelId === 'transit_car_rental') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷',
+      requiredSchemeTag: '方案：【天天刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '🚗 iRent App 扣款或和運/格上門市刷卡',
+        note: '【天天刷】指定租車交通出行 3.3%'
+      },
+      details: [
+        `【天天刷方案】指定租車與共享運具：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋 iRent、和運租車、格上租車'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.6. 日本交通卡儲值 (玩旅刷)
+  if (channelId === 'transit_japan_ic') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '玩旅刷',
+      requiredSchemeTag: '方案：【玩旅刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '🍏 iPhone Apple 錢包加值日本交通卡',
+        note: '【玩旅刷】海外外幣消費 3.3%'
+      },
+      details: [
+        `【玩旅刷方案】Apple 錢包加值日圓交通卡：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋 Suica、PASMO、ICOCA 外幣線上儲值'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 10.7. 海外實體
+  if (channelId === 'travel_overseas') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '玩旅刷',
+      requiredSchemeTag: '方案：【玩旅刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '✈️ 海外實體感應 / 插卡',
+        note: '【玩旅刷】海外消費 3.3%'
+      },
+      details: [`【玩旅刷】海外實體與線上外幣消費：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11. 全台餐廳
+  if (channelId === 'dining_restaurant') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '好饗刷',
+      requiredSchemeTag: '方案：【好饗刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【好饗刷】餐飲享 3.3%'
+      },
+      details: [`【好饗刷】全台餐飲消費：${isLinked ? 3.3 : baseRate}% 台新Point`],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11.5. 全台指定百貨 (大筆刷支援)
+  if (channelId === 'department_store') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '大筆刷',
+      requiredSchemeTag: '方案：【大筆刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 專櫃實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【大筆刷】新光三越/SOGO/微風/台北101等享 3.3%'
+      },
+      details: [
+        `【大筆刷方案】指定百貨消費：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '涵蓋新光三越、遠東SOGO、微風、台北101、遠東百貨等',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11.6. 生活藥妝 (天天刷支援)
+  if (channelId === 'drugstore_cosmetics') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷',
+      requiredSchemeTag: '方案：【天天刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【天天刷】康是美/屈臣氏指定藥妝享 3.3%'
+      },
+      details: [
+        `【天天刷方案】指定藥妝門市：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '涵蓋康是美、屈臣氏等連鎖藥妝',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11.7. IKEA 宜家家居 (大筆刷支援)
+  if (channelId === 'home_ikea') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '大筆刷',
+      requiredSchemeTag: '方案：【大筆刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市實體刷卡/感應或官網刷卡',
+        note: '【大筆刷】居家裝修（IKEA、特力屋）享 3.3%'
+      },
+      details: [
+        `【大筆刷方案】IKEA 居家裝修：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '涵蓋 IKEA 門市、餐廳用餐與官網線上購物',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11.8. LOPIA 日系超市
+  if (channelId === 'supermarket_lopia') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷 / 大筆刷',
+      requiredSchemeTag: '方案：【天天刷 / 大筆刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市實體刷卡或感應支付',
+        note: '商場量販享 3.3%'
+      },
+      details: [
+        `【天天刷/大筆刷】商場量販超市：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11.9. 充電與智慧停車 (天天刷支援)
+  if (channelId === 'ev_charging_parking') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '天天刷',
+      requiredSchemeTag: '方案：【天天刷】',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '📱 綁定各 App 自動扣繳或充電掃碼',
+        note: '【天天刷】加油充電與交通享 3.3%'
+      },
+      details: [
+        `【天天刷方案】指定充電站與行車交通：${isLinked ? 3.3 : baseRate}% 台新Point`,
+        '涵蓋 U-POWER、EVOASIS、車麻吉等智慧出行',
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 12. 一般門市 (假日刷支援)
+  if (channelId === 'general_store') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 2.0 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '假日刷',
+      requiredSchemeTag: '方案：【假日刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 週末假日消費刷卡',
+        note: '【假日刷】週末享 2.0%（平日一般消費 0.5%）'
+      },
+      details: [`【假日刷方案】節假日國內一般消費：${isLinked ? 2.0 : baseRate}% 回饋（平日一般消費 ${baseRate}%）`],
+      isSchemeDependent: true
     };
   }
 
@@ -1208,15 +1924,47 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
 
   const supportsContactless = (
     channelId.startsWith('gas_') ||
-    channelId.startsWith('convenience_') ||
     channelId === 'fastfood_mos' ||
     channelId === 'fastfood_kfc' ||
     channelId === 'dining_restaurant' ||
     channelId === 'dining_hotpot' ||
     channelId === 'drink_chill' ||
     channelId === 'supermarket_carrefour' ||
+    channelId === 'supermarket_lopia' ||
+    channelId === 'home_ikea' ||
+    channelId === 'department_store' ||
+    channelId === 'drugstore_cosmetics' ||
+    channelId === 'transit_car_rental' ||
+    channelId === 'travel_overseas' ||
     channelId === 'general_store'
   );
+
+  if (channelId.startsWith('convenience_')) {
+    const is711 = channelId === 'convenience_711';
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: 0.0,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: is711 ? '❌ 7-11 未合作刷卡且 0% 排除' : '❌ 超商小額支付 0% 排除',
+        note: is711 ? '門市無法感應永豐卡' : '超商非一般消費無回饋'
+      },
+      details: [
+        is711
+          ? '7-ELEVEN 門市刷卡未與永豐銀行合作，實體卡與 Apple Pay 無法過卡（交易失敗）'
+          : '全家等超商門市在銀行端屬於非一般消費/小額支付，永豐直接列為 0% 排除',
+        '永豐 SPORT 卡的 Apple Pay 7% 指定加碼「不適用於任何超商」！',
+        '建議改用台新卡（切【天天刷】出示「台新Pay」享 3.8%）或國泰 CUBE（【集精選】享 3%）！'
+      ],
+      warning: is711
+        ? '⚠️ 7-11 無法刷永豐卡，且超商為 0% 排除！請改用台新Pay (3.8%) 或 CUBE 集精選 (3%)！'
+        : '⚠️ 超商門市為永豐 0% 排除通路，SPORT 卡無 7% 回饋！請改用台新Pay (3.8%) 或 CUBE 集精選 (3%)！',
+      isBlocked: true
+    };
+  }
 
   if (channelId === 'fastfood_mcdonalds') {
     return {
@@ -1254,6 +2002,79 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       details: ['全聯門市列為非一般消費排除通路，0% 回饋'],
       warning: '全聯消費不適用 SPORT 卡，請改刷 CUBE (集精選 3%)！',
       isBlocked: true
+    };
+  }
+
+  if (channelId === 'transit_rail') {
+    const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: rate,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'apple_pay',
+        label: '🚄 車站自動售票機或窗口 Apple Pay / Google Pay 感應購票',
+        note: '機台感應享最高 7%（$6,000 封頂）；線上 App 購票僅 1%~2%'
+      },
+      details: [
+        `車站機台/臨櫃使用 Apple Pay / Google Pay 感應：${rate}% 豐點`,
+        '⚠️ 線上購票提醒：若使用高鐵 T-EX App 或台鐵官網線上刷卡，屬於線上交易無法享有感應 +5% 加碼，僅享 1%~2%！',
+        '💡 想拿 7% 務必至車站實體機台或售票窗口使用手機感應付款！'
+      ],
+      capWarning: rate === 7.0 ? '🔥 每月消費 NT$6,000 內享 7%，超過後降為 1%~2%' : undefined,
+      warning: rate < 7.0 ? '運動尚未達標或本月 $6,000 感應額度已滿' : undefined
+    };
+  }
+
+  if (channelId === 'transit_taxi') {
+    const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: rate,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'apple_pay',
+        label: '🚕 台灣大車隊 / yoxi 車上機台使用 Apple Pay / Google Pay 感應',
+        note: '車上感應享最高 7%（$6,000 封頂）；Uber App 線上僅 1%~2%'
+      },
+      details: [
+        `車內實體刷卡機使用 Apple Pay / Google Pay 感應：${rate}% 豐點`,
+        '台灣大車隊、yoxi 車內均配備感應式刷卡機，達標享 7% 封頂',
+        '⚠️ Uber App 為線上綁卡扣款，無感應加碼，僅享 1%~2%！'
+      ],
+      capWarning: rate === 7.0 ? '🔥 每月消費 NT$6,000 內享 7%，超過後降為 1%~2%' : undefined
+    };
+  }
+
+  if (channelId === 'travel_airlines' || channelId === 'travel_booking_ota' || channelId === 'travel_agencies' || channelId === 'transit_japan_ic') {
+    const onlineRate = isCalorieMet ? 2.0 : 1.0;
+    const channelNames: Record<string, string> = {
+      travel_airlines: '航空機票官網直購',
+      travel_booking_ota: 'Agoda / Booking / Klook 訂房票券',
+      travel_agencies: '雄獅 / 可樂 / 易遊網各大旅行社',
+      transit_japan_ic: 'Apple 錢包日本交通卡加值'
+    };
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: onlineRate,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '線上刷卡',
+        note: '純線上扣款無法觸發感應 +5%'
+      },
+      details: [
+        `${channelNames[channelId] || '本通路'}多為線上付款：僅享一般消費 ${onlineRate}% 豐點`,
+        '無 Apple Pay / Google Pay 實體感應支付 +5% 加碼',
+        '💡 建議改刷國泰 CUBE（趣旅行 3.3% 無上限）或台新卡（玩旅刷 3.3%）！'
+      ],
+      warning: '⚠️ 線上消費無法觸發 7% 感應加碼！機票/訂房/旅行社建議刷 CUBE (3.3%) 或台新 (3.3%)！'
     };
   }
 
@@ -1340,7 +2161,34 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
   const isNew = config.dawayIsNewUser;
   const lpRate = isNew ? 3.0 : 1.5;
 
-  if (channelId === 'convenience_711') {
+  if (channelId.startsWith('convenience_')) {
+    const is711 = channelId === 'convenience_711';
+    const isFamily = channelId === 'convenience_family';
+    let label = '❌ 超商小額支付 0% 排除';
+    let note = '超商消費無回饋';
+    let details = [
+      '超商門市在永豐銀行信用卡條款中屬於非一般消費排除通路，0% 回饋',
+      '永豐 DAWAY 卡之 LINE POINTS 加碼回饋不適用於超商！',
+      '建議改用台新卡（出示「台新Pay」享 3.8%）或國泰 CUBE（集精選享 3%）！'
+    ];
+    if (is711) {
+      label = '❌ 7-11 不支援永豐卡 LINE Pay';
+      note = '未合作刷卡且扣款會失敗';
+      details = [
+        '【重大限制】7-11 門市的 LINE Pay 不開放綁定永豐信用卡付款（交易失敗）！',
+        '門市實體刷卡亦未與永豐銀行合作，且超商列為 0% 排除！',
+        '建議改用台新卡（台新Pay 3.8%）或國泰 CUBE（集精選 3%）！'
+      ];
+    } else if (isFamily) {
+      label = '❌ 全家不支援永豐卡 LINE Pay';
+      note = 'LINE Pay 無法扣款且實體 0%';
+      details = [
+        '【重大限制】全家便利商店 LINE Pay 不支援綁定永豐信用卡付款（交易失敗）！',
+        '實體刷卡雖可過卡，但超商屬於非一般消費 0% 排除！',
+        '建議改用台新卡（台新Pay 3.8%）或國泰 CUBE（集精選 3%）！'
+      ];
+    }
+
     return {
       cardId: 'daway',
       cardName: '永豐銀行 DAWAY 卡',
@@ -1349,14 +2197,15 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       rewardType: 'LINE POINTS',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '❌ 7-11 不支援永豐卡 LINE Pay',
-        note: '門市扣款會失敗'
+        label,
+        note
       },
-      details: [
-        '【重大限制】7-11 門市的 LINE Pay 不開放綁定永豐信用卡付款！',
-        '實體插卡亦被列為非一般消費 0%！'
-      ],
-      warning: '⚠️ 7-11 門市無法刷永豐 DAWAY 卡（LINE Pay 與實體皆不可）！請改刷 SPORT、台新Pay 或 CUBE！',
+      details,
+      warning: is711
+        ? '⚠️ 7-11 無法刷永豐 DAWAY 卡（LINE Pay 與實體皆不可）！請改用台新Pay (3.8%) 或 CUBE (3%)！'
+        : isFamily
+          ? '⚠️ 全家不支援永豐 LINE Pay，且實體為 0% 排除！請改用台新Pay (3.8%) 或 CUBE (3%)！'
+          : '⚠️ 萊爾富/OK 超商為 0% 排除通路！請改用台新Pay (3.8%)！',
       isBlocked: true
     };
   }
@@ -1463,7 +2312,7 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
     };
   }
 
-  if (channelId.startsWith('gas_')) {
+  if (channelId === 'food_delivery') {
     return {
       cardId: 'daway',
       cardName: '永豐銀行 DAWAY 卡',
@@ -1472,14 +2321,391 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       rewardType: 'LINE POINTS',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 加油站使用 LINE Pay 掃碼付款',
-        note: '切勿實體刷卡（實體僅 1%）'
+        label: '📱 外送結帳選擇 LINE Pay 付款',
+        note: 'Uber Eats / foodpanda 結帳選 LINE Pay 享加碼'
       },
       details: [
-        `中油/全國使用 LINE Pay 支付：${lpRate}% LINE POINTS`,
-        '若實體插卡僅 1% 一般消費'
+        `外送結帳選擇 LINE Pay 支付：${lpRate}% LINE POINTS`,
+        isNew ? '🔥 新戶加碼享 3%（加碼上限每期 800 點，月刷 NT$40,000 封頂）' : '舊戶享 1.5% LINE POINTS（加碼上限 300 點）',
+        '⚠️ 若直接在 App 輸入卡號線上刷卡僅一般消費 1%'
       ],
       capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'online_shopee') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 1.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '❌ 蝦皮不支援 LINE Pay',
+        note: '直接刷卡僅一般消費 1%'
+      },
+      details: [
+        '蝦皮購物目前不支援 LINE Pay 付款，無法享有最高 3% LINE POINTS 加碼',
+        '線上刷卡僅享基本回饋 1% LINE POINTS',
+        '建議改用國泰 CUBE（玩數位 3.3%）或台新卡（數趣刷 3.3%）！'
+      ],
+      warning: '⚠️ 蝦皮不支援 LINE Pay，DAWAY 僅 1%！建議改刷 CUBE (3.3%) 或台新 (3.3%)！'
+    };
+  }
+
+  if (channelId === 'online_momo' || channelId === 'online_pchome' || channelId === 'online_coupang') {
+    const platformName = channelId === 'online_momo' ? 'momo 購物網' : channelId === 'online_pchome' ? 'PChome 24h' : '酷澎 Coupang';
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 結帳付款方式選擇 LINE Pay',
+        note: '走 LINE Pay 享新戶 3% / 舊戶 1.5%'
+      },
+      details: [
+        `${platformName} 結帳選擇 LINE Pay 支付：${lpRate}% LINE POINTS`,
+        isNew ? '🔥 新戶加碼享 3%（加碼上限每期 800 點，月刷 NT$40,000 封頂）' : '舊戶享 1.5% LINE POINTS（加碼上限 300 點）',
+        '⚠️ 若直接輸入卡號線上刷卡僅一般消費 1%'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'department_store') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 專櫃結帳出示 LINE Pay 條碼',
+        note: '若專櫃支援 LINE Pay 享新戶 3% / 舊戶 1.5%'
+      },
+      details: [
+        `百貨專櫃出示 LINE Pay 條碼支付：${lpRate}% LINE POINTS`,
+        '⚠️ 若專櫃不支援 LINE Pay 走實體插卡僅 1% 一般消費',
+        '建議改刷國泰 CUBE（樂饗購 3.3% 無上限）或台新（大筆刷 3.3%）！'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'drugstore_cosmetics') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市出示 LINE Pay 條碼付款',
+        note: '康是美/屈臣氏/寶雅門市皆支援 LINE Pay'
+      },
+      details: [
+        `藥妝門市出示 LINE Pay 條碼支付：${lpRate}% LINE POINTS`,
+        isNew ? '🔥 新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '⚠️ 純實體卡感應或插卡僅 1% 一般消費'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'home_ikea') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市結帳出示 LINE Pay 條碼',
+        note: 'IKEA 門市支援 LINE Pay'
+      },
+      details: [
+        `IKEA 出示 LINE Pay 條碼支付：${lpRate}% LINE POINTS`,
+        isNew ? '🔥 新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '⚠️ 純實體卡刷卡僅 1% 一般消費'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'supermarket_lopia') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 結帳出示 LINE Pay 條碼',
+        note: '若機台支援 LINE Pay 享加碼'
+      },
+      details: [
+        `LOPIA 出示 LINE Pay 條碼支付：${lpRate}% LINE POINTS`,
+        '⚠️ 若走實體卡僅 1% 一般消費'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'ev_charging_parking') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 App 內結帳選擇 LINE Pay 支付',
+        note: '車麻吉等 App 支援 LINE Pay'
+      },
+      details: [
+        `智慧出行綁定 LINE Pay 支付：${lpRate}% LINE POINTS`,
+        isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '若走直接輸入卡號線上刷僅 1%'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'online_taobao') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 3.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 淘寶 App 線上刷卡直接輸卡號',
+        note: '淘寶跨境海外消費享 3% LINE POINTS 無上限'
+      },
+      details: [
+        '淘寶/天貓跨境海外交易：3.0% LINE POINTS（回饋無上限）',
+        '海外外幣消費享 3% LINE POINTS，可抵扣 1.5% 跨境交易手續費！'
+      ]
+    };
+  }
+
+  if (channelId === 'ai_software') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 3.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 AI 官網綁定直接刷卡扣款',
+        note: '美金外幣扣款享海外消費 3% LINE POINTS 無上限'
+      },
+      details: [
+        '海外外幣線上扣款：3.0% LINE POINTS（回饋無上限）',
+        'ChatGPT / Cursor / Claude 等美金計價服務，享海外 3% 回饋！'
+      ]
+    };
+  }
+
+  if (channelId === 'streaming_media') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 1.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💻 線上刷卡直接扣款',
+        note: '一般消費 1%'
+      },
+      details: [
+        '影音串流線上刷卡：1.0% LINE POINTS',
+        '💡 建議改用台新卡（切換【Chill刷】享狂暴 10%）或國泰 CUBE（玩數位 3.3%）！'
+      ],
+      warning: 'DAWAY 刷串流僅 1%！建議改刷台新 Chill 刷 (10%) 或 CUBE 玩數位 (3.3%)！'
+    };
+  }
+
+  if (channelId === 'digital_stores') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 1.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '📱 綁定 Apple ID / Google 帳號線上扣款',
+        note: '一般消費 1%'
+      },
+      details: [
+        'App Store / Google Play 課金：1.0% LINE POINTS',
+        '💡 建議改用國泰 CUBE（玩數位 3.3% 無上限）或台新（數趣刷 3.3%）！'
+      ],
+      warning: 'DAWAY 課金僅 1%！建議改刷 CUBE 玩數位 (3.3% 無上限)！'
+    };
+  }
+
+  if (channelId.startsWith('gas_')) {
+    const stationName =
+      channelId === 'gas_formosa'
+        ? '福懋 / 台塑加油站'
+        : channelId === 'gas_smile'
+          ? '速邁樂加油站'
+          : channelId === 'gas_national'
+            ? '全國加油站'
+            : '中油加油站';
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 若加油站支援出示 LINE Pay 掃碼付款',
+        note: '若支援 LINE Pay 享加碼；若實體插卡僅 1%'
+      },
+      details: [
+        `${stationName}若支援 LINE Pay 支付：${lpRate}% LINE POINTS`,
+        '⚠️ 若直接拿實體卡感應或插卡僅享一般消費 1%',
+        '💡 加油最推薦改刷永豐 SPORT（Apple Pay 感應 7%）！'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'transit_rail') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '🚄 車站售票窗口/機台出示 LINE Pay 掃碼',
+        note: '窗口掃 LINE Pay 享加碼；實體刷卡僅 1%'
+      },
+      details: [
+        `車站臨櫃若支援出示 LINE Pay 條碼付款：${lpRate}% LINE POINTS`,
+        isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '⚠️ 若使用實體卡插卡或線上 T-EX/官網刷卡僅享 1% 一般消費！'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'transit_taxi') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: lpRate,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '🚕 叫車出示 LINE Pay 條碼（台灣大車隊/yoxi/LINE GO）',
+        note: 'LINE Pay 結帳享加碼'
+      },
+      details: [
+        `計程車結帳出示 LINE Pay 條碼：${lpRate}% LINE POINTS`,
+        isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
+        '⚠️ Uber App 為綁定信用卡扣款（不支援 LINE Pay 條碼），僅享 1% 一般消費'
+      ],
+      capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
+    };
+  }
+
+  if (channelId === 'travel_booking_ota') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 3.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '🏨 Klook/KKday 結帳選 LINE Pay 享 3%；Agoda/Booking 外幣扣款 3%',
+        note: '海外外幣消費或 LINE Pay 享加碼'
+      },
+      details: [
+        'Klook / KKday 結帳選擇 LINE Pay：新戶 3% / 舊戶 1.5% LINE POINTS',
+        'Agoda / Booking.com / Trip.com 海外外幣扣款：3.0% LINE POINTS（回饋無上限）'
+      ],
+      capWarning: isNew ? '新戶 LINE Pay 加碼每期上限 800 點；外幣消費無上限' : undefined
+    };
+  }
+
+  if (channelId === 'travel_airlines') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 3.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '✈️ 外籍航空外幣購票享 3%；國內台幣官網僅 1%',
+        note: '海外航司外幣扣款享 3% LINE POINTS 無上限'
+      },
+      details: [
+        '國外航空公司（如樂桃、酷航、日航、阿聯酋等海外外幣扣款）：3.0% LINE POINTS（無上限）',
+        '國內航空公司（華航、長榮、星宇台幣官網刷卡）：僅享一般消費 1% LINE POINTS',
+        '💡 購買國籍航空機票強烈建議改刷國泰 CUBE（趣旅行 3.3% 無上限）！'
+      ]
+    };
+  }
+
+  if (channelId === 'travel_agencies' || channelId === 'transit_car_rental') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 1.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市或官網刷卡（僅一般消費 1%）',
+        note: '若門市支援 LINE Pay 享新戶 3% / 舊戶 1.5%'
+      },
+      details: [
+        '國內旅行社 / 租車一般消費：1.0% LINE POINTS',
+        '若門市支援 LINE Pay 條碼結帳可享新戶 3% / 舊戶 1.5% 加碼',
+        '💡 旅行社大額團費建議改刷國泰 CUBE（趣旅行 3.3% 無上限）！'
+      ],
+      warning: 'DAWAY 刷旅行社僅 1%！大額團費建議改刷 CUBE 趣旅行 (3.3% 無上限)！'
+    };
+  }
+
+  if (channelId === 'transit_japan_ic') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 3.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '🍏 iPhone Apple 錢包加值日本交通卡',
+        note: '海外外幣線上扣款享 3% LINE POINTS 無上限'
+      },
+      details: [
+        'Apple 錢包加值 Suica / PASMO / ICOCA：3.0% LINE POINTS（無上限）',
+        '日圓外幣線上扣款認列海外消費，可抵扣 1.5% 交易手續費！'
+      ]
     };
   }
 

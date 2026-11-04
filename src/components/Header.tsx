@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreditCard, HelpCircle } from 'lucide-react';
+import { HelpCircle } from 'lucide-react';
 
 interface Props {
   onOpenCheatSheet: () => void;
@@ -10,9 +10,11 @@ export const Header: React.FC<Props> = ({ onOpenCheatSheet }) => {
     <header className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
       <div>
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center shadow-md shadow-indigo-500/20">
-            <CreditCard className="w-5 h-5" />
-          </div>
+          <img
+            src="/icon.png"
+            alt="卡友聰明刷"
+            className="w-10 h-10 rounded-2xl object-cover shadow-md shadow-indigo-500/20 ring-1 ring-slate-200/50"
+          />
           <div>
             <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
               <span>卡友聰明刷</span>

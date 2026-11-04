@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import type { CardRewardResult, CubeScheme, ScenarioChannel, TaishinScheme } from '../types/card';
-import { CUBE_SCHEME_LABELS, calculateExactRewardPoints } from '../data/cardData';
-import { Trophy, AlertTriangle, ArrowRight, Zap, CheckCircle, Calculator, Info, ShieldCheck, Smartphone, ExternalLink } from 'lucide-react';
+import type { CardRewardResult, ScenarioChannel } from '../types/card';
+import { calculateExactRewardPoints } from '../data/cardData';
+import { Trophy, AlertTriangle, Zap, CheckCircle, Calculator, Info, ShieldCheck, Smartphone, ExternalLink } from 'lucide-react';
 
 function openAppOrFallback(scheme: string, fallbackUrl: string) {
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -21,27 +21,17 @@ function openAppOrFallback(scheme: string, fallbackUrl: string) {
 interface Props {
   channel: ScenarioChannel;
   results: CardRewardResult[];
-  onSwitchCubeScheme: (scheme: CubeScheme) => void;
-  onSwitchTaishinScheme: (scheme: TaishinScheme) => void;
 }
 
 export const RecommendationResult: React.FC<Props> = ({
   channel,
   results,
-  onSwitchCubeScheme,
-  onSwitchTaishinScheme,
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1000);
   const [showCalculator, setShowCalculator] = useState<boolean>(true);
 
   const bestCard = results[0];
   const otherCards = results.slice(1);
-
-  // 檢查是否有 CUBE 切換提議
-  const cubeResult = results.find(r => r.cardId === 'cube');
-  const cubeSuggestion = cubeResult?.schemeSuggestion;
-  const gogoResult = results.find(r => r.cardId === 'gogo');
-  const gogoSuggestion = gogoResult?.schemeSuggestion;
 
   return (
     <div className="space-y-6">
@@ -72,96 +62,6 @@ export const RecommendationResult: React.FC<Props> = ({
         </button>
       </div>
 
-      {/* 💡 CUBE 權益切換升級大提示（如果有更佳權益） */}
-      {cubeSuggestion && (
-        <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent border-l-4 border-amber-500 p-4 rounded-xl shadow-xs">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-            <div className="flex items-start gap-2.5">
-              <Zap className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
-              <div>
-                <div className="text-sm font-bold text-amber-950 flex items-center gap-2">
-                  <span>CUBE 權益切換提示：建議切換至【{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme as CubeScheme]?.name || cubeSuggestion.recommendedScheme}】</span>
-                  <span className="text-[10px] bg-amber-200/80 text-amber-900 px-2 py-0.5 rounded-full font-semibold">
-                    +{cubeSuggestion.difference}%
-                  </span>
-                </div>
-                <div className="text-xs text-amber-800 mt-0.5">
-                  目前方案僅享 {cubeResult?.rewardRate}%，若於 CUBE App 切換為「{CUBE_SCHEME_LABELS[cubeSuggestion.recommendedScheme as CubeScheme]?.name || cubeSuggestion.recommendedScheme}」，
-                  回饋率可直接飆升至 <strong className="font-bold underline">{cubeSuggestion.potentialRate}%</strong> 小樹點無上限！
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 w-full md:w-auto shrink-0">
-              <button
-                type="button"
-                onClick={() => openAppOrFallback('cathaybk://', 'https://www.cathaybk.com.tw/cathaybk/personal/digital-banking/cube-app/')}
-                className="flex-1 md:flex-initial bg-amber-600 hover:bg-amber-700 active:scale-95 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-                title="在手機上直接喚醒國泰 CUBE App"
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span>📱 開啟 CUBE App</span>
-                <ExternalLink className="w-3 h-3 opacity-70" />
-              </button>
-              <button
-                type="button"
-                onClick={() => onSwitchCubeScheme(cubeSuggestion.recommendedScheme as CubeScheme)}
-                className="bg-white/90 hover:bg-white text-amber-950 text-xs font-semibold px-2.5 py-2 rounded-xl border border-amber-300/80 hover:border-amber-400 flex items-center justify-center gap-1 transition-all cursor-pointer"
-                title="在網頁上模擬切換，即時重算點數"
-              >
-                <span>網頁預覽</span>
-                <ArrowRight className="w-3 h-3 text-amber-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 💡 台新權益切換提示（如果有更佳權益） */}
-      {gogoSuggestion && (
-        <div className="bg-gradient-to-r from-zinc-800/10 via-zinc-800/5 to-transparent border-l-4 border-zinc-800 p-4 rounded-xl shadow-xs">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-            <div className="flex items-start gap-2.5">
-              <Zap className="w-5 h-5 text-zinc-800 mt-0.5 shrink-0" />
-              <div>
-                <div className="text-sm font-bold text-zinc-900 flex items-center gap-2">
-                  <span>台新權益切換提示：建議切換至【{gogoSuggestion.recommendedScheme}】</span>
-                  <span className="text-[10px] bg-zinc-200 text-zinc-900 px-2 py-0.5 rounded-full font-semibold">
-                    +{gogoSuggestion.difference}%
-                  </span>
-                </div>
-                <div className="text-xs text-zinc-700 mt-0.5">
-                  若於 Richart Life App 切換為「{gogoSuggestion.recommendedScheme}」，
-                  回饋率可直接飆升至 <strong className="font-bold underline">{gogoSuggestion.potentialRate}%</strong> 台新Point！
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 w-full md:w-auto shrink-0">
-              <button
-                type="button"
-                onClick={() => openAppOrFallback('cardaily://', 'https://richartlife.taishinbank.com.tw/')}
-                className="flex-1 md:flex-initial bg-zinc-900 hover:bg-black active:scale-95 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-                title="在手機上直接喚醒台新 Richart Life App"
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span>📱 開啟 Richart Life</span>
-                <ExternalLink className="w-3 h-3 opacity-70" />
-              </button>
-              <button
-                type="button"
-                onClick={() => onSwitchTaishinScheme(gogoSuggestion.recommendedSchemeKey as TaishinScheme)}
-                className="bg-white/90 hover:bg-white text-zinc-800 text-xs font-semibold px-2.5 py-2 rounded-xl border border-zinc-300 hover:border-zinc-400 flex items-center justify-center gap-1 transition-all cursor-pointer"
-                title="在網頁上模擬切換，即時重算點數"
-              >
-                <span>網頁預覽</span>
-                <ArrowRight className="w-3 h-3 text-zinc-600" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* 🥇 今日最佳推薦冠軍卡片 */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-7 shadow-xl ring-1 ring-white/10">
         {/* 背景裝飾 */}
@@ -171,7 +71,7 @@ export const RecommendationResult: React.FC<Props> = ({
           <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-amber-950 font-black text-xs shadow-sm">
               <Trophy className="w-3.5 h-3.5 fill-amber-950" />
-              今日最佳首選 🥇
+              今日最佳首選 🥇 No.1
             </div>
 
             {bestCard.capWarning && (
@@ -183,12 +83,20 @@ export const RecommendationResult: React.FC<Props> = ({
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-white/10">
             <div>
-              <div className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
-                {bestCard.cardName}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+                  {bestCard.cardName}
+                </span>
+                {bestCard.requiredSchemeTag && (
+                  <span className="text-xs bg-amber-400 text-amber-950 font-black px-2.5 py-1 rounded-lg shadow-sm border border-amber-300 flex items-center gap-1">
+                    <Zap className="w-3 h-3 fill-amber-950" />
+                    {bestCard.requiredSchemeTag}
+                  </span>
+                )}
               </div>
               <div className="text-xs sm:text-sm text-indigo-200 mt-1 flex items-center gap-1.5">
                 <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>此情境下回饋率全卡第一</span>
+                <span>此通路回饋率全卡第一</span>
               </div>
             </div>
 
@@ -212,11 +120,40 @@ export const RecommendationResult: React.FC<Props> = ({
               <span>{bestCard.bestPaymentMethod.label}</span>
             </div>
             {bestCard.bestPaymentMethod.note && (
-              <div className="text-xs text-amber-200/90 mt-1">
+              <div className="text-xs text-amber-200/90 mt-1 font-medium">
                 ⚠️ {bestCard.bestPaymentMethod.note}
               </div>
             )}
           </div>
+
+          {/* 快捷喚醒對應 App 切換方案按鈕 */}
+          {bestCard.requiredSchemeName && (bestCard.cardId === 'cube' || bestCard.cardId === 'gogo') && (
+            <div className="mt-3 flex items-center gap-2">
+              {bestCard.cardId === 'cube' ? (
+                <button
+                  type="button"
+                  onClick={() => openAppOrFallback('cathaybk://', 'https://www.cathaybk.com.tw/cathaybk/personal/digital-banking/cube-app/')}
+                  className="bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
+                  title="直接喚醒國泰 CUBE App 切換指定方案"
+                >
+                  <Smartphone className="w-3.5 h-3.5" />
+                  <span>📱 開啟 CUBE App 切換【{bestCard.requiredSchemeName}】</span>
+                  <ExternalLink className="w-3 h-3 opacity-70" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => openAppOrFallback('cardaily://', 'https://richartlife.taishinbank.com.tw/')}
+                  className="bg-zinc-800 hover:bg-zinc-700 active:scale-95 text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-zinc-600 flex items-center gap-1.5 transition-all cursor-pointer"
+                  title="直接喚醒台新 Richart Life App 切換指定方案"
+                >
+                  <Smartphone className="w-3.5 h-3.5" />
+                  <span>📱 開啟 Richart Life 切換【{bestCard.requiredSchemeName}】</span>
+                  <ExternalLink className="w-3 h-3 opacity-70" />
+                </button>
+              )}
+            </div>
+          )}
 
           {/* 上限與封頂規則徽章 */}
           {bestCard.capInfo && (
@@ -357,8 +294,13 @@ export const RecommendationResult: React.FC<Props> = ({
                     </div>
 
                     <div>
-                      <div className="font-bold text-slate-900 flex items-center gap-2">
+                      <div className="font-bold text-slate-900 flex flex-wrap items-center gap-2">
                         <span>{card.cardName}</span>
+                        {card.requiredSchemeTag && (
+                          <span className="text-xs bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-md border border-indigo-200">
+                            ⚡ {card.requiredSchemeTag}
+                          </span>
+                        )}
                         {card.capWarning && (
                           <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-normal">
                             {card.capWarning}
@@ -368,10 +310,38 @@ export const RecommendationResult: React.FC<Props> = ({
                       <div className="text-xs text-slate-600 mt-1 flex items-center gap-1.5 font-medium">
                         <span>{card.bestPaymentMethod.label}</span>
                       </div>
+                      {card.bestPaymentMethod.note && (
+                        <div className="text-[11px] text-slate-500 mt-0.5">
+                          💡 {card.bestPaymentMethod.note}
+                        </div>
+                      )}
                       <div className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1">
                         <span className="font-semibold text-slate-700">封頂上限：</span>
                         <span>{card.capInfo?.capNote || '依銀行公告規範'}</span>
                       </div>
+                      {card.requiredSchemeName && (card.cardId === 'cube' || card.cardId === 'gogo') && (
+                        <div className="mt-2 flex items-center gap-2">
+                          {card.cardId === 'cube' ? (
+                            <button
+                              type="button"
+                              onClick={() => openAppOrFallback('cathaybk://', 'https://www.cathaybk.com.tw/cathaybk/personal/digital-banking/cube-app/')}
+                              className="bg-amber-50 hover:bg-amber-100 text-amber-800 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-amber-200 flex items-center gap-1 transition-all cursor-pointer"
+                            >
+                              <Smartphone className="w-3 h-3 text-amber-600" />
+                              <span>📱 開啟 CUBE App 切換【{card.requiredSchemeName}】</span>
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => openAppOrFallback('cardaily://', 'https://richartlife.taishinbank.com.tw/')}
+                              className="bg-slate-100 hover:bg-slate-200 text-slate-800 text-[11px] font-bold px-2.5 py-1 rounded-lg border border-slate-300 flex items-center gap-1 transition-all cursor-pointer"
+                            >
+                              <Smartphone className="w-3 h-3 text-slate-600" />
+                              <span>📱 開啟 Richart Life 切換【{card.requiredSchemeName}】</span>
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 

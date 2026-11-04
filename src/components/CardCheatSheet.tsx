@@ -101,11 +101,27 @@ export const CardCheatSheet: React.FC<Props> = ({ isOpen, onClose }) => {
               </li>
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                <span><strong>集精選</strong>：中油直營 (3.3%)、7-11、全家、全聯 (3.0%) 回饋<strong>無上限</strong>！</span>
+                <span><strong>集精選</strong>：中油直營 (3.3%)、7-11、全家、全聯、萬家福、IKEA、指定充電 (3.0%) 回饋<strong>無上限</strong>！</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                <span><strong>玩數位 & 樂饗購</strong>：蝦皮/momo/淘寶/AI工具/串流/百貨/餐廳享 <strong>3.3% 無上限</strong>！</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                <span><strong>趣旅行 (3.3%)</strong>：台灣高鐵 (3.3%無上限)、全球航空機票、Agoda/Booking/Klook、Uber/yoxi、雄獅/易遊網、海外實體享 <strong>3.3% 無上限</strong>！</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                <span><strong>台塑家 (2% + 降價)</strong>：福懋、速邁樂、台亞、台塑加油站享 <strong>2% 小樹點無上限</strong> + 天天汽油降價！</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <AlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                <span><strong>超大地雷</strong>：7-11、全家、全聯若「未切換至集精選」，直接列為 <strong>0% 排除</strong>！</span>
+                <span><strong>超大地雷 1</strong>：7-11、全家、全聯若「未切換至集精選」，直接列為 <strong>0% 排除</strong>！</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <AlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
+                <span><strong>超大地雷 2</strong>：趣旅行<strong>僅限「高鐵」！「台鐵（火車）」不在加碼名單中（僅0.3%）</strong>；且機票/旅行社若辦「分期」直接降為 0.3%！</span>
               </li>
             </ul>
           </div>
