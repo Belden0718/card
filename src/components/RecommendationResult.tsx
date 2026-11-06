@@ -36,7 +36,13 @@ export const RecommendationResult: React.FC<Props> = ({
   onToggleFavorite,
 }) => {
   const [calcAmount, setCalcAmount] = useState<number>(1000);
-  const [showCalculator, setShowCalculator] = useState<boolean>(true);
+  // 手機版 (寬度 < 768px) 預設收起試算機，避免佔用大量手機垂直螢幕空間；桌機版預設展開
+  const [showCalculator, setShowCalculator] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768;
+    }
+    return true;
+  });
 
   const isCardOwned = (cardId: CardId) => !ownedCards || ownedCards[cardId] !== false;
 
@@ -90,8 +96,14 @@ export const RecommendationResult: React.FC<Props> = ({
           )}
 
           <button
+            type="button"
             onClick={() => setShowCalculator(!showCalculator)}
-            className="text-xs font-semibold px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 flex items-center gap-1.5 transition-colors cursor-pointer"
+            className={`text-xs font-semibold px-3 py-1.5 rounded-xl border flex items-center gap-1.5 transition-colors cursor-pointer ${
+              showCalculator
+                ? 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                : 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100 font-bold shadow-2xs'
+            }`}
+            title={showCalculator ? '點擊收起即時試算' : '點擊開啟即時試算'}
           >
             <Calculator className="w-3.5 h-3.5 text-indigo-600" />
             <span>{showCalculator ? '隱藏試算' : '開啟試算'}</span>
@@ -257,112 +269,146 @@ export const RecommendationResult: React.FC<Props> = ({
         </div>
       )}
 
-      {/* 💰 消費金額即時試算機 (僅試算有回饋之有效卡片) */}
-      {showCalculator && validCards.length > 0 && (
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
-            <div className="flex items-center gap-2">
-              <Calculator className="w-4 h-4 text-indigo-600" />
-              <h3 className="text-sm font-bold text-slate-800">消費金額即時試算</h3>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500">預計消費金額 NT$</span>
-              <input
-                type="number"
-                min="0"
-                step="100"
-                value={calcAmount}
-                onChange={(e) => setCalcAmount(Math.max(0, Number(e.target.value) || 0))}
-                className="w-28 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-              />
-            </div>
-          </div>
-
-          {/* 快捷金額膠囊 (含關鍵封頂臨界點) */}
-          <div className="flex flex-wrap items-center gap-1.5 mb-3.5 pb-3 border-b border-slate-100">
-            <span className="text-[11px] font-semibold text-slate-400 mr-1 shrink-0">快選金額：</span>
-            {[
-              { label: '+$500', isDelta: true, value: 500 },
-              { label: '$1,000', value: 1000 },
-              { label: '🎯 $6,000 (SPORT封頂)', value: 6000, color: 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border-emerald-200' },
-              ...(dawayIsNewUser
-                ? [{ label: '🎯 $40,000 (DAWAY新戶封頂/買空機)', value: 40000, color: 'text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border-indigo-200' }]
-                : [
-                    { label: '🎯 $20,000 (DAWAY舊戶封頂)', value: 20000, color: 'text-blue-700 bg-blue-50 hover:bg-blue-100 border-blue-200' },
-                    { label: '🎯 $40,000 (買空機/大筆消費)', value: 40000, color: 'text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border-indigo-200' }
-                  ])
-            ].map((chip) => {
-              const isCurrent = !chip.isDelta && calcAmount === chip.value;
-              return (
-                <button
-                  key={chip.label}
-                  type="button"
-                  onClick={() => {
-                    if (chip.isDelta) {
-                      setCalcAmount(prev => prev + chip.value);
-                    } else {
-                      setCalcAmount(chip.value);
-                    }
-                  }}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
-                    isCurrent
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs ring-2 ring-indigo-200'
-                      : chip.color || 'bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200'
-                  }`}
-                >
-                  {chip.label}
-                </button>
-              );
-            })}
-          </div>
-
-          <div className={`grid gap-2.5 ${
-            validCards.length === 1
-              ? 'grid-cols-1 max-w-xs'
-              : validCards.length === 2
-                ? 'grid-cols-2'
-                : validCards.length === 3
-                  ? 'grid-cols-2 sm:grid-cols-3'
-                  : 'grid-cols-2 sm:grid-cols-4'
-          }`}>
-            {validCards.map((res) => {
-              const exact = calculateExactRewardPoints(calcAmount, res);
-              const isBest = res.cardId === bestCard?.cardId;
-
-              return (
-                <div
-                  key={res.cardId}
-                  className={`p-3 rounded-xl border text-center transition-all ${
-                    isBest
-                      ? 'bg-amber-50/70 border-amber-300 ring-1 ring-amber-300'
-                      : 'bg-white border-slate-200'
-                  }`}
-                >
-                  <div className="text-[11px] font-semibold text-slate-500 truncate mb-1">
-                    {res.cardName.replace('銀行 ', '')}
-                  </div>
-                  <div className={`text-xl font-black ${isBest ? 'text-amber-600' : 'text-slate-800'}`}>
-                    {exact.points}
-                    <span className="text-xs font-normal text-slate-500 ml-0.5">點/元</span>
-                  </div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">
-                    ({res.rewardRate.toFixed(1)}% {res.rewardType})
-                  </div>
-                  {exact.isCapped && exact.capNote && (
-                    <div className="text-[10px] text-amber-700 bg-amber-100/90 px-1.5 py-0.5 rounded mt-1.5 font-bold leading-tight">
-                      {exact.capNote}
-                    </div>
-                  )}
-                  {!exact.isCapped && res.rewardRate > 0 && (
-                    <div className="text-[10px] text-emerald-600 mt-1 font-semibold">
-                      {res.capInfo?.isUnlimited ? '✅ 回饋無上限' : '✅ 未達上限'}
-                    </div>
-                  )}
+      {/* 💰 消費金額即時試算機 (僅試算有回饋之有效卡片，手機版預設可折疊) */}
+      {validCards.length > 0 && (
+        showCalculator ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Calculator className="w-4 h-4 text-indigo-600" />
+                  <h3 className="text-sm font-bold text-slate-800">消費金額即時試算</h3>
                 </div>
-              );
-            })}
+                <button
+                  type="button"
+                  onClick={() => setShowCalculator(false)}
+                  className="sm:hidden text-xs text-slate-400 hover:text-slate-600 font-medium px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                  title="收起試算機"
+                >
+                  收起
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500">預計消費金額 NT$</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="100"
+                  value={calcAmount}
+                  onChange={(e) => setCalcAmount(Math.max(0, Number(e.target.value) || 0))}
+                  className="w-28 px-2.5 py-1 bg-slate-50 border border-slate-300 rounded-lg text-sm font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                />
+              </div>
+            </div>
+
+            {/* 快捷金額膠囊 (含關鍵封頂臨界點) */}
+            <div className="flex flex-wrap items-center gap-1.5 mb-3.5 pb-3 border-b border-slate-100">
+              <span className="text-[11px] font-semibold text-slate-400 mr-1 shrink-0">快選金額：</span>
+              {[
+                { label: '+$500', isDelta: true, value: 500 },
+                { label: '$1,000', value: 1000 },
+                { label: '🎯 $6,000 (SPORT封頂)', value: 6000, color: 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border-emerald-200' },
+                ...(dawayIsNewUser
+                  ? [{ label: '🎯 $40,000 (DAWAY新戶封頂/買空機)', value: 40000, color: 'text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border-indigo-200' }]
+                  : [
+                      { label: '🎯 $20,000 (DAWAY舊戶封頂)', value: 20000, color: 'text-blue-700 bg-blue-50 hover:bg-blue-100 border-blue-200' },
+                      { label: '🎯 $40,000 (買空機/大筆消費)', value: 40000, color: 'text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border-indigo-200' }
+                    ])
+              ].map((chip) => {
+                const isCurrent = !chip.isDelta && calcAmount === chip.value;
+                return (
+                  <button
+                    key={chip.label}
+                    type="button"
+                    onClick={() => {
+                      if (chip.isDelta) {
+                        setCalcAmount(prev => prev + chip.value);
+                      } else {
+                        setCalcAmount(chip.value);
+                      }
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                      isCurrent
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs ring-2 ring-indigo-200'
+                        : chip.color || 'bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200'
+                    }`}
+                  >
+                    {chip.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className={`grid gap-2.5 ${
+              validCards.length === 1
+                ? 'grid-cols-1 max-w-xs'
+                : validCards.length === 2
+                  ? 'grid-cols-2'
+                  : validCards.length === 3
+                    ? 'grid-cols-2 sm:grid-cols-3'
+                    : 'grid-cols-2 sm:grid-cols-4'
+            }`}>
+              {validCards.map((res) => {
+                const exact = calculateExactRewardPoints(calcAmount, res);
+                const isBest = res.cardId === bestCard?.cardId;
+
+                return (
+                  <div
+                    key={res.cardId}
+                    className={`p-3 rounded-xl border text-center transition-all ${
+                      isBest
+                        ? 'bg-amber-50/70 border-amber-300 ring-1 ring-amber-300'
+                        : 'bg-white border-slate-200'
+                    }`}
+                  >
+                    <div className="text-[11px] font-semibold text-slate-500 truncate mb-1">
+                      {res.cardName.replace('銀行 ', '')}
+                    </div>
+                    <div className={`text-xl font-black ${isBest ? 'text-amber-600' : 'text-slate-800'}`}>
+                      {exact.points}
+                      <span className="text-xs font-normal text-slate-500 ml-0.5">點/元</span>
+                    </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">
+                      ({res.rewardRate.toFixed(1)}% {res.rewardType})
+                    </div>
+                    {exact.isCapped && exact.capNote && (
+                      <div className="text-[10px] text-amber-700 bg-amber-100/90 px-1.5 py-0.5 rounded mt-1.5 font-bold leading-tight">
+                        {exact.capNote}
+                      </div>
+                    )}
+                    {!exact.isCapped && res.rewardRate > 0 && (
+                      <div className="text-[10px] text-emerald-600 mt-1 font-semibold">
+                        {res.capInfo?.isUnlimited ? '✅ 回饋無上限' : '✅ 未達上限'}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ) : (
+          /* 手機版折疊狀態卡片：簡潔省空間，點擊一鍵展開完整試算 */
+          <div className="bg-white rounded-2xl border border-dashed border-slate-200 hover:border-indigo-300 p-3 sm:p-3.5 shadow-2xs transition-all">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                  <Calculator className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-800 truncate">消費金額即時試算</h4>
+                  <p className="text-[11px] text-slate-400 truncate">輸入金額快速換算 CUBE、台新、SPORT、DAWAY 預估回饋點數</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCalculator(true)}
+                className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-bold shrink-0 transition-all shadow-xs cursor-pointer"
+              >
+                開啟試算
+              </button>
+            </div>
+          </div>
+        )
       )}
 
       {/* 🥈 次佳與其他卡片排名 (僅顯示有回饋 > 0% 的卡片，完全排除 0% 廢卡) */}
