@@ -33,6 +33,9 @@ export const ChannelDrawer: React.FC<Props> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClose = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
     setSearchQuery('');
     onClose();
   }, [onClose]);
@@ -124,13 +127,16 @@ export const ChannelDrawer: React.FC<Props> = ({
   }
 
   let channelsToFilter = CHANNELS;
-  if (activeCategory === 'favorites') {
-    channelsToFilter = CHANNELS.filter(ch => favorites.includes(ch.id));
-  } else if (activeCategory === 'recents') {
-    const recentsMap = new Map(recents.map((id, index) => [id, index]));
-    channelsToFilter = CHANNELS.filter(ch => recentsMap.has(ch.id)).sort((a, b) => (recentsMap.get(a.id) ?? 0) - (recentsMap.get(b.id) ?? 0));
-  } else if (activeCategory !== 'all') {
-    channelsToFilter = CHANNELS.filter(ch => ch.category === activeCategory);
+  // 只有在未輸入搜尋字詞時，才受分類標籤限制；一旦搜尋，全庫檢索避免用戶找不到
+  if (!searchQuery.trim()) {
+    if (activeCategory === 'favorites') {
+      channelsToFilter = CHANNELS.filter(ch => favorites.includes(ch.id));
+    } else if (activeCategory === 'recents') {
+      const recentsMap = new Map(recents.map((id, index) => [id, index]));
+      channelsToFilter = CHANNELS.filter(ch => recentsMap.has(ch.id)).sort((a, b) => (recentsMap.get(a.id) ?? 0) - (recentsMap.get(b.id) ?? 0));
+    } else if (activeCategory !== 'all') {
+      channelsToFilter = CHANNELS.filter(ch => ch.category === activeCategory);
+    }
   }
 
   const filteredChannels = filterAndRankChannels(channelsToFilter, searchQuery);
@@ -276,11 +282,6 @@ export const ChannelDrawer: React.FC<Props> = ({
           {/* 通路清單可捲動區 (雙欄網格，滑動即自動收起虛擬鍵盤) */}
           <div
             className="p-3 overflow-y-auto flex-1 overscroll-contain"
-            onTouchStart={() => {
-              if (document.activeElement === inputRef.current) {
-                dismissKeyboard();
-              }
-            }}
             onScroll={() => {
               if (document.activeElement === inputRef.current) {
                 dismissKeyboard();
@@ -334,8 +335,15 @@ export const ChannelDrawer: React.FC<Props> = ({
                   const isFav = favorites.includes(channel.id);
                   return (
                     <button
+                      type="button"
                       key={channel.id}
                       ref={isSelected ? drawerSelectedRef : undefined}
+                      onMouseDown={(e) => {
+                        // 避免點擊時輸入框過早 blur 造成鍵盤收合動效導致 click 被瀏覽器取消
+                        if (!(e.target as HTMLElement).closest('.fav-star-btn')) {
+                          e.preventDefault();
+                        }
+                      }}
                       onClick={() => {
                         onSelectChannel(channel.id);
                         handleClose();
@@ -356,7 +364,10 @@ export const ChannelDrawer: React.FC<Props> = ({
                                   e.stopPropagation();
                                   onToggleFavorite(channel.id);
                                 }}
-                                className={`p-1 rounded-md hover:bg-slate-100 transition-colors ${
+                                onMouseDown={(e) => {
+                                  e.stopPropagation();
+                                }}
+                                className={`fav-star-btn p-1 rounded-md hover:bg-slate-100 transition-colors ${
                                   isFav ? 'text-amber-500' : 'text-slate-300 hover:text-slate-500'
                                 }`}
                                 title={isFav ? '取消常用' : '加入常用'}
