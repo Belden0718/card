@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { UserCardConfig } from './types/card';
 import { CHANNELS, calculateCardRewards } from './data/cardData';
 import { Header } from './components/Header';
@@ -6,17 +6,58 @@ import { UserConfigBar } from './components/UserConfigBar';
 import { QuickScenarioGrid } from './components/QuickScenarioGrid';
 import { RecommendationResult } from './components/RecommendationResult';
 import { CardCheatSheet } from './components/CardCheatSheet';
+import { ChannelDrawer } from './components/ChannelDrawer';
+import { ChevronDown, Star } from 'lucide-react';
 
 const STORAGE_KEY = 'credit_card_advisor_config_v2';
+const LAST_CHANNEL_KEY = 'credit_card_advisor_last_channel_v1';
+const FAVORITES_KEY = 'credit_card_advisor_favorites_v1';
+const RECENTS_KEY = 'credit_card_advisor_recents_v1';
+
+const DEFAULT_FAVORITES = ['pay_linepay', 'supermarket_px', 'convenience_711', 'gas_cpc', 'drink_chill', 'transit_rail'];
 
 const DEFAULT_CONFIG: UserCardConfig = {
-  cubeScheme: 'selected',      // 預設集精選（涵蓋加油與超商）
+  cubeScheme: 'selected',      // 預設集精選（涵蓋加油與超商 2.0%）
+  cubeLevel: 2,                // CUBE 會員等級 Lv2 (3.0% 無上限)
   sportCalorieMet: true,       // 預設汗水有達標
   sportQuotaAvailable: true,   // 預設本月 $6,000 額度未滿
   dawayIsNewUser: false,       // 已非新戶，預設舊戶 1.5%
   gogoRichartLinked: true,     // 預設有綁 Richart 自動扣繳
-  taishinScheme: 'daily'       // 預設天天刷（超商台新Pay 3.8%、加油 3.8%）
+  taishinScheme: 'pay',        // 本月已領取 Pay著刷（LINE Pay 3.8% / 超商台新Pay 3.8%）
+  ownedCards: {
+    cube: true,
+    gogo: true,
+    sport: true,
+    daway: true
+  }
 };
+
+// 精選高頻熱門捷徑 (23 大核心場景)
+const HOT_SHORTCUTS = [
+  { id: 'pay_apple_google', label: '📱 Apple/Google Pay' },
+  { id: 'pay_linepay', label: '📱 LINE Pay' },
+  { id: 'pay_taishin_twqr', label: '⚡ 台新Pay/TWQR' },
+  { id: 'pay_jko', label: '📱 街口支付' },
+  { id: 'convenience_711', label: '🏪 7-11' },
+  { id: 'convenience_family', label: '🏪 全家' },
+  { id: 'supermarket_px', label: '🛒 全聯' },
+  { id: 'supermarket_amart', label: '🛒 愛買量販' },
+  { id: 'store_muji', label: '🛋️ 無印良品' },
+  { id: 'store_showba_hardware', label: '🐧 小北百貨' },
+  { id: 'gas_cpc', label: '⛽ 中油' },
+  { id: 'gas_formosa', label: '⛽ 台塑/台亞' },
+  { id: 'ev_charging', label: '⚡ 特斯拉/充電' },
+  { id: 'transit_rail', label: '🚄 高鐵/台鐵' },
+  { id: 'online_shopee', label: '🦐 蝦皮' },
+  { id: 'online_momo', label: '🍑 momo' },
+  { id: 'food_delivery', label: '🛵 外送' },
+  { id: 'supermarket_rtmart', label: '🏬 大潤發' },
+  { id: 'drugstore_poya', label: '🎀 寶雅' },
+  { id: 'entertainment_tickets', label: '🎫 拓元售票' },
+  { id: 'entertainment_ktv', label: '🎤 錢櫃/KTV' },
+  { id: 'hotel_star_resorts', label: '🏨 星級飯店' },
+  { id: 'insurance_payment', label: '🛡️ 繳保費' }
+];
 
 export function App() {
   const [config, setConfig] = useState<UserCardConfig>(() => {
@@ -29,9 +70,41 @@ export function App() {
     return DEFAULT_CONFIG;
   });
 
-  const [selectedChannelId, setSelectedChannelId] = useState<string>('gas_cpc');
+  const [selectedChannelId, setSelectedChannelId] = useState<string>(() => {
+    try {
+      const saved = localStorage.getItem(LAST_CHANNEL_KEY);
+      if (saved && CHANNELS.some((c) => c.id === saved)) {
+        return saved;
+      }
+    } catch {
+      // ignore
+    }
+    return 'gas_cpc';
+  });
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(FAVORITES_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return DEFAULT_FAVORITES;
+  });
+
+  const [recents, setRecents] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(RECENTS_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // ignore
+    }
+    return [];
+  });
+
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isCheatSheetOpen, setIsCheatSheetOpen] = useState<boolean>(false);
+  const [isChannelDrawerOpen, setIsChannelDrawerOpen] = useState<boolean>(false);
+  const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
@@ -41,6 +114,40 @@ export function App() {
     }
   }, [config]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(LAST_CHANNEL_KEY, selectedChannelId);
+    } catch {
+      // ignore
+    }
+  }, [selectedChannelId]);
+
+  const handleSelectChannel = (channelId: string) => {
+    setSelectedChannelId(channelId);
+    setRecents((prev) => {
+      const next = [channelId, ...prev.filter((id) => id !== channelId)].slice(0, 8);
+      try {
+        localStorage.setItem(RECENTS_KEY, JSON.stringify(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
+
+  const handleToggleFavorite = (channelId: string) => {
+    setFavorites((prev) => {
+      const exists = prev.includes(channelId);
+      const next = exists ? prev.filter((id) => id !== channelId) : [...prev, channelId];
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
+
   // 當前選取的通路
   const currentChannel = CHANNELS.find((c) => c.id === selectedChannelId) || CHANNELS[0];
 
@@ -49,340 +156,154 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-slate-100/70 text-slate-900 pb-16">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-5 sm:pt-8">
         {/* 頁頭 */}
         <Header onOpenCheatSheet={() => setIsCheatSheetOpen(true)} />
 
         {/* 頂部狀態列（可收合展開調整4張卡個別狀態） */}
         <UserConfigBar config={config} onChange={setConfig} />
 
-        {/* 快速常用直達捷徑標籤 */}
-        <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1 text-xs">
-          <span className="font-bold text-slate-500 whitespace-nowrap">🔥 常用秒查：</span>
-          <button
-            onClick={() => { setSelectedChannelId('gas_cpc'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'gas_cpc'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            ⛽ 中油加油
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('gas_formosa'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'gas_formosa'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            ⛽ 福懋/台塑
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('gas_smile'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'gas_smile'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            ⛽ 速邁樂加油
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('convenience_711'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'convenience_711'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🏪 7-ELEVEN
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('convenience_family'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'convenience_family'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🏪 全家超商
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('drink_chill'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'drink_chill'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🍹 手搖/咖啡 (Chill 10%)
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('fastfood_mos'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'fastfood_mos'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🍔 摩斯漢堡
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('fastfood_mcdonalds'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'fastfood_mcdonalds'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🍟 麥當勞
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('fastfood_kfc'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'fastfood_kfc'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🍗 肯德基
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('supermarket_px'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'supermarket_px'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🛒 全聯福利中心
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('supermarket_carrefour'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'supermarket_carrefour'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🏬 萬家福 / 大全聯
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('supermarket_lopia'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'supermarket_lopia'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🥩 LOPIA 日系超市
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('home_ikea'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'home_ikea'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🪑 IKEA 宜家家居
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('ev_charging_parking'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'ev_charging_parking'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            ⚡ 充電停車
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('department_store'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'department_store'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🏬 百貨公司
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('drugstore_cosmetics'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'drugstore_cosmetics'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            💄 生活藥妝
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('food_delivery'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'food_delivery'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🛵 外送平台
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('online_shopee'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'online_shopee'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🦐 蝦皮購物
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('online_momo'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'online_momo'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🍑 momo購物
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('online_pchome'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'online_pchome'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            📦 PChome
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('streaming_media'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'streaming_media'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🎬 Netflix / 串流 (Chill 10%)
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('ai_software'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'ai_software'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🤖 ChatGPT / AI 工具
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('digital_stores'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'digital_stores'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            📱 App Store 課金
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('online_taobao'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'online_taobao'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🛍️ 淘寶天貓
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('transit_rail'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'transit_rail'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🚄 高鐵/台鐵
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('travel_airlines'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'travel_airlines'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🛫 航空公司機票
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('travel_booking_ota'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'travel_booking_ota'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🏨 Agoda / 訂房票券
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('transit_taxi'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'transit_taxi'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🚕 Uber / 台灣大車隊
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('travel_agencies'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'travel_agencies'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🗺️ 雄獅 / 各大旅行社
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('transit_japan_ic'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'transit_japan_ic'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            🍏 日本Suica交通卡
-          </button>
-          <button
-            onClick={() => { setSelectedChannelId('travel_overseas'); setSearchQuery(''); }}
-            className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all ${
-              selectedChannelId === 'travel_overseas'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-            }`}
-          >
-            ✈️ 海外實體 / 迪士尼
-          </button>
+        {/* ══════════════════════════════════════════════════════════════
+            1. 電腦版 (Desktop >= 1024px)：雙欄專業儀表板 (左欄50+通路 + 右欄Sticky釘選結果)
+           ══════════════════════════════════════════════════════════════ */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-6 items-start">
+          {/* 左欄：搜尋、分類與完整 50+ 通路網格 (內部獨立捲動) */}
+          <div className="lg:col-span-5 space-y-4">
+            <QuickScenarioGrid
+              selectedChannelId={selectedChannelId}
+              onSelectChannel={handleSelectChannel}
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              favorites={favorites}
+              recents={recents}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          </div>
+
+          {/* 右欄：Sticky 釘選推薦結果 (永遠停留在螢幕最精華區) */}
+          <div className="lg:col-span-7 lg:sticky lg:top-6 space-y-6">
+            <RecommendationResult
+              channel={currentChannel}
+              results={rewards}
+              ownedCards={config.ownedCards}
+              dawayIsNewUser={config.dawayIsNewUser}
+              isFavorite={favorites.includes(currentChannel.id)}
+              onToggleFavorite={() => handleToggleFavorite(currentChannel.id)}
+            />
+          </div>
         </div>
 
-        {/* 通路與情境選擇器 */}
-        <QuickScenarioGrid
-          selectedChannelId={selectedChannelId}
-          onSelectChannel={setSelectedChannelId}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-        />
+        {/* ══════════════════════════════════════════════════════════════
+            2. 手機版 (Mobile < 1024px)：方案 B「底部抽屜選擇器 + 結果第一屏置頂」
+           ══════════════════════════════════════════════════════════════ */}
+        <div className="lg:hidden space-y-4">
+          {/* 通路狀態切換列 */}
+          <div className="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-sm flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-2xl shrink-0">{currentChannel.icon}</span>
+              <div className="min-w-0">
+                <span className="text-[10px] text-slate-400 font-semibold tracking-wider uppercase block">
+                  當前查詢通路
+                </span>
+                <p className="font-bold text-sm sm:text-base text-slate-900 truncate">
+                  {currentChannel.name}
+                </p>
+              </div>
+            </div>
 
-        {/* 決策與推薦結果展示 */}
-        <RecommendationResult
-          channel={currentChannel}
-          results={rewards}
+            <button
+              onClick={() => setIsChannelDrawerOpen(true)}
+              className="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shrink-0 shadow-sm active:scale-95 transition-all cursor-pointer"
+            >
+              <span>切換通路</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* ⭐ 我的常用 (自訂常用門市快捷膠囊) */}
+          {favorites.length > 0 && (
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+              <span className="font-bold text-amber-600 whitespace-nowrap px-1 flex items-center gap-1">
+                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                常用：
+              </span>
+              {favorites.map((favId) => {
+                const favCh = CHANNELS.find((c) => c.id === favId);
+                if (!favCh) return null;
+                const isSelected = selectedChannelId === favId;
+                const shortLabel = favCh.name.split(' (')[0].replace(' (統一超商)', '').replace(' (FamilyMart)', '');
+                return (
+                  <button
+                    key={favId}
+                    onClick={() => handleSelectChannel(favId)}
+                    className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer ${
+                      isSelected
+                        ? 'bg-amber-500 text-white border-amber-500 shadow-xs ring-1 ring-amber-300'
+                        : 'bg-white text-slate-700 border-amber-200 hover:bg-amber-50'
+                    }`}
+                  >
+                    <span>{favCh.icon}</span>
+                    <span>{shortLabel}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* 🔥 常用秒查 (單行水平滑動膠囊，16大高頻通路點擊秒換) */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+            <span className="font-bold text-slate-500 whitespace-nowrap px-1">🔥 秒查：</span>
+            {HOT_SHORTCUTS.map((item) => {
+              const isSelected = selectedChannelId === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleSelectChannel(item.id)}
+                  className={`px-2.5 py-1 rounded-lg border font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                      : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 🥇 核心推薦結果 (直接在手機第 1 屏展示！完全零滾動看最優卡片與避雷！) */}
+          <div ref={resultRef} className="scroll-mt-4">
+            <RecommendationResult
+              channel={currentChannel}
+              results={rewards}
+              ownedCards={config.ownedCards}
+              dawayIsNewUser={config.dawayIsNewUser}
+              isFavorite={favorites.includes(currentChannel.id)}
+              onToggleFavorite={() => handleToggleFavorite(currentChannel.id)}
+            />
+          </div>
+
+          {/* 下方輔助大按鈕：開啟全部 50+ 通路抽屜 */}
+          <div className="pt-2">
+            <button
+              onClick={() => setIsChannelDrawerOpen(true)}
+              className="w-full py-3.5 px-4 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 text-slate-700 font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition-colors active:scale-98 cursor-pointer"
+            >
+              <span>🏬 瀏覽全部 50+ 消費通路清單（開啟抽屜選擇器）</span>
+              <span className="text-indigo-600 font-semibold">➔</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 手機版專屬：底部滑出之「50+ 通路選擇抽屜」 */}
+        <ChannelDrawer
+          isOpen={isChannelDrawerOpen}
+          onClose={() => setIsChannelDrawerOpen(false)}
+          selectedChannelId={selectedChannelId}
+          onSelectChannel={handleSelectChannel}
+          favorites={favorites}
+          recents={recents}
+          onToggleFavorite={handleToggleFavorite}
         />
 
         {/* 頁尾資訊 */}

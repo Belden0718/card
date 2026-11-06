@@ -1,15 +1,17 @@
 import type { CardRewardResult, CubeScheme, ScenarioChannel, TaishinScheme, UserCardConfig } from '../types/card';
 
 export const CUBE_SCHEME_LABELS: Record<CubeScheme, { name: string; tag: string; desc: string; icon: string }> = {
-  selected: { name: '集精選', tag: '中油 / 超商 / 全聯 / IKEA', desc: '中油直營、7-11、全家、全聯、萬家福、IKEA、智慧充電 3%~3.3%', icon: '⭐' },
-  dining: { name: '樂饗購', tag: '餐廳 / 外送 / 百貨 / 藥妝', desc: '國內餐飲、UberEats、foodpanda、新光三越、康是美 3.3%', icon: '🍱' },
-  digital: { name: '玩數位', tag: '網購 / 串流 / App / AI', desc: '蝦皮、momo、酷澎、淘寶、Netflix、App Store、ChatGPT 3.3%', icon: '💻' },
-  travel: { name: '趣旅行', tag: '海外實體 / 交通 / 機票', desc: '海外實體 3%、日韓實體、機票、Agoda、Uber叫車 3.3%', icon: '✈️' },
+  selected: { name: '集精選', tag: '中油 / 超商 / 全聯 / IKEA 2%', desc: '中油直營、7-11、全家、全聯、家樂福、LOPIA、IKEA 2.0% 無上限', icon: '⭐' },
+  travel: { name: '趣旅行', tag: '海外實體 / 高鐵 / 機票 3%', desc: '海外實體外幣、高鐵、機票、Agoda/Booking、Uber叫車 3.0% 無上限', icon: '✈️' },
+  dining: { name: '樂饗購', tag: '餐廳 / 外送 / 百貨 / 藥妝 3%', desc: '全台餐飲、UberEats、foodpanda、新光三越/SOGO/微風、康是美 3.0% 無上限', icon: '🍱' },
+  digital: { name: '玩數位', tag: '網購 / 串流 / App / AI 3%', desc: '蝦皮、momo、酷澎、淘寶、Netflix、Spotify、ChatGPT、App Store 3.0% 無上限', icon: '💻' },
+  formosa: { name: '台塑家', tag: '福懋/速邁樂/台塑/台亞 2%', desc: '台塑石油、台亞、福懋、統一速邁樂 2.0% 小樹點無上限 + 天天汽油降價', icon: '⛽' },
+  pxpay: { name: '全支付', tag: '全支付特約 / 全聯 2%', desc: '全支付 App 綁定 CUBE 卡於指定特約門市消費享 2.0% 小樹點無上限', icon: '📱' },
+  autumn: { name: '秋日遊', tag: '10/1~11/30 限定 3%~8%', desc: '期間限定日本指定名店、機場免稅、Suica/ICOCA 交通卡 3%~8% 小樹點', icon: '🍁' },
+  birthday: { name: '慶生日', tag: '壽星專屬 3.5%~10% (7月)', desc: '當月壽星專屬，精選名店餐廳、百貨專櫃最高 3.5%~10% 小樹點', icon: '🎂' },
   japan: { name: '日本賞', tag: '日本實體 / Suica 3.5%~8%', desc: '赴日旅遊指定名店、Suica/ICOCA 儲值、免稅店加碼', icon: '🗾' },
-  birthday: { name: '慶生月', tag: '壽星指定餐飲 / 百貨 10%', desc: '當月壽星專屬，精選餐廳、百貨專櫃最高 10% 小樹點', icon: '🎂' },
-  kids: { name: '童樂匯', tag: '婦幼 / 親子樂園', desc: '母嬰婦幼生活用品、親子樂園 3.3%', icon: '🧸' },
-  finance: { name: '來金網', tag: '保費 / 理財', desc: '國泰人壽保費、證券等 3%', icon: '💼' },
-  formosa: { name: '台塑家', tag: '福懋/速邁樂/台塑/台亞 2%', desc: '台塑石油、台亞、福懋、統一速邁樂加油站 2% 小樹點無上限 + 天天汽油每公升降價優惠', icon: '⛽' }
+  kids: { name: '童樂匯', tag: '婦幼 / 親子樂園 3%', desc: '母嬰婦幼生活用品、親子樂園 3.0% 無上限', icon: '🧸' },
+  finance: { name: '來金網', tag: '保費 / 理財 3%', desc: '國泰人壽保費、證券等 3.0%', icon: '💼' }
 };
 
 export const TAISHIN_SCHEME_LABELS: Record<TaishinScheme, { name: string; tag: string; desc: string; icon: string }> = {
@@ -32,7 +34,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '⛽',
     description: '台灣中油加油站（支援 Samsung Pay / Apple Pay / Google Pay / LINE Pay / 中油Pay / 台新Pay）',
     pitfalls: [
-      '【直營 vs 加盟陷阱】國泰 CUBE「集精選 3.3%」嚴格限制「台灣中油直營店」！若在千越、台糖、車容坊等「加盟站」刷 CUBE 僅有 0.3%！',
+      '【直營 vs 加盟陷阱】國泰 CUBE「集精選 2.0%」嚴格限制「台灣中油直營店」！若在千越、台糖、車容坊等「加盟站」刷 CUBE 僅有 0.3%！',
       '【永豐 SPORT 7% 不挑站】永豐 SPORT 綁定 Apple Pay / Google Pay 手機感應享最高 7%，直營或加盟通通適用，不用費心辨別直營站！',
       '【台新 3.8% 雙方案】台新切換【天天刷】或【Pay著刷】，出示中油Pay / LINE Pay / 台新Pay 掃碼享 3.8%！',
       '【避雷】切勿直接拿台新或永豐 DAWAY 實體插卡結帳（實體僅 0.5%~1%）。'
@@ -85,7 +87,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '⚡',
     description: 'U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging充電站；車麻吉、uTagGo智慧停車',
     pitfalls: [
-      '【CUBE 3.0% 首選】國泰 CUBE 切換【集精選】，指定充電站與車麻吉/uTagGo享 3% 小樹點無上限！',
+      '【CUBE 2.0%】國泰 CUBE 切換【集精選】，指定充電站與車麻吉/uTagGo享 2.0% 小樹點無上限！',
       '【台新 3.3%】台新切換【天天刷】（加油/充電/交通出行）享 3.3% 台新Point！',
       '【避雷注意】車麻吉中油加油消費不列入集精選（加油請直接刷中油直營）；uTagGo 月租停車排除。',
       '【永豐 DAWAY 3%】App 內付款若支援 LINE Pay 享新戶 3% / 舊戶 1.5%。'
@@ -101,7 +103,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【致命地雷 1】7-11 門市不支援永豐信用卡與 Apple Pay（未合作刷不過），且超商屬小額支付 0% 排除，千萬不要用 SPORT 卡！',
       '【台新Pay神器 3.8%】台新切換【天天刷】或【Pay著刷】，打開「台新Pay」掃碼享 3.8%（單筆上限 $3,000）！',
-      '【CUBE 3.0%】CUBE 切換【集精選】，直接感應/實體刷享 3% 無上限。',
+      '【CUBE 2.0%】CUBE 切換【集精選】，門市實體/感應享 2.0% 小樹點無上限（一般0.3%+指定加碼1.7%）。',
       '【致命地雷 2】千萬不要拿台新卡直接「實體刷卡或Apple Pay感應」，非台新Pay直接 0%！',
       '【致命地雷 3】7-11 門市的 LINE Pay「不支援」永豐信用卡扣款（刷不過）！',
       '【致命地雷 4】CUBE 卡若未切換至「集精選」，在 7-11 直接 0% 排除！'
@@ -116,7 +118,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【永豐超商 0% 排除】全家雖然可刷永豐卡，但超商屬於非一般消費小額排除通路，SPORT 卡 Apple Pay 拿不到 7%（直接 0%）！',
       '【台新Pay 3.8%】台新【天天刷】或【Pay著刷】出示「台新Pay」掃碼享 3.8%（單筆限額 $3,000）！',
-      '【CUBE 3.0%】國泰 CUBE 切換至「集精選」直接刷享 3% 無上限。',
+      '【CUBE 2.0% + 券最高 6%】國泰 CUBE 切換至「集精選」享 2.0% 無上限；11月領券滿額折抵最高享 6.0%！',
       '【避雷】全家千萬不要拿台新實體卡直接感應（0%），一定要出示台新Pay條碼！'
     ]
   },
@@ -154,6 +156,58 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【台新 Chill刷】指定名店（詹記、屋馬、碳佐麻里）享最高 10% 狂暴回饋！',
       '國泰 CUBE 切換【樂饗購】享 3.3% 無上限，大額聚餐不用擔心上限！'
+    ]
+  },
+  {
+    id: 'dining_orangeshabu',
+    name: '橘色涮涮屋 / Extension 1 by 橘色',
+    category: 'food',
+    icon: '🍲',
+    description: '頂級日式鍋物（橘色涮涮屋一館/二館/台中館、Extension 1 by 橘色）',
+    pitfalls: [
+      '【CUBE 秋日遊 8.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，橘色涮涮屋全門市享高達 8.0% 小樹點（無上限）！',
+      '【CUBE 平常樂饗購 3%~3.3%】若非秋日遊期間，切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！大額聚餐免算上限！',
+      '【台新 好饗刷 3.3%】台新切換【好饗刷】享全台餐飲 3.3% 台新Point！',
+      '【永豐 SPORT 7% 感應支付】門市支援 Apple Pay / Google Pay / Samsung Pay 感應，達標享最高 7% 豐點（月刷 $6,000 封頂）！'
+    ]
+  },
+  {
+    id: 'dining_sushiro',
+    name: '台灣壽司郎 / 爭鮮迴轉壽司',
+    category: 'food',
+    icon: '🍣',
+    description: '熱門連鎖迴轉壽司（台灣壽司郎、爭鮮迴轉壽司、爭鮮PLUS）',
+    pitfalls: [
+      '【CUBE 慶生日 10% 壽星神卡】7月壽星生日當月切換【慶生日】方案，台灣壽司郎享狂暴 10.0% 小樹點無上限！',
+      '【CUBE 秋日遊 5.0% 快閃】10/01~11/30 期間限定：切換【秋日遊】方案，爭鮮迴轉壽司、爭鮮PLUS 享 5.0% 小樹點無上限！',
+      '【台新雙方案】門市支援 LINE Pay 條碼切【Pay著刷】享 3.8%；實體卡感應切【好饗刷】享 3.3%！',
+      '【永豐 SPORT 7%】門市收銀機台支援 Apple Pay 感應付款，每月運動達標享最高 7%！'
+    ]
+  },
+  {
+    id: 'dining_japanese_luxury',
+    name: '日系頂級名店 (初魚/梵燒肉/侍燒肉/天麩羅)',
+    category: 'food',
+    icon: '🍱',
+    description: '初魚鮨、初魚 鉄板料亭、梵燒肉、侍燒肉、作 天麩羅、濟安鮨、元一天婦羅、鳥苑、成蔵、雞湯桑、朝炭',
+    pitfalls: [
+      '【CUBE 秋日遊 8.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，名店饗宴享高達 8.0% 小樹點（無上限）！秋日預約制日料首選！',
+      '【CUBE 平常樂饗購 3%~3.3%】若非秋日遊期間，切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！',
+      '【台新 好饗刷 3.3%】台新切換【好饗刷】享全台餐飲 3.3% 台新Point！',
+      '【永豐 SPORT 7%】現場支援 Apple Pay / Google Pay 感應且每月運動達標，享最高 7% 豐點（月刷 $6,000 封頂）！'
+    ]
+  },
+  {
+    id: 'dining_japanese_chain',
+    name: '日系連鎖美饌 (客美多咖啡 / すき家 / 錢都涮涮鍋)',
+    category: 'food',
+    icon: '☕',
+    description: '客美多咖啡 (Komeda\'s Coffee)、すき家 SUKIYA、錢都日式涮涮鍋',
+    pitfalls: [
+      '【CUBE 秋日遊 5.0% 快閃】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，客美多咖啡、すき家 SUKIYA、錢都日式涮涮鍋享 5.0% 小樹點無上限！',
+      '【CUBE 平常樂饗購 3%~3.3%】平時切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！',
+      '【台新雙方案】門市出示 LINE Pay 條碼切【Pay著刷】享 3.8%；實體卡感應切【好饗刷】享 3.3%！',
+      '【永豐 SPORT 7%】門市收銀機台支援 Apple Pay 感應付款，達標享最高 7%！'
     ]
   },
   // 網購
@@ -321,11 +375,13 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '全台實體餐廳 / 聚餐',
     category: 'food',
     icon: '🍽️',
-    description: '一般餐廳、咖啡廳、早午餐、連鎖餐飲',
+    description: '一般獨立餐廳、特色餐酒館、排餐合菜、連鎖餐飲',
     pitfalls: [
-      '【台新 好饗刷】台新切換至【好饗刷】，全台餐飲（含王品瘋Pay）享 3.3%！',
-      '【CUBE 樂饗購】國泰 CUBE 切換至「樂饗購」，全台餐廳實體消費享 3.3% 無上限！',
-      '若餐廳能用 Samsung Pay / Apple Pay 感應且額度充足，永豐 SPORT 感應享 7% 完勝！'
+      '【CUBE 樂饗購 3%~3.3% 首選】全台合法登記餐飲（MCC 5811/5812）刷 CUBE 切換【樂饗購】享最高 3.3% 小樹點無上限！幾萬塊聚餐大額消費不封頂！',
+      '【⚠️ 飯店餐廳致命地雷】若在晶華、萬豪、喜來登等「飯店/酒店附設餐廳」用餐，簽單常登記為「飯店住宿業 (MCC 7011)」，樂饗購會直接排除判定為 0.3%！此時 CUBE 必須改切【趣旅行】享 3.3%！',
+      '【⚠️ KTV / 酒吧排除】在錢櫃、好樂迪點餐，簽單登記為視聽娛樂業 (MCC 7999)，不屬於餐飲業，僅一般消費 0.3%！',
+      '【永豐 SPORT 7% 感應之神】若餐廳櫃檯能使用 Apple Pay / Google Pay / Samsung Pay 感應且月刷 $6,000 內，SPORT 卡享 7% 完勝！',
+      '【台新 好饗刷 3.3%】台新切換至【好饗刷】，全台餐飲（含王品瘋Pay、連鎖餐飲）享 3.3% 台新Point！'
     ]
   },
   // 超市量販
@@ -336,7 +392,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🛒',
     description: '全聯大部分信用卡直接刷卡為 0% 回饋',
     pitfalls: [
-      '【全聯唯一首選】國泰 CUBE 切換至「集精選」，實體刷卡直接拿 3.0% 小樹點無上限！',
+      '【全聯唯一首選】國泰 CUBE 切換至「集精選」，實體刷卡享 2.0% 小樹點無上限（全聯非一般消費但CUBE集精選特例加碼）！',
       '【注意】全聯直接刷黑狗卡、DAWAY、SPORT 實體卡皆為 0% 回饋！'
     ]
   },
@@ -349,7 +405,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '永豐 SPORT 卡使用 Samsung Pay / Apple Pay 感應享 7%！',
       '台新切換【天天刷】(萬家福/大全聯等指定量販) 享 3.3%！',
-      '國泰 CUBE 切換至「集精選」，萬家福享 3% 無上限。'
+      '國泰 CUBE 切換至「集精選」，家樂福實體享 2.0% 小樹點無上限。'
     ]
   },
   {
@@ -359,10 +415,23 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🥩',
     description: '日本人氣生鮮肉品超市（新北中和環球、台中LaLaport、桃園等店）',
     pitfalls: [
-      '【CUBE 3.0% 首選】國泰 CUBE 正式納入【集精選】，門市實體刷卡享 3.0% 小樹點無上限！',
+      '【CUBE 2.0%】國泰 CUBE 正式納入【集精選】，門市實體刷卡享 2.0% 小樹點無上限！',
       '【永豐 SPORT 7%】門市收銀機台支援 Apple Pay / Google Pay 感應，達標享最高 7%！',
       '【台新 3.3%】若門市設立於百貨商場（如中和環球、台中LaLaport），台新切換【大筆刷】或【天天刷】享 3.3%！',
       '【注意】部分 LOPIA 特殊生鮮櫃位僅收現金，結帳前請留意該收銀台標示。'
+    ]
+  },
+  {
+    id: 'supermarket_donki',
+    name: 'DON DON DONKI 唐吉訶德',
+    category: 'supermarket',
+    icon: '🐧',
+    description: '台灣 DON DON DONKI 唐吉訶德（日系生活量販、生鮮熟食、零食美妝）',
+    pitfalls: [
+      '【CUBE 秋日遊 5.0% 快閃】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，台灣 DON DON DONKI 享 5.0% 小樹點無上限！',
+      '【台新 Pay著刷 3.8%】結帳出示 LINE Pay 條碼付款，台新切換【Pay著刷】享最高 3.8% 台新Point！',
+      '【永豐 SPORT 7%】現場收銀機支援 Apple Pay / Google Pay / Samsung Pay 感應，達標享最高 7% 豐點！',
+      '【平日避雷提醒】唐吉訶德非秋日遊期間，獨立街邊門市刷 CUBE 僅一般消費 0.3%（非集精選常態加碼）；百貨店中櫃需視百貨自營機台認定。'
     ]
   },
   // 百貨家居與藥妝
@@ -380,6 +449,82 @@ export const CHANNELS: ScenarioChannel[] = [
     ]
   },
   {
+    id: 'store_hands',
+    name: 'HANDS 台隆手創館 (南港 LaLaport 店 / 門市)',
+    category: 'department',
+    icon: '🛍️',
+    description: 'HANDS 台隆手創館（南港 LaLaport 店享秋日遊 8.0% 小樹點無上限）',
+    pitfalls: [
+      '【CUBE 秋日遊 8.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，HANDS 台隆手創館（南港 LaLaport 店）享最高 8.0% 小樹點（無上限）！',
+      '【永豐 SPORT 7% 不挑店】實體機台使用 Apple Pay / Google Pay 感應付款，達標享最高 7% 豐點！',
+      '【台新 3.3%】門市消費切換【大筆刷】享 3.3% 台新Point！'
+    ]
+  },
+  {
+    id: 'mall_mingyao_xpark',
+    name: '明曜百貨 / Xpark 水生公園 / UNITED ARROWS',
+    category: 'department',
+    icon: '🏬',
+    description: '台北明曜百貨、Xpark 都會型水生公園、UNITED ARROWS 官方購物網站',
+    pitfalls: [
+      '【CUBE 秋日遊 5.0% 快閃】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，明曜百貨、Xpark、UNITED ARROWS 享 5.0% 小樹點（無上限）！',
+      '【永豐 SPORT 7%】現場機台使用 Apple Pay / Google Pay 感應付款享最高 7%！',
+      '【台新雙方案】明曜百貨切【大筆刷】享 3.3%；若支援 LINE Pay 切【Pay著刷】享 3.8%！'
+    ]
+  },
+  {
+    id: 'mall_sogo_dome',
+    name: '遠東SOGO百貨 / Garden City 大巨蛋 (SOGO各館)',
+    category: 'department',
+    icon: '🏬',
+    description: '遠東SOGO各館 (忠孝/復興/敦化/天母/中壢/新竹/高雄) 與 Garden City 台北大巨蛋商場',
+    pitfalls: [
+      '【CUBE 秋日遊 3.5%】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，遠東 SOGO（含 Garden City 大巨蛋）享 3.5% 小樹點無上限！',
+      '【CUBE 平常樂饗購 3%~3.3%】平常日切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3)；7月壽星切【慶生日】享 3.5%！',
+      '【永豐 SPORT 7%】專櫃支援 Apple Pay 感應付款享最高 7%（月刷 $6,000 封頂）！',
+      '【台新 3.3%】台新切換【大筆刷】專櫃實體消費享 3.3% 台新Point！'
+    ]
+  },
+  {
+    id: 'mall_mitsui_lalaport',
+    name: '三井 MITSUI OUTLET / Mitsui LaLaport',
+    category: 'department',
+    icon: '🛍️',
+    description: 'MITSUI OUTLET PARK (林口/台中港/台南)、Mitsui Shopping Park LaLaport (南港/台中)',
+    pitfalls: [
+      '【CUBE 秋日遊 3.0%】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，三井 OUTLET 與 LaLaport 享 3.0% 小樹點無上限！',
+      '【平日樂饗購 3%~3.3%】平常日切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！',
+      '【永豐 SPORT 7%】商場專櫃使用 Apple Pay / Google Pay 感應付款享最高 7%！',
+      '【台新 3.3%】台新切換【大筆刷】享 3.3% 台新Point！'
+    ]
+  },
+  {
+    id: 'drugstore_jp_med',
+    name: '日藥本舖 (指定門市) / 日系藥妝',
+    category: 'department',
+    icon: '💊',
+    description: '日藥本舖全台指定門市（秋日遊加碼日系藥妝 3.5%）',
+    pitfalls: [
+      '【CUBE 秋日遊 3.5%】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，日藥本舖指定門市享 3.5% 小樹點無上限！',
+      '【平日樂饗購 3%~3.3%】平常日切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！',
+      '【永豐 SPORT 7%】門市出示 Apple Pay 感應付款享 7% 豐點！',
+      '【台新雙方案】切【天天刷】實體感應享 3.3%；出示 LINE Pay 切【Pay著刷】享 3.8%！'
+    ]
+  },
+  {
+    id: 'fashion_fast',
+    name: 'UNIQLO / GU (網路商店與直營門市) / 快時尚',
+    category: 'department',
+    icon: '👕',
+    description: 'UNIQLO（網路商店/直營門市）、GU 台灣網路商店、ZARA、H&M、NET',
+    pitfalls: [
+      '【CUBE 秋日遊 3.0% 快閃】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，UNIQLO（網路商店/直營店）與 GU 台灣網路商店享 3.0% 小樹點無上限！',
+      '【百貨店中櫃地雷】若在百貨館內門市消費，UNIQLO/GU 多使用品牌自營獨立刷卡機（簽單非百貨抬頭），刷 CUBE 僅一般消費 0.3%！',
+      '【永豐 SPORT 7% 無腦破解】實體門市結帳直接使用 Apple Pay / Google Pay 感應付款，達標享最高 7% 豐點，完全不受店中櫃特店名稱限制！',
+      '【台新雙方案】門市或線上出示 LINE Pay 條碼切【Pay著刷】享 3.8%；百貨專櫃機台切【大筆刷】享 3.3%！'
+    ]
+  },
+  {
     id: 'home_ikea',
     name: 'IKEA 宜家家居 (門市 / 餐廳 / 官網)',
     category: 'department',
@@ -387,7 +532,7 @@ export const CHANNELS: ScenarioChannel[] = [
     description: '全台 IKEA 實體門市、IKEA 餐廳用餐、線上購物官網',
     pitfalls: [
       '【台新 3.3% 首選】台新切換【大筆刷】（指定居家裝修：IKEA、特力屋）享 3.3% 台新Point！',
-      '【CUBE 3.0%】國泰 CUBE 切換【集精選】享 3.0% 小樹點無上限！大額家具採購不封頂！',
+      '【CUBE 2.0%】國泰 CUBE 切換【集精選】享 2.0% 小樹點無上限！大額家具採購不封頂！',
       '【永豐 SPORT 7%】門市使用 Apple Pay / Google Pay 感應付款，達標享最高 7% 回饋（月刷 $6,000 封頂）！',
       '【永豐 DAWAY 3%】出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶享 1.5% LINE POINTS。'
     ]
@@ -513,16 +658,30 @@ export const CHANNELS: ScenarioChannel[] = [
       '【⚠️ 避開 DCC 雙幣陷阱】在國外刷卡若店員詢問「要刷台幣還是當地貨幣」，務必堅定回答「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
     ]
   },
-  // 一般
+  // 運動健身與一般
   {
-    id: 'general_store',
-    name: '一般實體門市 (無指定加碼小店)',
+    id: 'fitness_gym',
+    name: '連鎖健身房 (World Gym / 健身工廠 / BEING / Curves)',
     category: 'general',
-    icon: '💳',
-    description: '路邊雜貨、一般服飾店、無法用行動支付之實體店',
+    icon: '🏋️',
+    description: 'World Gym、健身工廠 (Fitness Factory)、BEING sport / BEING spa、Curves 等指定運動場館會籍月費與門市消費',
     pitfalls: [
-      '若店家支援 Apple/Samsung Pay 感應，永豐 SPORT 運動達標享 7%！',
-      '週末假日消費若用台新切換【假日刷】，國內不限通路享 2.0%！'
+      '【永豐 SPORT 7% 扣繳神卡】官方指定特約健身通路！每月運動達標 7,000 大卡，直接綁定信用卡定期定額扣繳月費或現場感應享狂暴 7.0% 豐點（月刷 $6,000 封頂）！健人每月省下一大筆！',
+      '【台新雙方案】若櫃檯支援 LINE Pay 條碼切【Pay著刷】享 3.8%；週末現場刷卡切【假日刷】享 2.0%；月費直接扣款為一般消費 0.5%。',
+      '【CUBE 0.3% 踩雷】健身房未列入國泰 CUBE 任何方案加碼名單中，刷卡扣繳會費僅有一般消費 0.3%！',
+      '【DAWAY 1.5%】永豐 DAWAY 實體刷卡或扣繳僅一般消費 1.5% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'store_momentum',
+    name: '摩曼頓 / 喬山健康科技 (SPORT 官方特約通路)',
+    category: 'general',
+    icon: '👟',
+    description: '摩曼頓 (Momentum)、喬山健康科技 (實體門市/官網) — 永豐 SPORT 官方直接列名之特約運動通路',
+    pitfalls: [
+      '【無腦隨便刷都 7.0%】摩曼頓與喬山是永豐官方合約白紙黑字明文列名的運動裝備特約通路！拿實體卡直接插卡、線上官網刷卡、或用 Apple Pay 感應，通通穩拿 7.0% 豐點（月刷 $6,000 封頂）！',
+      '【官網線上買也算】在摩曼頓官網或喬山官網輸入 SPORT 卡號線上結帳，一樣認列指定特約 7.0%！',
+      '【台新雙方案】門市出示 LINE Pay 切【Pay著刷】享 3.8%；百貨專櫃機台切【大筆刷】享 3.3%！'
     ]
   }
 ];
@@ -690,7 +849,10 @@ export function calculateExactRewardPoints(amount: number, res: CardRewardResult
   return { points, isCapped: false };
 }
 
-function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRewardResult {
+function calculateCubeReward(channelId: string, config: UserCardConfig): CardRewardResult {
+  const level = config.cubeLevel || 2;
+  const majorRate = level === 3 ? 3.3 : level === 2 ? 3.0 : 2.0;
+  const majorRateLabel = `${majorRate.toFixed(1)}%`;
   let rate = 0.3; // 基礎回饋
   let isTargetScheme = false;
   let requiredSchemeName: string | undefined = undefined;
@@ -702,14 +864,14 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
   let bestPaymentNote: string | undefined = '一般消費 0.3%';
 
   if (channelId === 'gas_cpc') {
-    rate = 3.3;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '💳 中油直營門市實體感應 / Apple Pay';
-    bestPaymentNote = '切換至【集精選】方案（限直營站）；當天 23:59 前切換即可';
+    bestPaymentNote = '切換至【集精選】方案（限直營站）；當天 23:59 前切換即可享 2.0% 小樹點無上限';
     details = [
-      '【集精選方案】中油直營門市消費：3.3% 小樹點（無上限）',
+      '【集精選方案】中油直營門市消費：2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
       '⚠️ 致命避坑：CUBE「集精選」嚴格排除中油加盟站（加盟門市僅享 0.3% 基本回饋）！'
     ];
   } else if (channelId === 'gas_formosa' || channelId === 'gas_smile') {
@@ -737,21 +899,24 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
     bestPaymentNote = '全國加油站非台塑體系，僅一般消費 0.3%';
     details = [
       '⚠️ 全國加油站「未列入」國泰 CUBE「集精選」或「台塑家」加碼名單',
-      'CUBE 加油加碼僅限「中油直營店 (集精選 3.3%)」與「台塑體系/福懋/速邁樂 (台塑家 2%)」',
+      'CUBE 加油加碼僅限「中油直營店 (集精選 2.0%)」與「台塑體系/福懋/速邁樂 (台塑家 2%)」',
       '強烈建議改用永豐 SPORT（Apple Pay 感應 7%）或台新卡（LINE Pay 3.8%）！'
     ];
     warning = '⚠️ 全國加油站不在 CUBE 加碼名單中，僅 0.3%！建議改刷 SPORT (7%) 或台新 (3.8%)！';
   } else if (channelId === 'convenience_711' || channelId === 'convenience_family') {
-    rate = 3.0;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '📱 門市實體感應 / Apple Pay';
-    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限（需於當天 23:59 前切換）';
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限（需於當天 23:59 前切換）';
     details = [
-      '【集精選方案】7-11 / 全家實體感應：3.0% 小樹點（無上限）',
+      '【集精選方案】7-11 / 全家實體感應：2.0% 小樹點（無上限，一般0.3%+指定加碼1.7%）',
       '⚠️ 必須切換至「集精選」方案！若非集精選，超商列為非一般消費直接 0% 排除！'
     ];
+    if (channelId === 'convenience_family') {
+      details.push('💡 11月專屬折抵券：國泰優惠APP領取【全家指定支付馬上折抵加碼 4% 券】，滿額折抵最高享 6.0%（單月上限100點）！');
+    }
   } else if (channelId === 'convenience_hilife_ok') {
     rate = 0.0;
     isBlocked = true;
@@ -764,55 +929,67 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
     ];
     warning = '⚠️ 萊爾富/OK 不在 CUBE 集精選加碼名單中，且為 0% 排除！請改用台新Pay (3.8%)！';
   } else if (channelId === 'supermarket_px') {
-    rate = 3.0;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '💳 全聯實體刷卡 / 全聯感應';
-    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限';
     details = [
-      '【集精選方案】全聯實體刷卡/感應：3.0% 小樹點（無上限）',
+      '【集精選方案】全聯實體刷卡/感應：2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
       '⚠️ 必須切換至「集精選」！全聯在其他方案為非一般消費 0%！'
     ];
   } else if (channelId === 'supermarket_carrefour') {
-    rate = 3.0;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '💳 實體刷卡 / Apple Pay 感應';
-    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
-    details = ['【集精選方案】萬家福消費：3.0% 小樹點（無上限）'];
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限';
+    details = ['【集精選方案】家樂福消費：2.0% 小樹點（無上限，一般0.3%+加碼1.7%）'];
   } else if (channelId === 'supermarket_lopia') {
-    rate = 3.0;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
-    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限';
     details = [
-      '【集精選方案】LOPIA 日系超市消費：3.0% 小樹點（無上限）',
-      '官方正式納入集精選名單，生鮮肉品採買享 3% 無上限！'
+      '【集精選方案】LOPIA 日系超市消費：2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
+      '官方正式納入集精選名單，生鮮肉品採買享 2.0% 無上限！'
+    ];
+  } else if (channelId === 'supermarket_donki') {
+    rate = 5.0;
+    isTargetScheme = true;
+    requiredSchemeName = '秋日遊';
+    requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+    bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+    bestPaymentNote = '切換至【秋日遊】方案，唐吉訶德享 5.0% 小樹點（無上限）！';
+    details = [
+      '【秋日遊限定方案 (10/1~11/30)】台灣 DON DON DONKI 唐吉訶德：5.0% 小樹點（無上限）！',
+      '涵蓋全台唐吉訶德門市，生鮮熟食與美妝日用通通享 5.0% 小樹點！',
+      '💡 避雷提醒：唐吉訶德於非秋日遊活動期間為一般消費 0.3%，10/01~11/30 活動期間請務必於消費當天 23:59 前在 CUBE App 切換至【秋日遊】方案享 5%！'
     ];
   } else if (channelId === 'home_ikea') {
-    rate = 3.0;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '💳 門市實體刷卡 / 官網線上刷卡';
-    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限';
     details = [
-      '【集精選方案】IKEA 宜家家居全門市與官網：3.0% 小樹點（無上限）',
+      '【集精選方案】IKEA 宜家家居全門市與官網：2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
       '涵蓋實體家具賣場、IKEA 餐廳用餐、官網線上購物'
     ];
   } else if (channelId === 'ev_charging_parking') {
-    rate = 3.0;
+    rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
     bestPaymentLabel = '📱 綁定各 App 自動扣款 / 現場感應';
-    bestPaymentNote = '切換至【集精選】方案享 3.0% 無上限';
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限';
     details = [
-      '【集精選方案】指定智慧出行享 3.0% 小樹點（無上限）',
+      '【集精選方案】指定智慧出行享 2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
       '指定充電站：U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging',
       '指定智慧停車：車麻吉（不含加油）、uTagGo（不含月租）'
     ];
@@ -827,6 +1004,16 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
   } else if (
     channelId === 'dining_restaurant' ||
     channelId === 'dining_hotpot' ||
+    channelId === 'dining_orangeshabu' ||
+    channelId === 'dining_sushiro' ||
+    channelId === 'dining_japanese_luxury' ||
+    channelId === 'dining_japanese_chain' ||
+    channelId === 'fashion_fast' ||
+    channelId === 'store_hands' ||
+    channelId === 'mall_mingyao_xpark' ||
+    channelId === 'mall_sogo_dome' ||
+    channelId === 'mall_mitsui_lalaport' ||
+    channelId === 'drugstore_jp_med' ||
     channelId === 'fastfood_mos' ||
     channelId === 'fastfood_mcdonalds' ||
     channelId === 'fastfood_kfc' ||
@@ -841,9 +1028,14 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
     bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
     bestPaymentNote = '切換至【樂饗購】方案享 3.3% 小樹點無上限';
     if (channelId === 'fastfood_mos') {
+      rate = 3.5;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊】';
+      bestPaymentNote = '切換至【秋日遊】方案享摩斯 3.5% 小樹點（無上限，高於樂饗購 3%）！';
       details = [
-        '【樂饗購方案】摩斯漢堡餐飲消費：3.3% 小樹點（無上限）',
-        '支援門市感應、自助機與 MOS App 線上刷卡'
+        '【秋日遊限定方案 (10/1~11/30)】摩斯漢堡（APP+實體店）享 3.5% 小樹點（無上限）！',
+        '支援門市感應、自助機與 MOS Order App 線上刷卡',
+        '平常非活動期間切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 無上限'
       ];
     } else if (channelId === 'fastfood_mcdonalds') {
       details = [
@@ -851,34 +1043,191 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
         '支援門市實體感應與麥當勞 APP 手機點餐'
       ];
     } else if (channelId === 'fastfood_kfc') {
+      rate = 5.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊】';
+      bestPaymentNote = '必勝客切換至【秋日遊】享 5.0% 小樹點！肯德基切【樂饗購】享 3%~3.3%';
       details = [
-        '【樂饗購方案】肯德基/必勝客官方認列：3.3% 小樹點（無上限）',
-        '支援門市實體感應與 PK雙饗卡 App 線上訂餐'
+        '【秋日遊限定方案 (10/1~11/30)】必勝客切換【秋日遊】方案享 5.0% 小樹點（無上限）！',
+        '肯德基門市與 PK雙饗卡切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限'
       ];
     } else if (channelId === 'drink_chill') {
       details = [
         '【樂饗購方案】手搖茶飲與咖啡：3.3% 小樹點（無上限）',
         '💡 提示：若追求極致回饋，台新卡切換【Chill刷】可享狂暴 10%！'
       ];
-    } else if (channelId === 'dining_hotpot') {
+    } else if (channelId === 'dining_orangeshabu') {
+      rate = 8.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】方案享橘色涮涮屋 8.0% 小樹點（無上限）！';
       details = [
-        '【樂饗購方案】燒肉火鍋餐廳：3.3% 小樹點（無上限）',
-        '💡 提示：指定名店（詹記、屋馬、碳佐麻里）台新卡切換【Chill刷】可達 10%！'
+        '【秋日遊限定方案 (10/1~11/30)】國內日系美食饗宴：8.0% 小樹點（無上限）！',
+        '涵蓋橘色涮涮屋（一館/二館/台中館）、Extension 1 by 橘色全門市實體消費',
+        '🔥 頂級日系美食最高 8.0% 小樹點無上限！秋日聚餐首選！',
+        '平常非活動期間切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 無上限'
+      ];
+    } else if (channelId === 'dining_sushiro') {
+      rate = 5.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】爭鮮享 5.0% 小樹點！🎂 7月壽星切【慶生日】壽司郎享 10.0%！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】爭鮮迴轉壽司、爭鮮PLUS 享 5.0% 小樹點（無上限）！',
+        '🎂 7月壽星神卡：生日當月切換【慶生日】方案，台灣壽司郎享狂暴 10.0% 小樹點無上限！',
+        '平常日切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限'
+      ];
+    } else if (channelId === 'dining_japanese_luxury') {
+      rate = 8.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】初魚/梵燒肉/侍燒肉等享 8.0% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系美食饗宴：8.0% 小樹點（無上限）！',
+        '涵蓋初魚鮨、初魚 鉄板料亭、梵燒肉、侍燒肉、作 天麩羅、濟安鮨、元一天婦羅、鳥苑、成蔵、雞湯桑、朝炭',
+        '🔥 頂級日系美食最高 8.0% 小樹點無上限！秋日預約制名店首選！',
+        '平常非活動期間切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 無上限'
+      ];
+    } else if (channelId === 'dining_japanese_chain') {
+      rate = 5.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】客美多/すき家/錢都享 5.0% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系美食饗宴：5.0% 小樹點（無上限）！',
+        '涵蓋客美多咖啡 (Komeda\'s Coffee)、すき家 SUKIYA、錢都日式涮涮鍋',
+        '⭐ 日系平價連鎖美饌 5.0% 小樹點無上限！',
+        '平常非活動期間切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 無上限'
+      ];
+    } else if (channelId === 'fashion_fast') {
+      rate = 3.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💻 官網網路商店 / 直營門市實體刷卡';
+      bestPaymentNote = '切換至【秋日遊】UNIQLO與GU享 3.0% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系購物名店：3.0% 小樹點（無上限）！',
+        '涵蓋 UNIQLO 網路商店/直營門市、GU 台灣網路商店',
+        '⚠️ 百貨商場內 UNIQLO/GU 門市若使用品牌獨立收銀機台非百貨自營機台，可能不列入加碼，建議優先於官網網路商店或直營街邊店消費！'
+      ];
+    } else if (channelId === 'dining_hotpot') {
+      if (config.cubeScheme === 'birthday') {
+        rate = 10.0;
+        requiredSchemeName = '慶生日';
+        requiredSchemeTag = '方案：【慶生日 (壽星專屬)】';
+        bestPaymentNote = '生日當月切換至【慶生日】方案享名店 10.0% 小樹點無上限！';
+        details = [
+          '【慶生日方案】詹記、屋馬、茶六、老井、老四川、鼎王享狂暴 10.0% 小樹點（無上限）！',
+          '🎂 7月壽星專屬：生日當月到指定火鍋燒肉名店用餐直接拿 10%！'
+        ];
+      } else {
+        details = [
+          '【樂饗購方案】燒肉火鍋餐廳：3.3% 小樹點（無上限）',
+          '🍁 10/1~11/30 秋日遊美食：橘色涮涮屋（一館/二館/台中館）、Extension 1 by橘色、梵燒肉、侍燒肉切【秋日遊】享 8.0%！錢都日式涮涮鍋享 5.0%！',
+          '🎂 7月壽星神技：生日當月切換【慶生日】方案，屋馬、詹記、茶六、老井、老四川、鼎王享狂暴 10.0% 小樹點無上限！',
+          '💡 提示：指定名店（詹記、屋馬、碳佐麻里）台新卡切換【Chill刷】可達 10%！'
+        ];
+      }
+    } else if (channelId === 'store_hands') {
+      rate = 8.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】方案，HANDS台隆手創館（南港LaLaport店）享 8.0% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系購物名店：8.0% 小樹點（無上限）！',
+        '涵蓋 HANDS 台隆手創館（南港 LaLaport 店）門市實體消費',
+        '🔥 日系生活雜貨最高 8.0% 小樹點無上限！秋日採購首選！'
+      ];
+    } else if (channelId === 'mall_mingyao_xpark') {
+      rate = 5.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 實體刷卡 / 官網線上刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】方案，明曜百貨、Xpark、UNITED ARROWS享 5.0% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系購物名店：5.0% 小樹點（無上限）！',
+        '涵蓋台北明曜百貨、Xpark 都會型水生公園、UNITED ARROWS 官方購物網站',
+        '⭐ 日系潮流選品與休閒娛樂享 5.0% 小樹點無上限！'
+      ];
+    } else if (channelId === 'mall_sogo_dome') {
+      rate = 3.5;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 專櫃實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】方案，遠東SOGO（含Garden City大巨蛋）享 3.5% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系購物名店：3.5% 小樹點（無上限）！',
+        '涵蓋遠東 SOGO 全台各館與 Garden City 台北大巨蛋商場',
+        '🎂 7月壽星當月切換【慶生日】亦享 3.5% 小樹點無上限；平時切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3)'
+      ];
+    } else if (channelId === 'mall_mitsui_lalaport') {
+      rate = 3.0;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 專櫃實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】方案，三井Outlet與LaLaport享 3.0% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系購物名店：3.0% 小樹點（無上限）！',
+        '涵蓋 MITSUI OUTLET PARK（林口/台中港/台南）、Mitsui Shopping Park LaLaport（南港/台中）',
+        '平常非活動期間切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 無上限'
+      ];
+    } else if (channelId === 'drugstore_jp_med') {
+      rate = 3.5;
+      requiredSchemeName = '秋日遊';
+      requiredSchemeTag = '方案：【秋日遊 (10/1~11/30)】';
+      bestPaymentLabel = '💳 門市實體刷卡 / Apple Pay 感應';
+      bestPaymentNote = '切換至【秋日遊】方案，日藥本舖指定門市享 3.5% 小樹點（無上限）！';
+      details = [
+        '【秋日遊限定方案 (10/1~11/30)】國內日系購物名店：3.5% 小樹點（無上限）！',
+        '涵蓋日藥本舖全台指定門市實體消費',
+        '平常非活動期間切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 無上限'
       ];
     } else if (channelId === 'department_store') {
       details = [
         '【樂饗購方案】全台指定百貨消費：3.3% 小樹點（無上限）',
-        '涵蓋新光三越、遠東SOGO、遠東百貨、微風廣場、台北101、漢神百貨等',
-        '🔥 週年慶與精品大額採購首選，小樹點回饋無上限！'
+        '涵蓋新光三越、微風廣場、遠東百貨、台北101、漢神百貨、京站、統一時代等',
+        '🍁 10/1~11/30 秋日遊加碼日系名店：HANDS台隆手創館 8%、明曜/Xpark/UA 5%、遠東SOGO/大巨蛋 3.5%、三井Outlet/LaLaport 3%！',
+        '🎂 7月慶生月：生日當月全台實體百貨專櫃切換【慶生日】享 3.5% 無上限！'
       ];
     } else if (channelId === 'drugstore_cosmetics') {
       details = [
         '【樂饗購方案】指定連鎖藥妝：3.3% 小樹點（無上限）',
         '涵蓋康是美、屈臣氏、寶雅 POYA、松本清、Tomod\'s、日藥本舖',
+        '🍁 10/1~11/30 秋日遊：日藥本舖指定門市切【秋日遊】享 3.5% 小樹點！',
         '醫美節或大額保養品補貨首選，小樹點回饋無上限！'
       ];
     } else {
-      details = ['【樂饗購方案】國內餐飲實體消費：3.3% 小樹點（無上限）'];
+      if (config.cubeScheme === 'autumn') {
+        rate = 8.0;
+        requiredSchemeName = '秋日遊';
+        requiredSchemeTag = '方案：【秋日遊】';
+        bestPaymentNote = '切換至【秋日遊】橘色/初魚/侍燒肉等享 8%、爭鮮/客美多/すき家 5%！';
+        details = [
+          '【秋日遊限定方案 (10/1~11/30)】國內日系美食饗宴：',
+          '🔥 8.0%：橘色涮涮屋（一館/二館/台中館）、Extension 1 by橘色、初魚鮨、初魚鉄板料亭、雞湯桑、朝炭、梵燒肉、侍燒肉、作 天麩羅、濟安鮨、元一天婦羅、鳥苑、成蔵',
+          '⭐ 5.0%：爭鮮迴轉壽司、爭鮮PLUS、錢都日式涮涮鍋、客美多咖啡、すき家 SUKIYA、必勝客',
+          '🍔 3.5%：摩斯漢堡（APP+實體店）'
+        ];
+      } else if (config.cubeScheme === 'birthday') {
+        rate = 10.0;
+        requiredSchemeName = '慶生日';
+        requiredSchemeTag = '方案：【慶生日 (壽星專屬)】';
+        bestPaymentNote = '生日當月切換至【慶生日】享名店 10.0% 小樹點無上限！';
+        details = [
+          '【慶生日方案】壽星指定名店（台灣壽司郎、龍都酒樓、新東南海鮮、JAI宅、青沐、嵩sung、Pastaio）享 10.0% 小樹點無上限！'
+        ];
+      } else {
+        details = [
+          '【樂饗購方案】國內餐飲實體消費：3.3% 小樹點（無上限）',
+          '🍁 10/1~11/30 秋日遊：橘色/初魚/梵燒肉享 8.0%！爭鮮/客美多/すき家/錢都/必勝客享 5.0%！摩斯享 3.5%！',
+          '🎂 7月壽星特權：生日當月切【慶生日】壽司郎、龍都酒樓、新東南海鮮、JAI宅享 10.0%！'
+        ];
+      }
     }
   } else if (
     channelId === 'online_shopee_momo' ||
@@ -990,6 +1339,7 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
     details = [
       '【趣旅行方案】指定訂房與票券平台：3.3% 小樹點（無上限）',
       '涵蓋 Agoda、Booking.com、Trip.com、Airbnb、Hotels.com、Expedia、Klook、KKday 等',
+      '🍁 10/1~11/30 秋日遊快閃：Klook 日本行程/交通享 5.0%、Hotels.com/Expedia 最高享 10% 小樹點！',
       '💡 疊加優惠：透過國泰專屬 Agoda 連結常享額外 7%~10% 現折優惠！',
       '⚠️ 避坑提醒：訂房請選擇線上預付與外幣計價，避開現場到店付款與 DCC 動態貨幣轉換；且切勿分期（分期降為 0.3%）！'
     ];
@@ -1031,36 +1381,52 @@ function calculateCubeReward(channelId: string, _config: UserCardConfig): CardRe
       '⚠️ 注意：門市刷卡請勿分期，一次付清享 3.3% 無上限！'
     ];
   } else if (channelId === 'transit_japan_ic') {
-    rate = 3.0;
+    rate = majorRate;
     isTargetScheme = true;
-    requiredSchemeName = '趣旅行 / 日本賞';
-    requiredSchemeTag = '方案：【趣旅行 / 日本賞】';
+    requiredSchemeName = '趣旅行 / 秋日遊';
+    requiredSchemeTag = '方案：【趣旅行 / 秋日遊】';
     bestPaymentLabel = '🍏 iPhone Apple 錢包直接線上加值';
-    bestPaymentNote = '切換至【趣旅行】享 3.0% / 切換【日本賞】享 3.5%~8% 小樹點無上限';
+    bestPaymentNote = `切換至【趣旅行】享 ${majorRateLabel} / 10/1~11/30 期間限定切【秋日遊】享 3%~8% 小樹點無上限`;
     details = [
-      '【趣旅行方案】Apple 錢包加值日本交通卡：3.0% 小樹點（無上限）',
-      '【日本賞方案】加碼可達 3.5%~8% 小樹點！日本自由行最強交通神操作！',
+      `【趣旅行方案】Apple 錢包加值日本交通卡：${majorRateLabel} 小樹點（無上限）`,
+      '【秋日遊限定方案 (10/1~11/30)】Suica/ICOCA 交通卡加碼可達 3%~8% 小樹點！日本自由行交通神操作！',
       '涵蓋 Apple 錢包內的 Suica（西瓜卡）、PASMO、ICOCA 線上直接儲值',
       '💡 屬於日圓外幣線上交易（需 1.5% 手續費），扣除後仍倒賺！'
     ];
   } else if (channelId === 'travel_overseas') {
-    rate = 3.0;
+    rate = majorRate;
     isTargetScheme = true;
-    requiredSchemeName = '趣旅行 / 日本賞';
-    requiredSchemeTag = '方案：【趣旅行 / 日本賞】';
+    requiredSchemeName = '趣旅行 / 秋日遊';
+    requiredSchemeTag = '方案：【趣旅行 / 秋日遊】';
     bestPaymentLabel = '✈️ 海外實體感應 / 插卡外幣消費（選當地貨幣）';
-    bestPaymentNote = '切換至【趣旅行】享 3.0%~3.3% / 日本實體切【日本賞】最高 3.5%~8%';
+    bestPaymentNote = `切換至【趣旅行】享 ${majorRateLabel} / 日本實體切【秋日遊 (10/1~11/30)】最高 3%~8%`;
     details = [
-      '【趣旅行方案】全球海外實體外幣消費：3.0%~3.3% 小樹點（無上限）',
+      `【趣旅行方案】全球海外實體外幣消費：${majorRateLabel} 小樹點（無上限）`,
       '涵蓋海外當地餐廳、百貨精品、實體飯店，以及日本三大樂園（東京迪士尼、大阪環球影城、哈利波特影城）',
-      '💡 日本當地精選名店建議切換【日本賞】可享 3.5%~8% 更高回饋！',
+      '💡 日本當地精選名店建議切換【秋日遊 (10/1~11/30)】可享 3%~8% 更高回饋！',
       '⚠️ 避坑提醒：在國外刷卡請務必選擇「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
     ];
   }
 
+  // 樂饗購 / 玩數位 / 趣旅行等主要權益：動態校正為使用者的 CUBE 等級 (Lv1: 2.0%, Lv2: 3.0%, Lv3: 3.3%)
+  if (rate === 3.3) {
+    rate = majorRate;
+    details = details.map((d) => d.replace(/3\.3%/g, majorRateLabel));
+    if (bestPaymentNote) {
+      bestPaymentNote = bestPaymentNote.replace(/3\.3%/g, majorRateLabel);
+    }
+    if (warning) {
+      warning = warning.replace(/3\.3%/g, majorRateLabel);
+    }
+  }
+
+  if (isTargetScheme) {
+    details.push(`💡 會員等級：當前以 CUBE Level ${level}（主要權益 ${majorRateLabel} / 集精選固定 2.0%）計算`);
+  }
+
   return {
     cardId: 'cube',
-    cardName: '國泰世華 CUBE 卡',
+    cardName: `國泰世華 CUBE 卡 (Lv${level})`,
     cardColor: 'from-amber-500 to-yellow-600',
     rewardRate: rate,
     rewardType: '小樹點',
@@ -1255,6 +1621,121 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       details: [
         `【Chill刷方案】微醺聚會指定燒肉火鍋享 ${isLinked ? 10 : baseRate}% 台新Point！`,
         '需綁定 Richart 自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 5.1 橘色涮涮屋 / 頂級日系鍋物 (好饗刷 3.3%)
+  if (channelId === 'dining_orangeshabu') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '好饗刷',
+      requiredSchemeTag: '方案：【好饗刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【好饗刷】橘色餐飲享 3.3%'
+      },
+      details: [
+        `【好饗刷方案】橘色涮涮屋實體門市消費：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 5.2 壽司郎 / 爭鮮 (Pay著刷 3.8% / 好饗刷 3.3%)
+  if (channelId === 'dining_sushiro') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷 / 好饗刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 出示 LINE Pay 條碼結帳享 3.8%；實體卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷】出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `【好饗刷】若走實體卡感應或插卡：${isLinked ? 3.3 : baseRate}% 台新Point`
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 5.3 日系精緻料理 / 預約名店 (好饗刷 3.3%)
+  if (channelId === 'dining_japanese_luxury') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: '好饗刷',
+      requiredSchemeTag: '方案：【好饗刷】',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        note: '【好饗刷】餐飲享 3.3%'
+      },
+      details: [
+        `【好饗刷方案】日系高級名店實體消費：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋初魚、梵燒肉、侍燒肉等日料餐廳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 5.4 日系連鎖餐飲 (客美多咖啡 / すき家 / 錢都)
+  if (channelId === 'dining_japanese_chain') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷 / 好饗刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 出示 LINE Pay 條碼結帳享 3.8%；實體卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷】門市出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `【好饗刷】若走實體卡感應或插卡：${isLinked ? 3.3 : baseRate}% 台新Point`
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 5.5 快時尚服飾 (UNIQLO / GU)
+  if (channelId === 'fashion_fast') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷 / 大筆刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 大筆刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 門市或官網出示 LINE Pay 付款享 3.8%；百貨專櫃機台切【大筆刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷方案】UNIQLO / GU 支援 LINE Pay 結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '若於百貨館內且走百貨自營機台，切換【大筆刷】亦享 3.3%'
       ],
       isSchemeDependent: true
     };
@@ -1536,7 +2017,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
         note: '全聯消費排除回饋'
       },
       details: ['全聯門市列為台新非一般消費排除項目，0% 回饋'],
-      warning: '全聯直接刷台新卡為 0%！請改用國泰 CUBE 卡 (集精選 3%)！',
+      warning: '全聯直接刷台新卡為 0%！請改用國泰 CUBE 卡 (集精選 2.0%)！',
       isBlocked: true
     };
   }
@@ -1557,6 +2038,29 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
         note: '【天天刷】萬家福/大全聯指定量販 3.3%'
       },
       details: [`【天天刷】萬家福/大全聯等指定量販：${isLinked ? 3.3 : baseRate}% 台新Point`],
+      isSchemeDependent: true
+    };
+  }
+
+  // 9.1 唐吉訶德 (Pay著刷 3.8%)
+  if (channelId === 'supermarket_donki') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷',
+      requiredSchemeTag: '方案：【Pay著刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 DON DON DONKI 出示 LINE Pay 條碼結帳',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷方案】唐吉訶德出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
       isSchemeDependent: true
     };
   }
@@ -1764,7 +2268,13 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
   }
 
   // 11.5. 全台指定百貨 (大筆刷支援)
-  if (channelId === 'department_store') {
+  if (
+    channelId === 'department_store' ||
+    channelId === 'store_hands' ||
+    channelId === 'mall_mingyao_xpark' ||
+    channelId === 'mall_sogo_dome' ||
+    channelId === 'mall_mitsui_lalaport'
+  ) {
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
@@ -1776,11 +2286,11 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       bestPaymentMethod: {
         method: 'physical',
         label: '💳 專櫃實體刷卡或 Apple/Samsung Pay 感應',
-        note: '【大筆刷】新光三越/SOGO/微風/台北101等享 3.3%'
+        note: '【大筆刷】新光三越/SOGO/明曜/微風/台北101等享 3.3%'
       },
       details: [
         `【大筆刷方案】指定百貨消費：${isLinked ? 3.3 : baseRate}% 台新Point`,
-        '涵蓋新光三越、遠東SOGO、微風、台北101、遠東百貨等',
+        '涵蓋新光三越、遠東SOGO、微風、台北101、遠東百貨、明曜百貨等',
         '需綁定 Richart / 台新帳戶自動扣繳'
       ],
       isSchemeDependent: true
@@ -1788,7 +2298,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
   }
 
   // 11.6. 生活藥妝 (天天刷支援)
-  if (channelId === 'drugstore_cosmetics') {
+  if (channelId === 'drugstore_cosmetics' || channelId === 'drugstore_jp_med') {
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
@@ -1882,8 +2392,31 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
     };
   }
 
-  // 12. 一般門市 (假日刷支援)
-  if (channelId === 'general_store') {
+  // 12. 摩曼頓與喬山運動器材 (Pay著刷 3.8% / 大筆刷 3.3%)
+  if (channelId === 'store_momentum') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷 / 大筆刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 大筆刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 出示 LINE Pay 條碼享 3.8%；百貨專櫃機台切【大筆刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%'
+      },
+      details: [
+        `【Pay著刷方案】門市結帳出示 LINE Pay 條碼：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `【大筆刷方案】若於新光三越、SOGO、遠百等百貨專櫃走百貨機台：${isLinked ? 3.3 : baseRate}% 台新Point`
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 13. 連鎖健身房 (假日刷 2.0% / 平日 0.5%)
+  if (channelId === 'fitness_gym') {
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
@@ -1894,10 +2427,13 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【假日刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 週末假日消費刷卡',
-        note: '【假日刷】週末享 2.0%（平日一般消費 0.5%）'
+        label: '💳 週末至健身房現場刷卡享 2.0%；月費直接扣繳僅 0.5%',
+        note: '【假日刷】週末現場刷卡享 2.0%'
       },
-      details: [`【假日刷方案】節假日國內一般消費：${isLinked ? 2.0 : baseRate}% 回饋（平日一般消費 ${baseRate}%）`],
+      details: [
+        `【假日刷方案】週末至 World Gym / 健身工廠現場刷卡：${isLinked ? 2.0 : baseRate}% 台新Point`,
+        `⚠️ 會籍月費提醒：若綁定信用卡定期定額每月自動扣繳，列為一般消費僅 ${baseRate}%！強烈推薦改用永豐 SPORT 卡扣繳享 7%！`
+      ],
       isSchemeDependent: true
     };
   }
@@ -1924,20 +2460,70 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
 
   const supportsContactless = (
     channelId.startsWith('gas_') ||
+    channelId.startsWith('dining_') ||
+    channelId.startsWith('mall_') ||
+    channelId.startsWith('store_') ||
+    channelId.startsWith('drugstore_') ||
+    channelId === 'fashion_fast' ||
     channelId === 'fastfood_mos' ||
     channelId === 'fastfood_kfc' ||
-    channelId === 'dining_restaurant' ||
-    channelId === 'dining_hotpot' ||
     channelId === 'drink_chill' ||
     channelId === 'supermarket_carrefour' ||
     channelId === 'supermarket_lopia' ||
+    channelId === 'supermarket_donki' ||
     channelId === 'home_ikea' ||
     channelId === 'department_store' ||
-    channelId === 'drugstore_cosmetics' ||
     channelId === 'transit_car_rental' ||
     channelId === 'travel_overseas' ||
-    channelId === 'general_store'
+    channelId === 'store_momentum' ||
+    channelId === 'fitness_gym'
   );
+
+  if (channelId === 'store_momentum') {
+    const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: rate,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '💳 實體卡直接刷 / 官網線上刷 / 手機 Apple Pay 感應通通享 7%',
+        note: '官方直接特約通路！無腦過卡、官網結帳、手機感應通通穩拿 7%'
+      },
+      details: [
+        `【官方特約裝備通路】摩曼頓 (Momentum)、喬山健康科技：${rate}% 豐點`,
+        '🔥 官方直接特約：實體卡插卡、官網線上刷卡、Apple Pay 感應通通享 7.0%！',
+        '每月消費滿 NT$6,000 封頂（可拿滿 350 豐點）'
+      ],
+      capWarning: rate === 7.0 ? '🔥 官方特約通路！實體卡/官網/感應通通 7%（$6,000 封頂）' : undefined,
+      isSchemeDependent: false
+    };
+  }
+
+  if (channelId === 'fitness_gym') {
+    const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: rate,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '🏋️ 綁定信用卡扣繳月費 或 門市 Apple Pay 感應',
+        note: '官方指定特約健身房！定期扣繳月費或現場感應通通享 7%（$6,000 封頂）'
+      },
+      details: [
+        `【官方特約健身加碼】World Gym、健身工廠、BEING、Curves：${rate}% 豐點`,
+        '🔥 最強特點：直接綁定信用卡每月自動扣繳會費（月費），只要運動達標一樣享 7.0% 加碼！',
+        '每月消費滿 NT$6,000 封頂（可拿滿 350 豐點）'
+      ],
+      capWarning: rate === 7.0 ? '🔥 官方特約通路！會費月費扣繳享 7%（月刷 $6,000 封頂）' : undefined,
+      isSchemeDependent: false
+    };
+  }
 
   if (channelId.startsWith('convenience_')) {
     const is711 = channelId === 'convenience_711';
@@ -1957,11 +2543,11 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
           ? '7-ELEVEN 門市刷卡未與永豐銀行合作，實體卡與 Apple Pay 無法過卡（交易失敗）'
           : '全家等超商門市在銀行端屬於非一般消費/小額支付，永豐直接列為 0% 排除',
         '永豐 SPORT 卡的 Apple Pay 7% 指定加碼「不適用於任何超商」！',
-        '建議改用台新卡（切【天天刷】出示「台新Pay」享 3.8%）或國泰 CUBE（【集精選】享 3%）！'
+        '建議改用台新卡（切【天天刷】出示「台新Pay」享 3.8%）或國泰 CUBE（【集精選】享 2.0%）！'
       ],
       warning: is711
-        ? '⚠️ 7-11 無法刷永豐卡，且超商為 0% 排除！請改用台新Pay (3.8%) 或 CUBE 集精選 (3%)！'
-        : '⚠️ 超商門市為永豐 0% 排除通路，SPORT 卡無 7% 回饋！請改用台新Pay (3.8%) 或 CUBE 集精選 (3%)！',
+        ? '⚠️ 7-11 無法刷永豐卡，且超商為 0% 排除！請改用台新Pay (3.8%) 或 CUBE 集精選 (2.0%)！'
+        : '⚠️ 超商門市為永豐 0% 排除通路，SPORT 卡無 7% 回饋！請改用台新Pay (3.8%) 或 CUBE 集精選 (2.0%)！',
       isBlocked: true
     };
   }
@@ -2000,7 +2586,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         note: '全聯無回饋'
       },
       details: ['全聯門市列為非一般消費排除通路，0% 回饋'],
-      warning: '全聯消費不適用 SPORT 卡，請改刷 CUBE (集精選 3%)！',
+      warning: '全聯消費不適用 SPORT 卡，請改刷 CUBE (集精選 2.0%)！',
       isBlocked: true
     };
   }
@@ -2169,7 +2755,7 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
     let details = [
       '超商門市在永豐銀行信用卡條款中屬於非一般消費排除通路，0% 回饋',
       '永豐 DAWAY 卡之 LINE POINTS 加碼回饋不適用於超商！',
-      '建議改用台新卡（出示「台新Pay」享 3.8%）或國泰 CUBE（集精選享 3%）！'
+      '建議改用台新卡（出示「台新Pay」享 3.8%）或國泰 CUBE（集精選享 2.0%）！'
     ];
     if (is711) {
       label = '❌ 7-11 不支援永豐卡 LINE Pay';
@@ -2177,7 +2763,7 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       details = [
         '【重大限制】7-11 門市的 LINE Pay 不開放綁定永豐信用卡付款（交易失敗）！',
         '門市實體刷卡亦未與永豐銀行合作，且超商列為 0% 排除！',
-        '建議改用台新卡（台新Pay 3.8%）或國泰 CUBE（集精選 3%）！'
+        '建議改用台新卡（台新Pay 3.8%）或國泰 CUBE（集精選 2.0%）！'
       ];
     } else if (isFamily) {
       label = '❌ 全家不支援永豐卡 LINE Pay';
@@ -2185,7 +2771,7 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       details = [
         '【重大限制】全家便利商店 LINE Pay 不支援綁定永豐信用卡付款（交易失敗）！',
         '實體刷卡雖可過卡，但超商屬於非一般消費 0% 排除！',
-        '建議改用台新卡（台新Pay 3.8%）或國泰 CUBE（集精選 3%）！'
+        '建議改用台新卡（台新Pay 3.8%）或國泰 CUBE（集精選 2.0%）！'
       ];
     }
 
@@ -2202,9 +2788,9 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       },
       details,
       warning: is711
-        ? '⚠️ 7-11 無法刷永豐 DAWAY 卡（LINE Pay 與實體皆不可）！請改用台新Pay (3.8%) 或 CUBE (3%)！'
+        ? '⚠️ 7-11 無法刷永豐 DAWAY 卡（LINE Pay 與實體皆不可）！請改用台新Pay (3.8%) 或 CUBE (2.0%)！'
         : isFamily
-          ? '⚠️ 全家不支援永豐 LINE Pay，且實體為 0% 排除！請改用台新Pay (3.8%) 或 CUBE (3%)！'
+          ? '⚠️ 全家不支援永豐 LINE Pay，且實體為 0% 排除！請改用台新Pay (3.8%) 或 CUBE (2.0%)！'
           : '⚠️ 萊爾富/OK 超商為 0% 排除通路！請改用台新Pay (3.8%)！',
       isBlocked: true
     };

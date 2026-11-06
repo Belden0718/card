@@ -1,15 +1,17 @@
 export type CardId = 'cube' | 'gogo' | 'sport' | 'daway';
 
 export type CubeScheme = 
-  | 'selected'   // 集精選 (中油直營/超商/全聯/萬家福 3%~3.3%)
-  | 'dining'     // 樂饗購 (餐廳/外送/百貨 3.3%)
-  | 'digital'    // 玩數位 (網購電商/串流 3.3%)
-  | 'travel'     // 趣旅行 (海外實體/機票訂房 3.3%)
-  | 'japan'      // 日本賞 (日本實體/Suica/人氣藥妝 3.5%~8%)
-  | 'birthday'   // 慶生月 (當月壽星精選餐飲/百貨 最高 10%)
-  | 'kids'       // 童樂匯 (婦幼育兒/遊樂園 3.3%)
-  | 'finance'    // 來金網 (保費/理財 3%)
-  | 'formosa';   // 台塑家 (台塑/台亞/福懋/速邁樂 2% + 汽油天天降價)
+  | 'selected'   // 集精選 (中油直營/超商/全聯/家樂福/IKEA 固定 2%)
+  | 'travel'     // 趣旅行 (海外實體/高鐵/機票/訂房 3%)
+  | 'dining'     // 樂饗購 (餐廳/外送/百貨 3%)
+  | 'digital'    // 玩數位 (網購電商/串流/AI 3%)
+  | 'formosa'    // 台塑家 (台塑/台亞/福懋/速邁樂 2% + 汽油天天降價)
+  | 'pxpay'      // 全支付 (綁定全支付享 2% 無上限)
+  | 'autumn'     // 秋日遊 (10/01~11/30 期間限定 3%~8%)
+  | 'birthday'   // 慶生日 (當月壽星精選餐飲/百貨 3.5%~10%)
+  | 'japan'      // 日本賞 (Suica/免稅店加碼 3.5%~8%)
+  | 'kids'       // 童樂匯 (婦幼育兒/遊樂園 3%)
+  | 'finance';   // 來金網 (保費/理財 3%)
 
 export type TaishinScheme =
   | 'daily'      // 天天刷 (超商/加油/通勤/藥妝 3.3%~3.8%)
@@ -23,11 +25,13 @@ export type TaishinScheme =
 
 export interface UserCardConfig {
   cubeScheme: CubeScheme;
+  cubeLevel?: 1 | 2 | 3;          // CUBE 會員等級: Lv1(2%) | Lv2(3.0% 預設) | Lv3(3.3% 財管)
   sportCalorieMet: boolean;       // 汗水不白流 7,000 大卡達標
   sportQuotaAvailable: boolean;   // AP/GP/SP 每月加碼額度尚未用盡
   dawayIsNewUser: boolean;        // 新戶 3% / 舊戶 1.5%
   gogoRichartLinked: boolean;     // 已綁定 Richart 自動扣繳 + 數位帳單
   taishinScheme: TaishinScheme;   // 台新完整 7+1 權益自選方案
+  ownedCards?: Record<CardId, boolean>; // 我持有的卡片開關（未持有者不推薦為 No.1）
 }
 
 export type PaymentMethod = 
@@ -37,6 +41,9 @@ export type PaymentMethod =
   | 'garmin_pay'     // Garmin Pay 感應
   | 'taishin_pay'    // 台新Pay 掃碼
   | 'line_pay'       // LINE Pay 條碼
+  | 'jko_pay'        // 街口支付 條碼
+  | 'px_pay'         // 全支付 / PX Pay 條碼
+  | 'taiwan_pay'     // 台灣Pay / TWQR 共通條碼
   | 'physical'       // 實體插卡/感應
   | 'online'         // 線上刷卡
   | 'open_wallet'    // OPEN 錢包
