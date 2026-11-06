@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { CHANNELS } from '../data/cardData';
 import type { ScenarioChannel } from '../types/card';
-import { Search, X, Sparkles, Fuel, Store, ShoppingBag, Utensils, ShoppingCart, Building2, Plane, Dumbbell, Check, Star, History } from 'lucide-react';
+import { Search, X, Sparkles, Fuel, Store, ShoppingBag, Utensils, ShoppingCart, Building2, Plane, Dumbbell, Check, Star, History, ChevronDown } from 'lucide-react';
 import { filterAndRankChannels } from '../utils/searchMatcher';
 
 interface Props {
@@ -25,12 +25,47 @@ export const ChannelDrawer: React.FC<Props> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  const drawerSelectedRef = React.useRef<HTMLButtonElement>(null);
+  const [visualViewportHeight, setVisualViewportHeight] = useState<number | null>(null);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false);
+  const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+
+  const drawerSelectedRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClose = useCallback(() => {
     setSearchQuery('');
     onClose();
   }, [onClose]);
+
+  // 監聽手機虛擬鍵盤與 Visual Viewport 動態變化，避免鍵盤遮擋內容
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleViewportChange = () => {
+      if (typeof window !== 'undefined' && window.visualViewport) {
+        const vvHeight = window.visualViewport.height;
+        setVisualViewportHeight(vvHeight);
+        // 當可視高度明顯小於 window.innerHeight (差值 > 120px) 判定虛擬鍵盤彈起
+        const isKb = window.innerHeight - vvHeight > 120;
+        setIsKeyboardOpen(isKb);
+      }
+    };
+
+    handleViewportChange();
+
+    const vv = typeof window !== 'undefined' ? window.visualViewport : null;
+    if (vv) {
+      vv.addEventListener('resize', handleViewportChange);
+      vv.addEventListener('scroll', handleViewportChange);
+    }
+
+    return () => {
+      if (vv) {
+        vv.removeEventListener('resize', handleViewportChange);
+        vv.removeEventListener('scroll', handleViewportChange);
+      }
+    };
+  }, [isOpen]);
 
   // 當抽屜開啟時鎖定 body 捲動，並將當前選中項目平滑滾動至視野內
   useEffect(() => {
@@ -41,7 +76,7 @@ export const ChannelDrawer: React.FC<Props> = ({
         if (drawerSelectedRef.current) {
           drawerSelectedRef.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
         }
-      }, 50);
+      }, 80);
       return () => clearTimeout(timer);
     } else {
       document.body.style.overflow = '';
@@ -100,153 +135,261 @@ export const ChannelDrawer: React.FC<Props> = ({
 
   const filteredChannels = filterAndRankChannels(channelsToFilter, searchQuery);
 
+  // 判定是否處於高度受限模式（虛擬鍵盤彈起中或螢幕高度偏低）
+  const isCompressed = isKeyboardOpen || (visualViewportHeight !== null && visualViewportHeight < 560);
+
+  // 輔助函式：主動收起虛擬鍵盤
+  const dismissKeyboard = () => {
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex flex-col justify-end lg:hidden">
-      {/* 半透明背景遮罩 (點擊關閉) */}
+      {/* 全螢幕半透明背景遮罩 (點擊任意處關閉抽屜) */}
       <div
         onClick={handleClose}
         className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
       />
 
-      {/* 底部向上滑出之抽屜主體 */}
-      <div className="relative bg-white w-full rounded-t-3xl shadow-2xl max-h-[85vh] flex flex-col z-10 animate-in slide-in-from-bottom duration-250">
-        {/* 頂部拖曳手柄與標題列 */}
-        <div className="pt-3 pb-2 px-4 border-b border-slate-100 shrink-0">
-          <div className="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-3" />
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-lg">🏬</span>
-              <h3 className="font-bold text-base text-slate-900">選擇消費通路情境</h3>
-              <span className="text-xs font-semibold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full">
-                共 {CHANNELS.length} 通路
-              </span>
+      {/* 依據 VisualViewport 動態高度對齊之抽屜外框容器 */}
+      <div
+        className="relative z-10 w-full flex flex-col justify-end pointer-events-none"
+        style={{
+          height: visualViewportHeight ? `${visualViewportHeight}px` : '100dvh',
+          maxHeight: '100dvh'
+        }}
+      >
+        {/* 底部向上滑出之抽屜主體 */}
+        <div
+          className="relative bg-white w-full rounded-t-3xl shadow-2xl flex flex-col pointer-events-auto animate-in slide-in-from-bottom duration-250 transition-all ease-out overflow-hidden"
+          style={{
+            maxHeight: isCompressed ? '100%' : '85vh',
+            height: isCompressed ? '100%' : undefined
+          }}
+        >
+          {/* 頂部拖曳手柄與標題列 */}
+          <div className={`px-4 border-b border-slate-100 shrink-0 ${isCompressed ? 'pt-2 pb-1.5' : 'pt-3 pb-2'}`}>
+            {!isCompressed && (
+              <div className="w-12 h-1.5 bg-slate-300 rounded-full mx-auto mb-2.5" />
+            )}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🏬</span>
+                <h3 className="font-bold text-sm sm:text-base text-slate-900">選擇消費通路情境</h3>
+                <span className="text-[11px] font-semibold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full">
+                  共 {CHANNELS.length} 通路
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors cursor-pointer"
+                title="關閉"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <button
-              onClick={handleClose}
-              className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors"
+          </div>
+
+          {/* 抽屜內部搜尋框 (含 Enter 搜尋收合與快速收起鍵盤按鈕) */}
+          <div className="p-2.5 sm:p-3 border-b border-slate-100 bg-slate-50/70 shrink-0">
+            <form
+              action=""
+              onSubmit={(e) => {
+                e.preventDefault();
+                dismissKeyboard();
+              }}
+              className="relative flex items-center gap-2"
             >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        {/* 抽屜內部搜尋框 */}
-        <div className="p-3 border-b border-slate-100 bg-slate-50/50 shrink-0">
-          <div className="relative">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              autoFocus
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="搜尋通路名稱（如：高鐵、全聯、中油、蝦皮、外送、拓元...）"
-              className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 placeholder:text-slate-400"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 bg-slate-100 rounded-full w-5 h-5 flex items-center justify-center"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* 雙排橫向滾動分類列 */}
-        <div className="px-3 py-2 border-b border-slate-100 grid grid-rows-2 grid-flow-col auto-cols-max gap-1.5 overflow-x-auto no-scrollbar shrink-0 bg-white">
-          {twoRowCategories.map((cat) => {
-            const isSelected = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-slate-900 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 border border-slate-200/70'
-                }`}
-              >
-                <span>{cat.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* 通路清單可捲動區 (雙欄網格) */}
-        <div className="p-3 overflow-y-auto flex-1 overscroll-contain">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-2 px-1">
-            <span>找到 {filteredChannels.length} 個相關通路</span>
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="text-indigo-600 font-semibold"
-              >
-                清除關鍵字
-              </button>
-            )}
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 pb-6">
-            {filteredChannels.map((channel: ScenarioChannel) => {
-              const isSelected = channel.id === selectedChannelId;
-              const isFav = favorites.includes(channel.id);
-              return (
-                <button
-                  key={channel.id}
-                  ref={isSelected ? drawerSelectedRef : undefined}
-                  onClick={() => {
-                    onSelectChannel(channel.id);
-                    handleClose();
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <input
+                  ref={inputRef}
+                  type="search"
+                  enterKeyHint="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsInputFocused(true)}
+                  onBlur={() => setIsInputFocused(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      dismissKeyboard();
+                    }
                   }}
-                  className={`p-3 rounded-2xl border text-left transition-all relative flex flex-col justify-between overflow-hidden min-w-0 cursor-pointer ${
-                    isSelected
-                      ? 'bg-gradient-to-br from-indigo-50 to-white border-indigo-600 shadow-sm ring-2 ring-indigo-500/20'
-                      : 'bg-white border-slate-200 active:bg-slate-50'
-                  }`}
-                >
-                  <div className="w-full min-w-0">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-2xl">{channel.icon}</span>
-                      <div className="flex items-center gap-1">
-                        {onToggleFavorite && (
-                          <span
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onToggleFavorite(channel.id);
-                            }}
-                            className={`p-1 rounded-md hover:bg-slate-100 transition-colors ${
-                              isFav ? 'text-amber-500' : 'text-slate-300 hover:text-slate-500'
-                            }`}
-                            title={isFav ? '取消常用' : '加入常用'}
-                          >
-                            <Star className={`w-3.5 h-3.5 ${isFav ? 'fill-amber-400' : ''}`} />
-                          </span>
-                        )}
-                        {isSelected && (
-                          <span className="text-[10px] bg-indigo-600 text-white font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5 shrink-0">
-                            <Check className="w-2.5 h-2.5" />
-                            已選取
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div
-                      className="font-bold text-xs sm:text-sm text-slate-900 leading-snug break-words [overflow-wrap:anywhere] line-clamp-2"
-                      title={channel.name}
-                    >
-                      {channel.name}
-                    </div>
-                  </div>
-                  <div
-                    className="text-[11px] text-slate-500 mt-1 line-clamp-1 w-full min-w-0 break-words [overflow-wrap:anywhere]"
-                    title={channel.description}
+                  placeholder="搜尋通路名稱（如：高鐵、全聯、中油、蝦皮...）"
+                  className="w-full pl-9 pr-8 py-2 bg-white rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 placeholder:text-slate-400"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('');
+                      inputRef.current?.focus();
+                    }}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 bg-slate-100 rounded-full w-5 h-5 flex items-center justify-center cursor-pointer"
+                    title="清除文字"
                   >
-                    {channel.description}
-                  </div>
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              {/* 當輸入框聚焦或鍵盤開啟時，顯示「收起鍵盤」快捷鍵 */}
+              {(isInputFocused || isKeyboardOpen) && (
+                <button
+                  type="button"
+                  onClick={dismissKeyboard}
+                  className="px-2.5 py-2 text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 active:bg-indigo-200 rounded-xl shrink-0 transition-colors flex items-center gap-0.5 cursor-pointer"
+                  title="收起鍵盤"
+                >
+                  <span>收起</span>
+                  <ChevronDown className="w-3.5 h-3.5" />
                 </button>
-              );
-            })}
+              )}
+            </form>
+          </div>
+
+          {/* 雙排橫向滾動分類列：若正在文字搜尋，自動隱藏以保留最大高度給搜尋結果 */}
+          {!searchQuery.trim() && (
+            <div className="px-3 py-2 border-b border-slate-100 grid grid-rows-2 grid-flow-col auto-cols-max gap-1.5 overflow-x-auto no-scrollbar shrink-0 bg-white">
+              {twoRowCategories.map((cat) => {
+                const isSelected = activeCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
+                      isSelected
+                        ? 'bg-slate-900 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 border border-slate-200/70'
+                    }`}
+                  >
+                    <span>{cat.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* 通路清單可捲動區 (雙欄網格，滑動即自動收起虛擬鍵盤) */}
+          <div
+            className="p-3 overflow-y-auto flex-1 overscroll-contain"
+            onTouchStart={() => {
+              if (document.activeElement === inputRef.current) {
+                dismissKeyboard();
+              }
+            }}
+            onScroll={() => {
+              if (document.activeElement === inputRef.current) {
+                dismissKeyboard();
+              }
+            }}
+          >
+            <div className="flex items-center justify-between text-xs text-slate-500 mb-2 px-1">
+              <span className="font-medium">
+                找到 <span className="text-indigo-600 font-bold">{filteredChannels.length}</span> 個相關通路
+              </span>
+              <div className="flex items-center gap-2">
+                {isKeyboardOpen && (
+                  <button
+                    type="button"
+                    onClick={dismissKeyboard}
+                    className="text-[11px] text-slate-400 hover:text-slate-600 flex items-center gap-0.5 cursor-pointer"
+                  >
+                    <span>收起鍵盤</span>
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                )}
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="text-indigo-600 font-semibold cursor-pointer"
+                  >
+                    清除關鍵字
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {filteredChannels.length === 0 ? (
+              <div className="text-center py-10 text-slate-400">
+                <p className="text-3xl mb-2">🔍</p>
+                <p className="text-sm font-semibold text-slate-700 mb-1">找不到符合「{searchQuery}」的通路</p>
+                <p className="text-xs text-slate-400 mb-3">請嘗試其他關鍵字或別名（如：高鐵、蝦皮、中油、7-11）</p>
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="text-xs text-indigo-600 hover:text-indigo-700 font-bold px-3 py-1.5 rounded-lg bg-indigo-50 inline-flex items-center cursor-pointer"
+                >
+                  清除關鍵字
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-2 pb-6">
+                {filteredChannels.map((channel: ScenarioChannel) => {
+                  const isSelected = channel.id === selectedChannelId;
+                  const isFav = favorites.includes(channel.id);
+                  return (
+                    <button
+                      key={channel.id}
+                      ref={isSelected ? drawerSelectedRef : undefined}
+                      onClick={() => {
+                        onSelectChannel(channel.id);
+                        handleClose();
+                      }}
+                      className={`p-2.5 sm:p-3 rounded-2xl border text-left transition-all relative flex flex-col justify-between overflow-hidden min-w-0 cursor-pointer ${
+                        isSelected
+                          ? 'bg-gradient-to-br from-indigo-50 to-white border-indigo-600 shadow-sm ring-2 ring-indigo-500/20'
+                          : 'bg-white border-slate-200 active:bg-slate-50'
+                      }`}
+                    >
+                      <div className="w-full min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xl sm:text-2xl">{channel.icon}</span>
+                          <div className="flex items-center gap-1">
+                            {onToggleFavorite && (
+                              <span
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onToggleFavorite(channel.id);
+                                }}
+                                className={`p-1 rounded-md hover:bg-slate-100 transition-colors ${
+                                  isFav ? 'text-amber-500' : 'text-slate-300 hover:text-slate-500'
+                                }`}
+                                title={isFav ? '取消常用' : '加入常用'}
+                              >
+                                <Star className={`w-3.5 h-3.5 ${isFav ? 'fill-amber-400' : ''}`} />
+                              </span>
+                            )}
+                            {isSelected && (
+                              <span className="text-[10px] bg-indigo-600 text-white font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5 shrink-0">
+                                <Check className="w-2.5 h-2.5" />
+                                已選取
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <div
+                          className="font-bold text-xs sm:text-sm text-slate-900 leading-snug break-words [overflow-wrap:anywhere] line-clamp-2"
+                          title={channel.name}
+                        >
+                          {channel.name}
+                        </div>
+                      </div>
+                      <div
+                        className="text-[11px] text-slate-500 mt-1 line-clamp-1 w-full min-w-0 break-words [overflow-wrap:anywhere]"
+                        title={channel.description}
+                      >
+                        {channel.description}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>
