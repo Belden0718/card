@@ -174,6 +174,37 @@ export const RecommendationResult: React.FC<Props> = ({
                   ⚠️ {bestCard.bestPaymentMethod.note}
                 </div>
               )}
+
+              {/* 雙方案 / 多途徑分支比對 (方案 B) */}
+              {bestCard.schemeBranches && bestCard.schemeBranches.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-white/10 flex flex-col gap-2">
+                  <div className="text-xs font-bold text-amber-300 flex items-center gap-1">
+                    <span>⚡ 方案自由選（依你的結帳方式）：</span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {bestCard.schemeBranches.map((branch, bIdx) => (
+                      <div
+                        key={bIdx}
+                        className="bg-black/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between text-xs"
+                      >
+                        <div className="flex flex-col pr-2">
+                          <span className="font-bold text-white">
+                            <span className="text-amber-300">【{branch.schemeName}】</span>
+                            {branch.paymentLabel}
+                          </span>
+                          {branch.note && (
+                            <span className="text-[10px] text-indigo-200/80 mt-0.5">{branch.note}</span>
+                          )}
+                        </div>
+                        <div className="text-right shrink-0">
+                          <span className="text-base font-black text-amber-400">{branch.rewardRate.toFixed(1)}%</span>
+                          <span className="text-[10px] text-slate-300 block">{branch.rewardType || bestCard.rewardType}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 快捷喚醒對應 App 切換方案按鈕 */}
@@ -466,6 +497,37 @@ export const RecommendationResult: React.FC<Props> = ({
                           <span className="font-semibold text-slate-700">封頂上限：</span>
                           <span>{card.capInfo?.capNote || '依銀行公告規範'}</span>
                         </div>
+
+                        {/* 雙方案 / 多途徑分支比對 (方案 B) */}
+                        {card.schemeBranches && card.schemeBranches.length > 0 && (
+                          <div className="mt-2.5 pt-2 border-t border-slate-100 flex flex-col gap-1.5">
+                            <div className="text-[11px] font-bold text-slate-700 flex items-center gap-1">
+                              <span>⚡ 方案自由選（依結帳方式比對）：</span>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              {card.schemeBranches.map((branch, bIdx) => (
+                                <div
+                                  key={bIdx}
+                                  className="bg-slate-50 hover:bg-indigo-50/50 p-2 rounded-xl border border-slate-200/70 flex items-center justify-between text-xs transition-colors"
+                                >
+                                  <div className="flex flex-col pr-2">
+                                    <div className="flex items-center gap-1 font-bold text-slate-800">
+                                      <span className="text-indigo-600">【{branch.schemeName}】</span>
+                                      <span>{branch.paymentLabel}</span>
+                                    </div>
+                                    {branch.note && (
+                                      <span className="text-[10px] text-slate-500 mt-0.5">{branch.note}</span>
+                                    )}
+                                  </div>
+                                  <div className="text-right shrink-0">
+                                    <span className="text-sm font-black text-indigo-600">{branch.rewardRate.toFixed(1)}%</span>
+                                    <span className="text-[10px] text-slate-400 block">{branch.rewardType || card.rewardType}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                         {card.requiredSchemeName && (card.cardId === 'cube' || card.cardId === 'gogo') && (
                           <div className="mt-2 flex items-center gap-2">
                             {card.cardId === 'cube' ? (

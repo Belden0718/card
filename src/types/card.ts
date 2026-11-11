@@ -66,6 +66,17 @@ export interface CapInfo {
   capNote: string;                // 易懂說明 (例如: "每月消費滿 NT$6,000 封頂", "回饋無上限")
 }
 
+export interface SchemeBranch {
+  schemeName: string;          // 例如: "Pay著刷"
+  schemeTag?: string;          // 例如: "方案：【Pay著刷】"
+  rewardRate: number;          // 例如: 3.8
+  rewardType?: string;         // 例如: "台新Point"
+  paymentLabel: string;        // 例如: "出示 LINE Pay 條碼"
+  paymentMethod: PaymentMethod;
+  note?: string;               // 例如: "需每月領券加碼"
+  capNote?: string;            // 例如: "加碼上限 500 點"
+}
+
 export interface CardRewardResult {
   cardId: CardId;
   cardName: string;
@@ -83,6 +94,7 @@ export interface CardRewardResult {
   capInfo?: CapInfo; // 完整封頂與上限機制
   capWarning?: string; // 封頂上限提示標籤
   isSchemeDependent?: boolean; // 是否受方案影響
+  schemeBranches?: SchemeBranch[]; // 方案 B：卡片內部並列之多方案/多途徑分支
   schemeSuggestion?: {
     cardName: string;
     schemeType: 'cube' | 'taishin';

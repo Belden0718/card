@@ -1690,9 +1690,27 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 出示 LINE Pay 條碼結帳享 3.8%；實體卡切【好饗刷】3.3%',
-        note: '【Pay著刷】LINE Pay 享 3.8%'
+        label: '📱 出示 LINE Pay 條碼享 3.8%；💳 實體卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（需領券）；【好饗刷】實體刷卡享 3.3%'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 出示 LINE Pay 條碼結帳',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '好饗刷',
+          schemeTag: '方案：【好饗刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💳 門市實體卡感應 / 插卡',
+          paymentMethod: 'physical',
+          note: '餐飲實體消費 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
         `【好饗刷】若走實體卡感應或插卡：${isLinked ? 3.3 : baseRate}% 台新Point`
@@ -1736,9 +1754,27 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 出示 LINE Pay 條碼結帳享 3.8%；實體卡切【好饗刷】3.3%',
-        note: '【Pay著刷】LINE Pay 享 3.8%'
+        label: '📱 出示 LINE Pay 條碼享 3.8%；💳 實體卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（需領券）；【好饗刷】實體刷卡享 3.3%'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 出示 LINE Pay 條碼結帳',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '好饗刷',
+          schemeTag: '方案：【好饗刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💳 門市實體卡感應 / 插卡',
+          paymentMethod: 'physical',
+          note: '餐飲實體消費 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】門市出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
         `【好饗刷】若走實體卡感應或插卡：${isLinked ? 3.3 : baseRate}% 台新Point`
@@ -1759,12 +1795,30 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【Pay著刷 / 大筆刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 門市或官網出示 LINE Pay 付款享 3.8%；百貨專櫃機台切【大筆刷】3.3%',
-        note: '【Pay著刷】LINE Pay 享 3.8%'
+        label: '📱 出示 LINE Pay 條碼享 3.8%；實體刷卡切【大筆刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（需領券）；【大筆刷】實體刷卡享 3.3%'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 門市或官網出示 LINE Pay 條碼',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '大筆刷',
+          schemeTag: '方案：【大筆刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💳 百貨專櫃/直營機台實體刷卡',
+          paymentMethod: 'physical',
+          note: '快時尚實體消費 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷方案】UNIQLO / GU 支援 LINE Pay 結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
-        '若於百貨館內且走百貨自營機台，切換【大筆刷】亦享 3.3%'
+        `【大筆刷方案】門市實體刷卡結帳：${isLinked ? 3.3 : baseRate}% 台新Point`
       ],
       isSchemeDependent: true
     };
@@ -1778,16 +1832,34 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: 'Pay著刷',
-      requiredSchemeTag: '方案：【Pay著刷】',
+      requiredSchemeName: 'Pay著刷 / 好饗刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 外送結帳選擇 LINE Pay 付款',
-        note: '【Pay著刷】LINE Pay 享 3.8%'
+        label: '📱 結帳選 LINE Pay 享 3.8%；線上刷卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（需領券）；【好饗刷】線上刷卡享 3.3%'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 外送結帳選擇 LINE Pay 付款',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '好饗刷',
+          schemeTag: '方案：【好饗刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💻 App 綁定卡號線上直刷',
+          paymentMethod: 'online',
+          note: '外送官方認列加碼 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】外送選擇 LINE Pay 付款：${isLinked ? 3.8 : baseRate}% 台新Point`,
-        '若走卡號線上刷卡可切換【好饗刷】享 3.3%'
+        `【好饗刷】外送 App 綁卡直接線上刷：${isLinked ? 3.3 : baseRate}% 台新Point`
       ],
       isSchemeDependent: true
     };
@@ -1801,16 +1873,34 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: 'Pay著刷',
-      requiredSchemeTag: '方案：【Pay著刷】',
+      requiredSchemeName: 'Pay著刷 / 好饗刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 門市櫃台出示 LINE Pay 條碼結帳',
-        note: '【Pay著刷】LINE Pay 享 3.8%（可避開百貨美食街門市餐飲排除）'
+        label: '📱 出示 LINE Pay 條碼享 3.8%；💳 實體刷卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（避開美食街排除）；【好饗刷】實體感應享 3.3%'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 門市櫃台出示 LINE Pay 條碼',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，可避開美食街門市餐飲排除'
+        },
+        {
+          schemeName: '好饗刷',
+          schemeTag: '方案：【好饗刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💳 門市實體卡感應 / 刷卡',
+          paymentMethod: 'physical',
+          note: '獨立門市餐飲 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】門市出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
-        '走 LINE Pay 掃碼可避開部分百貨商場門市餐飲排除；實體刷卡切【好饗刷】享 3.3%'
+        `【好饗刷】走實體卡感應或插卡：${isLinked ? 3.3 : baseRate}% 台新Point`
       ],
       isSchemeDependent: true
     };
@@ -1849,16 +1939,34 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: 'Pay著刷',
-      requiredSchemeTag: '方案：【Pay著刷】',
+      requiredSchemeName: 'Pay著刷 / 好饗刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 門市或線上訂餐出示 LINE Pay 條碼結帳',
-        note: '【Pay著刷】LINE Pay 享 3.8%'
+        label: '📱 出示 LINE Pay 條碼享 3.8%；💳 實體刷卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（需領券）；【好饗刷】實體刷卡享 3.3%'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 門市或線上出示 LINE Pay 條碼',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '好饗刷',
+          schemeTag: '方案：【好饗刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: `💳 ${brandName}門市實體感應 / 插卡`,
+          paymentMethod: 'physical',
+          note: '全台餐飲實體刷卡 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
-        `支援${brandName}門市現場與 PK雙饗卡線上訂餐；實體感應切【好饗刷】享 3.3%`
+        `【好饗刷】支援${brandName}門市現場實體感應/插卡：${isLinked ? 3.3 : baseRate}% 台新Point`
       ],
       isSchemeDependent: true
     };
@@ -1896,16 +2004,34 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: 'Pay著刷',
-      requiredSchemeTag: '方案：【Pay著刷】',
+      requiredSchemeName: 'Pay著刷 / 數趣刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 數趣刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 結帳付款方式選擇 LINE Pay',
+        label: '📱 結帳選 LINE Pay 享 3.8%；直刷卡號切【數趣刷】3.3%',
         note: `【Pay著刷】${platformName} 走 LINE Pay 享 3.8%`
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 結帳選擇 LINE Pay 付款',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '數趣刷',
+          schemeTag: '方案：【數趣刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💻 線上直接輸入卡號一次付清',
+          paymentMethod: 'online',
+          note: '指定電商直接刷卡 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】${platformName} 結帳選 LINE Pay：${isLinked ? 3.8 : baseRate}% 台新Point`,
-        `🔥 ${platformName} 支援 LINE Pay 結帳，享台新最高 3.8% 加碼！`,
+        `【數趣刷】線上刷卡直接輸卡號一次付清：${isLinked ? 3.3 : baseRate}% 台新Point`,
         '💡 建議小額優先用台新走 LINE Pay 享 3.8%；超過 3 萬大額採購可改刷 CUBE 玩數位 3.3% 無上限！'
       ],
       capWarning: '每期帳單加碼上限 1,000 點 (月刷約 $30,303 封頂)',
@@ -1921,16 +2047,34 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: 'Pay著刷',
-      requiredSchemeTag: '方案：【Pay著刷】',
+      requiredSchemeName: 'Pay著刷 / 數趣刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 數趣刷】',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 網購結帳選擇 LINE Pay 付款',
+        label: '📱 網購結帳選 LINE Pay 享 3.8%；直刷卡號切【數趣刷】3.3%',
         note: '【Pay著刷】LINE Pay 享 3.8%（無 LINE Pay 時切【數趣刷】直接刷卡享 3.3%）'
       },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 結帳選擇 LINE Pay 付款',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '數趣刷',
+          schemeTag: '方案：【數趣刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💻 線上直接輸入卡號一次付清',
+          paymentMethod: 'online',
+          note: '網購直接刷卡 3.3% 無上限'
+        }
+      ],
       details: [
         `【Pay著刷】若走 LINE Pay 結帳享 ${isLinked ? 3.8 : baseRate}% 台新Point`,
-        '若電商不支援 LINE Pay，切換為【數趣刷】直接刷卡享 3.3%'
+        `【數趣刷】若直接輸入卡號刷卡結帳享 ${isLinked ? 3.3 : baseRate}% 台新Point`
       ],
       isSchemeDependent: true
     };
@@ -2283,16 +2427,37 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
       cardColor: 'from-zinc-800 to-neutral-950',
-      rewardRate: isLinked ? 3.3 : baseRate,
+      rewardRate: isLinked ? 3.8 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: '好饗刷',
-      requiredSchemeTag: '方案：【好饗刷】',
+      requiredSchemeName: 'Pay著刷 / 好饗刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 好饗刷】',
       bestPaymentMethod: {
-        method: 'physical',
-        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
-        note: '【好饗刷】餐飲享 3.3%'
+        method: 'line_pay',
+        label: '📱 若支援 LINE Pay 享 3.8%；實體刷卡切【好饗刷】3.3%',
+        note: '【Pay著刷】LINE Pay 享 3.8%（需領券）；【好饗刷】實體刷卡享 3.3%'
       },
-      details: [`【好饗刷】全台餐飲消費：${isLinked ? 3.3 : baseRate}% 台新Point`],
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 若店家支援 LINE Pay 條碼',
+          paymentMethod: 'line_pay',
+          note: '需每月領券加碼，上限 500 點'
+        },
+        {
+          schemeName: '好饗刷',
+          schemeTag: '方案：【好饗刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '💳 門市實體感應 / 插卡',
+          paymentMethod: 'physical',
+          note: '全台合法登記餐飲 3.3% 無上限'
+        }
+      ],
+      details: [
+        `【Pay著刷】若店家支援 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
+        `【好饗刷】全台餐飲實體消費：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`
+      ],
       isSchemeDependent: true
     };
   }
