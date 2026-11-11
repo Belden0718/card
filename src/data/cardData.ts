@@ -355,18 +355,32 @@ export const CHANNELS: ScenarioChannel[] = [
       '【點點卡雙賺密技】使用 CUBE 樂饗購線上儲值麥當勞點點卡拿 3.3%，結帳再扣點點卡累積 M Point 點數！'
     ]
   },
-  // 速食連鎖 (肯德基 & 必勝客)
+  // 速食連鎖 (肯德基)
   {
     id: 'fastfood_kfc',
-    name: '肯德基 KFC / 必勝客 PK雙饗',
+    name: '肯德基 KFC',
     category: 'food',
     icon: '🍗',
-    description: '全台實體門市、自助點餐機、PK雙饗卡 APP / 官網線上訂餐（支援 Apple Pay / LINE Pay / 街口）',
+    description: '全台實體門市、自助點餐機、得來速、PK雙饗卡 APP / 官網線上訂餐（支援 Apple Pay / LINE Pay / 街口）',
     pitfalls: [
       '【永豐 SPORT 7%】門市櫃台/自助機使用 Apple Pay / Google Pay / Samsung Pay 感應，SPORT 卡最高享 7%！',
       '【台新雙方案 3.8%】門市或線上出示 LINE Pay 條碼切換【Pay著刷】享 3.8%！實體刷卡切換【好饗刷】享 3.3%！',
-      '【CUBE 樂饗購 3.3%】CUBE 切換「樂饗購」，門市實體刷卡或 PK App 線上訂餐享 3.3% 小樹點無上限！',
-      '【PK App 三重疊加】先在 PK雙饗卡 App 輸入 5 碼優惠代碼折價，搭配線上刷 CUBE 3.3% 或 LINE Pay 3.8%，再賺 PK App 2.5% 紅利點數！'
+      '【⚠️ CUBE 切換樂饗購 3.3%】肯德基切換【樂饗購】享 3.3% 小樹點無上限！注意：肯德基「未列入」秋日遊名單，切勿切換秋日遊，否則僅 0.3%！',
+      '【PK App 三重疊加】先在 PK雙饗卡 App 輸入 5 碼優惠代碼折價，搭配線上刷卡或 LINE Pay 賺 PK 點數與信用卡回饋！'
+    ]
+  },
+  // 速食連鎖 (必勝客)
+  {
+    id: 'fastfood_pizzahut',
+    name: '必勝客 Pizza Hut',
+    category: 'food',
+    icon: '🍕',
+    description: '全台實體門市、自助點餐機、PK雙饗卡 APP / 必勝客官網線上訂餐（支援 Apple Pay / LINE Pay / 街口）',
+    pitfalls: [
+      '【CUBE 秋日遊限定 5.0%】10/1~11/30 切換【秋日遊】方案，必勝客全通路刷卡享 5.0% 小樹點無上限（非活動期間切【樂饗購】享 3.3%）！',
+      '【永豐 SPORT 7%】門市櫃台/自助機使用 Apple Pay / Google Pay / Samsung Pay 感應，SPORT 卡最高享 7%！',
+      '【台新雙方案 3.8%】門市或線上出示 LINE Pay 條碼切換【Pay著刷】享 3.8%！實體刷卡切換【好饗刷】享 3.3%！',
+      '【⚠️ 隨饗券排除】PK雙饗卡 App 購買「PK隨饗券」與「禮物卡」不適用秋日遊 5% 回饋！'
     ]
   },
   // 餐廳
@@ -1017,6 +1031,7 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     channelId === 'fastfood_mos' ||
     channelId === 'fastfood_mcdonalds' ||
     channelId === 'fastfood_kfc' ||
+    channelId === 'fastfood_pizzahut' ||
     channelId === 'drink_chill' ||
     channelId === 'department_store' ||
     channelId === 'drugstore_cosmetics'
@@ -1043,13 +1058,27 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
         '支援門市實體感應與麥當勞 APP 手機點餐'
       ];
     } else if (channelId === 'fastfood_kfc') {
+      rate = 3.3;
+      requiredSchemeName = '樂饗購';
+      requiredSchemeTag = '方案：【樂饗購】';
+      bestPaymentLabel = '💳 門市實體刷卡 / PK雙饗卡線上訂餐';
+      bestPaymentNote = '切換至【樂饗購】方案享 3.3% 小樹點無上限';
+      details = [
+        '【樂饗購方案】肯德基切換【樂饗購】享 3.3% 小樹點（無上限）！',
+        '支援門市櫃台/自助點餐機感應與 PK雙饗卡 APP 線上訂餐刷卡',
+        '⚠️ 避雷警告：肯德基「未列入」秋日遊方案，切勿切換秋日遊，否則僅享 0.3%！'
+      ];
+    } else if (channelId === 'fastfood_pizzahut') {
       rate = 5.0;
       requiredSchemeName = '秋日遊';
       requiredSchemeTag = '方案：【秋日遊】';
-      bestPaymentNote = '必勝客切換至【秋日遊】享 5.0% 小樹點！肯德基切【樂饗購】享 3%~3.3%';
+      bestPaymentLabel = '💳 門市實體刷卡 / 官網App線上刷卡';
+      bestPaymentNote = '切換至【秋日遊】方案享必勝客 5.0% 小樹點無上限！';
       details = [
         '【秋日遊限定方案 (10/1~11/30)】必勝客切換【秋日遊】方案享 5.0% 小樹點（無上限）！',
-        '肯德基門市與 PK雙饗卡切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限'
+        '支援門市櫃台/點餐機與必勝客官網 / PK雙饗卡 APP 線上訂餐',
+        '⚠️ 排除項目：PK雙饗卡 App 購買「隨饗券」與「禮物卡」不適用秋日遊 5% 回饋',
+        '平常非活動期間切換【樂饗購】享 3.3% 小樹點無上限'
       ];
     } else if (channelId === 'drink_chill') {
       details = [
@@ -1812,7 +1841,8 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
   }
 
   // 6.7. 肯德基 KFC / 必勝客
-  if (channelId === 'fastfood_kfc') {
+  if (channelId === 'fastfood_kfc' || channelId === 'fastfood_pizzahut') {
+    const brandName = channelId === 'fastfood_kfc' ? '肯德基' : '必勝客';
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
@@ -1828,7 +1858,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       },
       details: [
         `【Pay著刷】出示 LINE Pay 條碼結帳：${isLinked ? 3.8 : baseRate}% 台新Point`,
-        '支援肯德基門市現場與 PK雙饗卡線上訂餐；實體感應切【好饗刷】享 3.3%'
+        `支援${brandName}門市現場與 PK雙饗卡線上訂餐；實體感應切【好饗刷】享 3.3%`
       ],
       isSchemeDependent: true
     };
@@ -2467,6 +2497,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
     channelId === 'fashion_fast' ||
     channelId === 'fastfood_mos' ||
     channelId === 'fastfood_kfc' ||
+    channelId === 'fastfood_pizzahut' ||
     channelId === 'drink_chill' ||
     channelId === 'supermarket_carrefour' ||
     channelId === 'supermarket_lopia' ||
@@ -2877,7 +2908,8 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
     };
   }
 
-  if (channelId === 'fastfood_kfc') {
+  if (channelId === 'fastfood_kfc' || channelId === 'fastfood_pizzahut') {
+    const brandName = channelId === 'fastfood_kfc' ? '肯德基' : '必勝客';
     return {
       cardId: 'daway',
       cardName: '永豐銀行 DAWAY 卡',
@@ -2887,10 +2919,10 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       bestPaymentMethod: {
         method: 'line_pay',
         label: '📱 門市或線上訂餐出示 LINE Pay 條碼',
-        note: '肯德基/PK雙饗卡支援 LINE Pay'
+        note: `${brandName}/PK雙饗卡支援 LINE Pay`
       },
       details: [
-        `肯德基出示 LINE Pay 條碼：${lpRate}% LINE POINTS`,
+        `${brandName}出示 LINE Pay 條碼：${lpRate}% LINE POINTS`,
         isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
         '⚠️ 純實體卡刷卡僅 1% 一般消費'
       ],

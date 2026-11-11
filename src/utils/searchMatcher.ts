@@ -45,7 +45,8 @@ export const CHANNEL_ALIASES: Record<string, string[]> = {
   ],
   fastfood_mos: ['摩斯', '摩斯漢堡', 'mos', '米漢堡', '蒟蒻'],
   fastfood_mcdonalds: ['麥當勞', 'mcdonald', '得來速', '大麥克', '麥克雞塊', '麥當當'],
-  fastfood_kfc: ['肯德基', 'kfc', '必勝客', 'pizza hut', 'pk雙饗', '蛋撻', '披薩', '炸雞'],
+  fastfood_kfc: ['肯德基', 'kfc', 'pk雙饗', 'pk雙饗卡', '蛋撻', '蛋塔', '炸雞', '肯爺爺', '卡啦脆雞', '炸雞桶'],
+  fastfood_pizzahut: ['必勝客', 'pizza hut', 'pizzahut', 'pk雙饗', 'pk雙饗卡', '披薩', '比薩', '芝心', '大比薩', '小比薩', '買大送大'],
   dining_restaurant: [
     '王品', '瓦城', '藏壽司', '鼎泰豐', '春水堂', '餐廳', '聚餐',
     '西堤', '陶板屋', '原燒', '夏慕尼', '大心', '1010湘', '時時香', '涓豆腐',
