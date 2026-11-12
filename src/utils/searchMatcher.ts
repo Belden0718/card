@@ -182,8 +182,9 @@ export const CHANNEL_ALIASES: Record<string, string[]> = {
   transit_taxi_app: ['uber', 'line go', 'grab', '叫車平台', '網約車', '優步', '境外叫車', 'app叫車', '線上叫車'],
   transit_car_rental: ['irent', '和運', '格上', 'udrive', '租車', '共享汽車', '和運租車', '格上租車', '短期租車', '門市租車'],
   transit_scooter_sharing: ['goshare', 'wemo', '共享機車', '電動機車', '共享電動機車', 'wemo scooter', 'gogoro share', '機車租借', '威摩'],
-  transit_japan_ic: ['suica', '西瓜卡', 'pasmo', 'icoca', '日本交通卡', '交通卡加值', '日本西瓜卡', 'apple suica', 'apple pasmo'],
-  travel_overseas: ['海外實體', '出國', '國外消費', '日本實體', '迪士尼', '環球影城', 'usj', '日本', '韓國', '泰國', '歐美', '免稅店', '海外刷卡'],
+  transit_japan_ic: ['suica', '西瓜卡', 'pasmo', 'icoca', '日本交通卡', '交通卡加值', '日本西瓜卡', 'apple suica', 'apple pasmo', 'apple icoca', '西瓜卡儲值', '交通卡儲值'],
+  travel_overseas: ['海外實體', '出國', '國外消費', '日本實體', '韓國實體', '迪士尼', '環球影城', 'usj', '日本', '韓國', '泰國', '美國', '加拿大', '免稅店', '海外刷卡', '日本購物'],
+  travel_europe: ['歐洲', '英國', '法國', '義大利', '德國', '西班牙', '瑞士', '歐盟', '巴黎', '倫敦', '羅馬', '精品', 'chanel', 'lv', 'hermes', 'gucci', '歐洲實體', '歐盟排除', '歐洲退稅'],
 
   // --- 運動健身/裝備 (2) ---
   fitness_gym: [

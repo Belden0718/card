@@ -931,22 +931,35 @@ export const CHANNELS: ScenarioChannel[] = [
       '【CUBE 日本賞 / 趣旅行 必備神卡】國泰 CUBE 切換【日本賞】加值享 3.5%~8% 小樹點！切換【趣旅行】亦享 3.0% 小樹點無上限！赴日自由行交通首選！',
       '【台新 3.3%】台新切換【玩旅刷】（Apple 錢包外幣線上加值認列海外消費），享 3.3% 台新Point！',
       '【永豐 DAWAY 3%】外幣海外消費認列 3% LINE POINTS 無上限！',
-      '【避開永豐 SPORT】線上錢包儲值無法觸發實體感應 +5%，且部分系統不認列為一般消費，僅 1% 甚至 0%！',
-      '【手續費提醒】Apple 錢包加值日本交通卡為日圓外幣交易，會產生 1.5% 海外交易手續費，以 CUBE 或 DAWAY 扣抵後仍倒賺！'
+      '💥【避開永豐 SPORT 0%~1%】Apple 錢包線上儲值非實體感應，無法觸發 +5% 加碼，且電子票證多被列為 0% 排除，請勿刷 SPORT 卡！',
+      '⚠️【防擋刷秘訣】台灣多數 VISA 卡在 Apple 錢包加值高機率被日方 3D 驗證擋刷，強烈建議綁定 Mastercard 或 JCB 卡別！'
     ]
   },
   {
     id: 'travel_overseas',
-    name: '海外實體消費 (日韓旅遊 / 歐美 / 東京迪士尼 / USJ)',
+    name: '日韓與非歐盟海外實體 (日本/韓國/美加/東南亞/樂園現場)',
     category: 'travel',
     icon: '✈️',
-    description: '國外實體店面外幣消費、日本三大樂園（東京迪士尼、大阪環球影城、哈利波特影城）、海外飯店現場付款（需扣 1.5% 國際手續費）',
+    description: '日本、韓國、美國、東南亞等實體店面外幣消費、東京迪士尼/USJ園內現場刷卡（需扣 1.5% 國際手續費；歐洲實體請選歐洲專用通道）',
     pitfalls: [
-      '【CUBE 趣旅行 / 日本賞 3%~3.5% 無上限】國泰 CUBE 切換【趣旅行】海外實體享 3.0%~3.3% 無上限；若去日本切換【日本賞】精選實體與名店高達 3.5%~8%！大額出國採購精品必備！',
-      '【台新 玩旅刷 3.3%】台新切換【玩旅刷】，海外實體與線上外幣消費享 3.3% 台新Point！',
-      '【永豐 DAWAY 3%】海外外幣消費最高享 3% LINE POINTS 無上限，無腦出國刷卡！',
-      '【永豐 SPORT 7% 限額 $6,000】國外實體店若支援 Apple Pay / Google Pay 感應，達標享最高 7% 豐點，但每月限額 $6,000，超過後請換 CUBE 或台新！',
+      '【CUBE 趣旅行 / 日本賞 3%~3.5% 無上限】國泰 CUBE 切換【趣旅行】海外實體享 3.0%~3.3% 無上限；若去日本切換【日本賞】精選實體與名店高達 3.5%~8%！',
+      '【永豐 SPORT 7% 限額 $6,000】國外實體店若支援 Apple Pay / Google Pay 感應，達標享最高 7% 豐點（月刷 $6,000 封頂），超過後換 CUBE！',
+      '【台新 玩旅刷 3.3%】台新切換【玩旅刷】，日韓美加海外實體消費享 3.3% 台新Point！',
+      '【永豐 DAWAY 3%】海外外幣實體消費最高享 3% LINE POINTS 無上限！',
       '【⚠️ 避開 DCC 雙幣陷阱】在國外刷卡若店員詢問「要刷台幣還是當地貨幣」，務必堅定回答「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
+    ]
+  },
+  {
+    id: 'travel_europe',
+    name: '歐洲實體消費 (英法德義等歐盟門市 / 避開0%排除)',
+    category: 'travel',
+    icon: '🏰',
+    description: '英國、法國、義大利、德國、西班牙、瑞士等歐洲實體店面、精品專櫃與飯店現場刷卡付款',
+    pitfalls: [
+      '👑【國泰 CUBE 3.3% 歐洲唯一神卡】國泰 CUBE 切換【趣旅行】，全球海外實體（含歐盟實體）享 3.3% 小樹點無上限！歐洲血拚買精品唯一首選！',
+      '💥【台新 0% 歐盟排除大地雷】台新信用卡官方條款明文排除歐盟地區實體商店交易，刷台新直接 0% 回饋！',
+      '💥【永豐 SPORT / DAWAY 0% 歐盟排除】永豐全行卡別在歐盟地區實體商店消費均不給予任何回饋（0% 排除），切勿在歐洲實體店刷永豐卡！',
+      '⚠️【歐盟實體小常識】因歐盟交換費上限法規，台灣絕大多數銀行均將歐盟實體消費列為 0% 排除，出國歐洲請務必帶國泰 CUBE 卡！'
     ]
   },
   // 運動健身與一般
@@ -1930,10 +1943,22 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     bestPaymentLabel = '✈️ 海外實體感應 / 插卡外幣消費（選當地貨幣）';
     bestPaymentNote = `切換至【趣旅行】享 ${majorRateLabel} / 日本實體切【秋日遊 (10/1~11/30)】最高 3%~8%`;
     details = [
-      `【趣旅行方案】全球海外實體外幣消費：${majorRateLabel} 小樹點（無上限）`,
+      `【趣旅行方案】日韓美加海外實體外幣消費：${majorRateLabel} 小樹點（無上限）`,
       '涵蓋海外當地餐廳、百貨精品、實體飯店，以及日本三大樂園（東京迪士尼、大阪環球影城、哈利波特影城）',
       '💡 日本當地精選名店建議切換【秋日遊 (10/1~11/30)】可享 3%~8% 更高回饋！',
       '⚠️ 避坑提醒：在國外刷卡請務必選擇「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
+    ];
+  } else if (channelId === 'travel_europe') {
+    rate = majorRate;
+    isTargetScheme = true;
+    requiredSchemeName = '趣旅行';
+    requiredSchemeTag = '方案：【趣旅行】';
+    bestPaymentLabel = '🏰 歐洲實體感應 / 插卡消費（選當地歐元/英鎊）';
+    bestPaymentNote = `切換至【趣旅行】享 ${majorRateLabel} 小樹點無上限（未排除歐盟唯一神卡！）`;
+    details = [
+      `【趣旅行方案】歐洲實體外幣消費：${majorRateLabel} 小樹點（無上限）`,
+      '👑 全場唯一活口：國泰 CUBE 卡未排除歐盟地區實體商店交易，出國歐洲買精品專櫃、百貨、餐廳退稅首選！',
+      '⚠️ 避坑提醒：在歐洲刷卡務必選擇「當地貨幣（歐元/英鎊/瑞士法郎）」，避免被收取高達 4%~5% DCC 匯差！'
     ];
   }
 
@@ -3297,7 +3322,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
     };
   }
 
-  // 10.7. 海外實體
+  // 10.7. 日韓美加海外實體
   if (channelId === 'travel_overseas') {
     return {
       cardId: 'gogo',
@@ -3309,11 +3334,33 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【玩旅刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '✈️ 海外實體感應 / 插卡',
+        label: '✈️ 海外實體感應 / 插卡（日韓美加等非歐盟）',
         note: '【玩旅刷】海外消費 3.3%'
       },
-      details: [`【玩旅刷】海外實體與線上外幣消費：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`],
+      details: [`【玩旅刷】日韓美加海外實體外幣消費：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`],
       isSchemeDependent: true
+    };
+  }
+
+  // 10.8. 歐洲實體 (歐盟排除 0%)
+  if (channelId === 'travel_europe') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: 0.0,
+      rewardType: '台新Point',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '❌ 歐盟地區實體商店 0% 排除',
+        note: '台新信用卡官方條款排除歐盟實體'
+      },
+      details: [
+        '⚠️ 台新銀行信用卡官方條款明文排除「歐盟地區實體商店交易」，回饋為 0% 排除！',
+        '💡 唯一解法：在歐洲實體店請務必改刷國泰 CUBE 卡（切換【趣旅行】享 3.3% 小樹點無上限）！'
+      ],
+      warning: '⚠️ 台新信用卡排除歐盟實體交易（0% 回饋）！歐洲實體門市請務必改刷國泰 CUBE 卡 (3.3%)！',
+      isBlocked: true
     };
   }
 
@@ -4061,6 +4108,27 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         '👑 最佳替代：請改用台新卡【Pay著刷】綁 LINE Pay (3.8%)，或永豐 DAWAY 綁 LINE Pay (3.0%)！'
       ],
       warning: '線上 App 扣款不適用實體感應支付加碼，回饋大幅縮水！'
+    };
+  }
+
+  if (channelId === 'travel_europe') {
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: 0.0,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '❌ 歐盟地區實體商店 0% 排除',
+        note: '永豐信用卡官方條款排除歐盟實體'
+      },
+      details: [
+        '⚠️ 永豐銀行官方條款明文排除「歐盟地區實體商店交易（含 Apple Pay 感應）」，回饋為 0% 排除！',
+        '💡 唯一解法：在歐洲實體店請務必改刷國泰 CUBE 卡（切換【趣旅行】享 3.3% 小樹點無上限）！'
+      ],
+      warning: '⚠️ 永豐信用卡排除歐盟實體交易（0% 回饋）！歐洲實體門市請務必改刷國泰 CUBE 卡 (3.3%)！',
+      isBlocked: true
     };
   }
 
@@ -4894,10 +4962,31 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       rewardType: 'LINE POINTS',
       bestPaymentMethod: {
         method: 'physical',
-        label: '海外實體刷卡',
+        label: '海外實體刷卡（日韓美加等非歐盟）',
         note: '海外消費 3% 回饋'
       },
-      details: ['海外外幣消費最高享 3% LINE POINTS 無上限']
+      details: ['日韓美加海外外幣實體消費享 3% LINE POINTS 無上限']
+    };
+  }
+
+  if (channelId === 'travel_europe') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 0.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'physical',
+        label: '❌ 歐盟地區實體商店 0% 排除',
+        note: '永豐全卡別官方條款排除歐盟實體'
+      },
+      details: [
+        '⚠️ 永豐銀行官方條款明文排除「歐盟地區實體商店交易」，回饋為 0% 排除！',
+        '💡 唯一解法：在歐洲實體店請務必改刷國泰 CUBE 卡（切換【趣旅行】享 3.3% 小樹點無上限）！'
+      ],
+      warning: '⚠️ 永豐 DAWAY 排除歐盟實體交易（0% 回饋）！歐洲實體門市請務必改刷國泰 CUBE 卡 (3.3%)！',
+      isBlocked: true
     };
   }
 
