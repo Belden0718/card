@@ -951,15 +951,14 @@ export const CHANNELS: ScenarioChannel[] = [
   },
   {
     id: 'travel_europe',
-    name: '歐洲實體消費 (英法德義等歐盟門市 / 避開0%排除)',
+    name: '歐洲實體消費 (英法德義等歐洲實體門市)',
     category: 'travel',
     icon: '🏰',
     description: '英國、法國、義大利、德國、西班牙、瑞士等歐洲實體店面、精品專櫃與飯店現場刷卡付款',
     pitfalls: [
-      '👑【國泰 CUBE 3.3% 歐洲唯一神卡】國泰 CUBE 切換【趣旅行】，全球海外實體（含歐盟實體）享 3.3% 小樹點無上限！歐洲血拚買精品唯一首選！',
-      '💥【台新 0% 歐盟排除大地雷】台新信用卡官方條款明文排除歐盟地區實體商店交易，刷台新直接 0% 回饋！',
+      '👑【歐洲雙神卡 3.3% 並列】國泰 CUBE 切換【趣旅行】(3.3% 小樹點) 與 台新 Richart 切換【玩旅刷】(3.3% 台新Point) 均正面表列歐洲實體！出國歐洲血拚買精品並列兩大首選！',
       '💥【永豐 SPORT / DAWAY 0% 歐盟排除】永豐全行卡別在歐盟地區實體商店消費均不給予任何回饋（0% 排除），切勿在歐洲實體店刷永豐卡！',
-      '⚠️【歐盟實體小常識】因歐盟交換費上限法規，台灣絕大多數銀行均將歐盟實體消費列為 0% 排除，出國歐洲請務必帶國泰 CUBE 卡！'
+      '⚠️【避開 DCC 雙幣陷阱】在歐洲刷卡結帳若店員詢問幣別，務必堅定回答「當地貨幣（歐元/英鎊/瑞士法郎）」，避免被收取高達 4%~5% DCC 匯差！'
     ]
   },
   // 運動健身與一般
@@ -3342,25 +3341,28 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
     };
   }
 
-  // 10.8. 歐洲實體 (歐盟排除 0%)
+  // 10.8. 歐洲實體 (玩旅刷正面表列包含歐洲實體及線上交易)
   if (channelId === 'travel_europe') {
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
       cardColor: 'from-zinc-800 to-neutral-950',
-      rewardRate: 0.0,
+      rewardRate: isLinked ? 3.3 : baseRate,
       rewardType: '台新Point',
+      requiredSchemeName: '玩旅刷',
+      requiredSchemeTag: '方案：【玩旅刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '❌ 歐盟地區實體商店 0% 排除',
-        note: '台新信用卡官方條款排除歐盟實體'
+        label: '✈️ 歐洲實體感應 / 插卡（選當地歐元/英鎊）',
+        note: '【玩旅刷】正面表列包含歐洲實體交易 3.3%'
       },
       details: [
-        '⚠️ 台新銀行信用卡官方條款明文排除「歐盟地區實體商店交易」，回饋為 0% 排除！',
-        '💡 唯一解法：在歐洲實體店請務必改刷國泰 CUBE 卡（切換【趣旅行】享 3.3% 小樹點無上限）！'
+        `【玩旅刷方案】歐洲實體外幣消費：${isLinked ? 3.3 : baseRate}% 台新Point（含歐盟實體與線上交易）`,
+        '👑 歐洲雙神卡之一：台新 Richart 卡「玩旅刷」正面表列納入歐洲國家交易，未受歐盟實體 0% 條款限制！',
+        '需綁定 Richart / 台新帳戶自動扣繳信用卡帳單',
+        '⚠️ 避坑提醒：在歐洲門市請務必選擇「當地貨幣（歐元/英鎊/瑞士法郎）」，避免被收取高達 4%~5% DCC 匯差！'
       ],
-      warning: '⚠️ 台新信用卡排除歐盟實體交易（0% 回饋）！歐洲實體門市請務必改刷國泰 CUBE 卡 (3.3%)！',
-      isBlocked: true
+      isSchemeDependent: true
     };
   }
 
@@ -4125,9 +4127,9 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       },
       details: [
         '⚠️ 永豐銀行官方條款明文排除「歐盟地區實體商店交易（含 Apple Pay 感應）」，回饋為 0% 排除！',
-        '💡 唯一解法：在歐洲實體店請務必改刷國泰 CUBE 卡（切換【趣旅行】享 3.3% 小樹點無上限）！'
+        '💡 推薦改刷：在歐洲實體店請改刷國泰 CUBE 卡【趣旅行】(3.3%) 或台新 Richart 卡【玩旅刷】(3.3%)！'
       ],
-      warning: '⚠️ 永豐信用卡排除歐盟實體交易（0% 回饋）！歐洲實體門市請務必改刷國泰 CUBE 卡 (3.3%)！',
+      warning: '⚠️ 永豐信用卡排除歐盟實體交易（0% 回饋）！歐洲實體門市請改刷國泰 CUBE (3.3%) 或台新玩旅刷 (3.3%)！',
       isBlocked: true
     };
   }
@@ -4983,9 +4985,9 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       },
       details: [
         '⚠️ 永豐銀行官方條款明文排除「歐盟地區實體商店交易」，回饋為 0% 排除！',
-        '💡 唯一解法：在歐洲實體店請務必改刷國泰 CUBE 卡（切換【趣旅行】享 3.3% 小樹點無上限）！'
+        '💡 推薦改刷：在歐洲實體店請改刷國泰 CUBE 卡【趣旅行】(3.3%) 或台新 Richart 卡【玩旅刷】(3.3%)！'
       ],
-      warning: '⚠️ 永豐 DAWAY 排除歐盟實體交易（0% 回饋）！歐洲實體門市請務必改刷國泰 CUBE 卡 (3.3%)！',
+      warning: '⚠️ 永豐 DAWAY 排除歐盟實體交易（0% 回饋）！歐洲實體門市請改刷國泰 CUBE (3.3%) 或台新玩旅刷 (3.3%)！',
       isBlocked: true
     };
   }
