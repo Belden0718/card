@@ -956,8 +956,9 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🏰',
     description: '英國、法國、義大利、德國、西班牙、瑞士等歐洲實體店面、精品專櫃與飯店現場刷卡付款',
     pitfalls: [
-      '👑【歐洲雙神卡 3.3% 並列】國泰 CUBE 切換【趣旅行】(3.3% 小樹點) 與 台新 Richart 切換【玩旅刷】(3.3% 台新Point) 均正面表列歐洲實體！出國歐洲血拚買精品並列兩大首選！',
-      '💥【永豐 SPORT / DAWAY 0% 歐盟排除】永豐全行卡別在歐盟地區實體商店消費均不給予任何回饋（0% 排除），切勿在歐洲實體店刷永豐卡！',
+      '【歐洲小額感應 7% 神操作】永豐 SPORT 卡未被列入歐盟排除名單！在歐洲門市用 Apple Pay 感應享最高 7% 豐點（每月 $6,000 封頂）！',
+      '👑【歐洲大額精品 3.3% 雙神卡】消費超過 $6,000 請改刷：國泰 CUBE 切換【趣旅行】(3.3% 無上限) 或 台新 Richart 切換【玩旅刷】(3.3%)！兩大卡別均正面表列歐洲實體！',
+      '💥【永豐 DAWAY 0% 歐盟排除】永豐 DAWAY 卡明文排除歐盟實體，在歐洲門市刷 DAWAY 為 0% 排除，請勿使用！',
       '⚠️【避開 DCC 雙幣陷阱】在歐洲刷卡結帳若店員詢問幣別，務必堅定回答「當地貨幣（歐元/英鎊/瑞士法郎）」，避免被收取高達 4%~5% DCC 匯差！'
     ]
   },
@@ -4114,23 +4115,26 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
   }
 
   if (channelId === 'travel_europe') {
+    const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
     return {
       cardId: 'sport',
       cardName: '永豐銀行 SPORT 卡',
       cardColor: 'from-emerald-600 to-teal-700',
-      rewardRate: 0.0,
+      rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'physical',
-        label: '❌ 歐盟地區實體商店 0% 排除',
-        note: '永豐信用卡官方條款排除歐盟實體'
+        method: 'apple_pay',
+        label: '📱 歐洲門市使用 Apple Pay / Google Pay 感應結帳',
+        note: 'SPORT卡未列入歐盟排除！嗶手機感應享最高 7%（$6,000封頂）'
       },
       details: [
-        '⚠️ 永豐銀行官方條款明文排除「歐盟地區實體商店交易（含 Apple Pay 感應）」，回饋為 0% 排除！',
-        '💡 推薦改刷：在歐洲實體店請改刷國泰 CUBE 卡【趣旅行】(3.3%) 或台新 Richart 卡【玩旅刷】(3.3%)！'
+        `【歐洲實體感應神操作】門市使用 Apple Pay 感應付款：${rate}% 豐點`,
+        '👑 永豐唯一特例：SPORT 卡並未列入永豐銀行「歐盟實體交易排除名單」（DAWAY 等卡才被排除），在歐洲支援 Apple Pay 的門市嗶手機依然享指定支付加碼！',
+        '⚠️ 致命限制：每月加碼額度僅約 $6,000 封頂，超過後降為 1%~2%；且若店家不支援 Apple Pay 而改用實體塑膠卡插卡，僅享一般消費 1%~2%！',
+        '💡 歐洲大額精品（LV/Chanel等）：超過 $6,000 請務必改刷國泰 CUBE【趣旅行】(3.3% 無上限) 或台新【玩旅刷】(3.3%)！'
       ],
-      warning: '⚠️ 永豐信用卡排除歐盟實體交易（0% 回饋）！歐洲實體門市請改刷國泰 CUBE (3.3%) 或台新玩旅刷 (3.3%)！',
-      isBlocked: true
+      capWarning: rate === 7.0 ? '歐洲小額感應神招！Apple Pay 享 7%（$6,000 封頂）' : undefined,
+      isSchemeDependent: false
     };
   }
 
@@ -4981,13 +4985,13 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       bestPaymentMethod: {
         method: 'physical',
         label: '❌ 歐盟地區實體商店 0% 排除',
-        note: '永豐全卡別官方條款排除歐盟實體'
+        note: '永豐 DAWAY 官方條款排除歐盟實體'
       },
       details: [
-        '⚠️ 永豐銀行官方條款明文排除「歐盟地區實體商店交易」，回饋為 0% 排除！',
-        '💡 推薦改刷：在歐洲實體店請改刷國泰 CUBE 卡【趣旅行】(3.3%) 或台新 Richart 卡【玩旅刷】(3.3%)！'
+        '⚠️ 永豐 DAWAY 卡官方條款明文排除「歐盟地區實體商店交易」，回饋為 0% 排除！',
+        '💡 推薦改刷：在歐洲小額感應改刷永豐 SPORT 卡（Apple Pay 7% 封頂 $6,000），大額改刷國泰 CUBE 卡【趣旅行】(3.3% 無上限) 或台新 Richart 卡【玩旅刷】(3.3%)！'
       ],
-      warning: '⚠️ 永豐 DAWAY 排除歐盟實體交易（0% 回饋）！歐洲實體門市請改刷國泰 CUBE (3.3%) 或台新玩旅刷 (3.3%)！',
+      warning: '⚠️ 永豐 DAWAY 排除歐盟實體交易（0% 回饋）！歐洲實體門市請改刷 CUBE (3.3%)、台新玩旅刷 (3.3%) 或 SPORT (Apple Pay 7%)！',
       isBlocked: true
     };
   }
