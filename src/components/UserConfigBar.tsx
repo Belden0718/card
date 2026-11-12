@@ -55,6 +55,8 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
               <span>DAWAY：<strong className="text-blue-600">{config.dawayIsNewUser ? "新戶 3%" : "舊戶 2.0%"}</strong></span>
               <span>•</span>
               <span>台新：<strong className={config.gogoRichartLinked ? "text-emerald-600" : "text-slate-400"}>{config.gogoRichartLinked ? "已綁 Richart" : "未綁帳戶"}</strong></span>
+              <span>•</span>
+              <span>📱 裝置：<strong className="text-indigo-600">Samsung Pay 首位</strong></span>
             </div>
           </div>
         </div>
@@ -340,6 +342,37 @@ export const UserConfigBar: React.FC<Props> = ({ config, onChange }) => {
                   className="rounded text-zinc-800 focus:ring-zinc-600 w-4 h-4"
                 />
               </label>
+            </div>
+
+            {/* 行動支付載具偏好 */}
+            <div className="bg-white p-3.5 rounded-xl border border-slate-200 sm:col-span-2">
+              <div className="text-xs font-bold text-indigo-900 flex items-center gap-1.5 mb-2.5">
+                <Smartphone className="w-3.5 h-3.5 text-indigo-600" />
+                感應支付順位偏好（影響 SPORT 卡等感應推薦標籤順序）
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { id: 'samsung_pay' as const, label: '📱 三星 (Samsung Pay 首位)' },
+                  { id: 'google_pay' as const, label: '🤖 Android (Google Pay)' },
+                  { id: 'apple_pay' as const, label: '🍏 iPhone (Apple Pay)' }
+                ].map((device) => {
+                  const isSelected = (config.preferredMobilePay || 'samsung_pay') === device.id;
+                  return (
+                    <button
+                      key={device.id}
+                      type="button"
+                      onClick={() => updateConfig('preferredMobilePay', device.id)}
+                      className={`py-2 px-2 rounded-lg text-xs font-semibold border text-center transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                      }`}
+                    >
+                      {device.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

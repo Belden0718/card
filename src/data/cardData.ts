@@ -32,10 +32,10 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '中油加油 (直營/加盟)',
     category: 'gas',
     icon: '⛽',
-    description: '台灣中油加油站（支援 Samsung Pay / Apple Pay / Google Pay / LINE Pay / 中油Pay / 台新Pay）',
+    description: '台灣中油加油站（支援 Samsung Pay / Samsung Pay / Google Pay / Apple Pay / LINE Pay / 中油Pay / 台新Pay）',
     pitfalls: [
       '【直營 vs 加盟陷阱】國泰 CUBE「集精選 2.0%」嚴格限制「台灣中油直營店」！若在千越、台糖、車容坊等「加盟站」刷 CUBE 僅有 0.3%！',
-      '【永豐 SPORT 7% 不挑站】永豐 SPORT 綁定 Apple Pay / Google Pay 手機感應享最高 7%，直營或加盟通通適用，不用費心辨別直營站！',
+      '【永豐 SPORT 7% 不挑站】永豐 SPORT 綁定 Samsung Pay / Google Pay / Apple Pay 手機感應享最高 7%，直營或加盟通通適用，不用費心辨別直營站！',
       '【台新 3.8% 雙方案】台新切換【天天刷】或【Pay著刷】，出示中油Pay / LINE Pay / 台新Pay 掃碼享 3.8%！',
       '【避雷】切勿直接拿台新或永豐 DAWAY 實體插卡結帳（實體僅 0.5%~1%）。'
     ]
@@ -45,10 +45,10 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '福懋加油站 (台塑體系 / 台亞 / 台塑石油)',
     category: 'gas',
     icon: '⛽',
-    description: '福懋興業加油站、台亞石油、台塑石油直營與加盟體系（支援 Apple Pay / Google Pay / 實體刷卡 / 台塑石油Pay）',
+    description: '福懋興業加油站、台亞石油、台塑石油直營與加盟體系（支援 Samsung Pay / Google Pay / Apple Pay / 實體刷卡 / 台塑石油Pay）',
     pitfalls: [
       '【CUBE 2% + 降價首選】國泰 CUBE 切換專屬【台塑家】權益，享 2% 小樹點無上限！現場天天汽油每公升降 1.2 元起，亦可搭配台塑石油 Pay 累積 F 幣！',
-      '【永豐 SPORT 7% 感應之神】自助機台或人工島使用 Apple Pay / Google Pay / Samsung Pay 感應付款，達標享最高 7% 豐點（月刷 $6,000 封頂）！比 2% 更賺！',
+      '【永豐 SPORT 7% 感應之神】自助機台或人工島使用 Samsung Pay / Google Pay / Apple Pay 感應付款，達標享最高 7% 豐點（月刷 $6,000 封頂）！比 2% 更賺！',
       '【台新未涵蓋福懋】台新「天天刷」加油名單僅限中油直營、全國、台亞直營；福懋加油站未列入指定名單，實體刷卡僅享一般消費 0.3%~0.5%！',
       '【避開第三方電支】在福懋刷 CUBE 台塑家時，嚴禁使用 LINE Pay、街口等第三方電支條碼付款，否則直接被排除 2% 加碼降為 0.3%！'
     ]
@@ -58,11 +58,11 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '速邁樂加油站 (統一精工 Smile)',
     category: 'gas',
     icon: '⛽',
-    description: '統一集團旗下統一精工速邁樂加油中心（支援 Apple Pay / Google Pay / 實體刷卡 / OPEN 錢包 / icash Pay）',
+    description: '統一集團旗下統一精工速邁樂加油中心（支援 Samsung Pay / Google Pay / Apple Pay / 實體刷卡 / OPEN 錢包 / icash Pay）',
     pitfalls: [
       '【CUBE 2% + 降價】國泰 CUBE 切換【台塑家】權益方案（限本島站點），刷卡享 2% 小樹點無上限 + 天天汽油每公升降價優惠！',
       '【⚠️ 速邁樂三大地雷】1. 速邁樂「不支援」台塑石油 Pay！2. 切勿使用 OPEN 錢包或 icash Pay 等第三方電支掃碼扣款（會被排除 CUBE 2% 回饋）！3. 速邁樂站內會員降價與 CUBE 降價通常互斥二選一。',
-      '【永豐 SPORT 7% 不挑站】使用 Apple Pay / Google Pay / Samsung Pay 感應付款，達標享最高 7% 豐點（月刷 $6,000 封頂）！免算降價最簡單無腦！',
+      '【永豐 SPORT 7% 不挑站】使用 Samsung Pay / Google Pay / Apple Pay 感應付款，達標享最高 7% 豐點（月刷 $6,000 封頂）！免算降價最簡單無腦！',
       '【台新未列入】速邁樂加油站不在台新「天天刷」指定名單中，實體刷卡僅 0.3%~0.5% 一般消費。'
     ]
   },
@@ -71,7 +71,7 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '全國加油站 (National)',
     category: 'gas',
     icon: '⛽',
-    description: '全國加油站連鎖站點（支援 Apple Pay / Google Pay / LINE Pay / 街口 / 實體刷卡）',
+    description: '全國加油站連鎖站點（支援 Samsung Pay / Google Pay / Apple Pay / LINE Pay / 街口 / 實體刷卡）',
     pitfalls: [
       '【CUBE 0.3% 踩雷】全國加油站「不在」國泰 CUBE「集精選」或「台塑家」加碼名單中，刷 CUBE 僅享一般消費 0.3%！',
       '【永豐 SPORT 7% 首選】自助機台或人工島使用 Samsung / Apple / Google Pay 感應享最高 7% 豐點！',
@@ -114,7 +114,7 @@ export const CHANNELS: ScenarioChannel[] = [
     name: '全家便利商店 (FamilyMart)',
     category: 'convenience',
     icon: '🏪',
-    description: '支援 Samsung Pay / Apple Pay / Google Pay / LINE Pay / 全盈+PAY / 台新Pay',
+    description: '支援 Samsung Pay / Samsung Pay / Google Pay / Apple Pay / LINE Pay / 全盈+PAY / 台新Pay',
     pitfalls: [
       '【永豐超商 0% 排除】全家雖然可刷永豐卡，但超商屬於非一般消費小額排除通路，SPORT 卡 Apple Pay 拿不到 7%（直接 0%）！',
       '【台新Pay 3.8%】台新【天天刷】或【Pay著刷】出示「台新Pay」掃碼享 3.8%（單筆限額 $3,000）！',
@@ -147,7 +147,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '【CUBE 樂饗購 3%~3.3% 首選】全台合法登記餐飲（MCC 5811/5812）刷 CUBE 切換【樂饗購】享最高 3.3% 小樹點無上限！幾萬塊聚餐大額消費不封頂！',
       '【⚠️ 飯店餐廳致命地雷】若在晶華、萬豪、喜來登等「飯店/酒店附設餐廳」用餐，簽單常登記為「飯店住宿業 (MCC 7011)」，樂饗購會直接排除判定為 0.3%！此時 CUBE 必須改切【趣旅行】享 3.3%！',
       '【⚠️ KTV / 酒吧排除】在錢櫃、好樂迪點餐，簽單登記為視聽娛樂業 (MCC 7999)，不屬於餐飲業，僅一般消費 0.3%！',
-      '【永豐 SPORT 7% 感應之神】若餐廳櫃檯能使用 Apple Pay / Google Pay / Samsung Pay 感應且月刷 $6,000 內，SPORT 卡享 7% 完勝！',
+      '【永豐 SPORT 7% 感應之神】若餐廳櫃檯能使用 Samsung Pay / Google Pay / Apple Pay 感應且月刷 $6,000 內，SPORT 卡享 7% 完勝！',
       '【台新 好饗刷 3.3%】台新切換至【好饗刷】，全台餐飲（含王品瘋Pay、連鎖餐飲）享 3.3% 台新Point！'
     ]
   },
@@ -212,7 +212,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🍔',
     description: '全台實體門市、自助點餐機、MOS Order App（支援 Apple Pay / LINE Pay / 信用卡）',
     pitfalls: [
-      '【永豐首選 7%】門市櫃台或自助點餐機使用 Apple Pay / Google Pay / Samsung Pay 感應，SPORT 卡最高享 7%！',
+      '【永豐首選 7%】門市櫃台或自助點餐機使用 Samsung Pay / Google Pay / Apple Pay 感應，SPORT 卡最高享 7%！',
       '【台新神技 3.8%】切換【Pay著刷】門市出示 LINE Pay 條碼掃碼享 3.8%（亦可切換【好饗刷】實體刷 3.3%）！',
       '【百貨美食街避坑】若摩斯開在百貨/車站內，實體刷卡常被列為「百貨」而排除餐飲回饋！強烈建議直接走 LINE Pay 掃碼最穩！',
       '【CUBE 3.3%】國泰 CUBE 切換至「樂饗購」享 3.3% 小樹點無上限（或當期秋日遊專屬加碼最高 3.5%）！',
@@ -315,7 +315,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '【CUBE 秋日遊 8.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，名店饗宴享高達 8.0% 小樹點（無上限）！秋日預約制日料首選！',
       '【CUBE 平常樂饗購 3%~3.3%】若非秋日遊期間，切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！',
       '【台新 好饗刷 3.3%】台新切換【好饗刷】享全台餐飲 3.3% 台新Point！',
-      '【永豐 SPORT 7%】現場支援 Apple Pay / Google Pay 感應且每月運動達標，享最高 7% 豐點（月刷 $6,000 封頂）！'
+      '【永豐 SPORT 7%】現場支援 Samsung Pay / Google Pay / Apple Pay 感應且每月運動達標，享最高 7% 豐點（月刷 $6,000 封頂）！'
     ]
   },
 
@@ -372,7 +372,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '【CUBE 秋日遊 8.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，橘色涮涮屋全門市享高達 8.0% 小樹點（無上限）！',
       '【CUBE 平常樂饗購 3%~3.3%】若非秋日遊期間，切換【樂饗購】享 3.0% (Lv2) ~ 3.3% (Lv3) 小樹點無上限！大額聚餐免算上限！',
       '【台新 好饗刷 3.3%】台新切換【好饗刷】享全台餐飲 3.3% 台新Point！',
-      '【永豐 SPORT 7% 感應支付】門市支援 Apple Pay / Google Pay / Samsung Pay 感應，達標享最高 7% 豐點（月刷 $6,000 封頂）！'
+      '【永豐 SPORT 7% 感應支付】門市支援 Samsung Pay / Google Pay / Apple Pay 感應，達標享最高 7% 豐點（月刷 $6,000 封頂）！'
     ]
   },
   {
@@ -476,7 +476,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '🔥【台新 Chill刷 10.0% 狂暴首選】台新卡切換【Chill刷】（官方指定追劇），Netflix 與 Disney+ 享 10.0% 台新Point！每期上限 1,000 點（月刷 $11,111 封頂）！',
       '【國泰 CUBE 3.3% 大額無上限】國泰 CUBE 切換【玩數位】享 3.3% 小樹點無上限！年繳大額訂閱無上限首選！',
       '【⚠️ 海外手續費 1.5% 說明】主機設於海外，帳單會收取 1.5% 國外交易服務費；台新 10% 扣除後仍淨賺 +8.5%，CUBE 3.3% 扣除後淨賺 +1.8%！',
-      '⚠️【永豐 SPORT 7% 完全無效】線上定期定額扣繳無法使用 Apple Pay / Google Pay 感應結帳，SPORT 卡僅一般消費 1%~2%，千萬別刷！',
+      '⚠️【永豐 SPORT 7% 完全無效】線上定期定額扣繳無法使用 Samsung Pay / Google Pay / Apple Pay 感應結帳，SPORT 卡僅一般消費 1%~2%，千萬別刷！',
       '⚠️【永豐 DAWAY 僅 1%】線上扣繳無 LINE Pay 條碼可掃，永豐 DAWAY 僅一般消費 1%！',
       '💡【Max(HBO) 訂閱密技】若要訂閱 Max，強烈建議透過 iPhone (App Store) 或 Android (Google Play) 應用程式內購，切換 CUBE【玩數位】或台新【數趣刷】享 3.3%！若在 Max 官網直刷僅一般消費 0.3%！'
     ]
@@ -553,7 +553,7 @@ export const CHANNELS: ScenarioChannel[] = [
     description: '日本人氣生鮮肉品超市（新北中和環球、台中LaLaport、桃園等店）',
     pitfalls: [
       '【CUBE 2.0%】國泰 CUBE 正式納入【集精選】，門市實體刷卡享 2.0% 小樹點無上限！',
-      '【永豐 SPORT 7%】門市收銀機台支援 Apple Pay / Google Pay 感應，達標享最高 7%！',
+      '【永豐 SPORT 7%】門市收銀機台支援 Samsung Pay / Google Pay / Apple Pay 感應，達標享最高 7%！',
       '【台新 3.3%】若門市設立於百貨商場（如中和環球、台中LaLaport），台新切換【大筆刷】或【天天刷】享 3.3%！',
       '【注意】部分 LOPIA 特殊生鮮櫃位僅收現金，結帳前請留意該收銀台標示。'
     ]
@@ -567,7 +567,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【CUBE 秋日遊 5.0% 快閃】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，台灣 DON DON DONKI 享 5.0% 小樹點無上限！',
       '【台新 Pay著刷 3.8%】結帳出示 LINE Pay 條碼付款，台新切換【Pay著刷】享最高 3.8% 台新Point！',
-      '【永豐 SPORT 7%】現場收銀機支援 Apple Pay / Google Pay / Samsung Pay 感應，達標享最高 7% 豐點！',
+      '【永豐 SPORT 7%】現場收銀機支援 Samsung Pay / Google Pay / Apple Pay 感應，達標享最高 7% 豐點！',
       '【平日避雷提醒】唐吉訶德非秋日遊期間，獨立街邊門市刷 CUBE 僅一般消費 0.3%（非集精選常態加碼）；百貨店中櫃需視百貨自營機台認定。'
     ]
   },
@@ -614,7 +614,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '⚠️【南港 LaLaport 店 台隆手創館 8% 特權】南港 LaLaport 館內之「HANDS 台隆手創館」在 CUBE 秋日遊獨享狂暴 8.0% 小樹點（比商場 3% 多整整 5%）！',
       '⚠️【台中 LaLaport 店 LOPIA 超市 0.3% 慘死地雷】館內 LOPIA 日系超市為獨立機台，切秋日遊只有 0.3%！必須切換【集精選】方案享 2.0%！',
       '⚠️【OUTLET 影城與快時尚排除】林口威秀影城、館內 UNIQLO/GU 等快時尚非商場自營，依 CUBE 條款排除加碼，僅 0.3%！',
-      '🔥【永豐 SPORT 7.0% 首選】專櫃臨櫃使用 Apple Pay / Google Pay 感應結帳，運動達標享最高 7.0% 豐點（月刷 $6,000 封頂）全場最高！',
+      '🔥【永豐 SPORT 7.0% 首選】專櫃臨櫃使用 Samsung Pay / Google Pay / Apple Pay 感應結帳，運動達標享最高 7.0% 豐點（月刷 $6,000 封頂）全場最高！',
       '【台新 3.3%】台新切換【大筆刷】專櫃實體刷卡享 3.3% 台新Point無上限！',
       '💡【停車特權】中信 LaLaport / 三井 Outlet 聯名卡天天享免費停車最高 2 小時；刷 CUBE / 台新需依商場一般消費滿額門檻折抵。'
     ]
@@ -629,7 +629,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '🔥【CUBE 秋日遊 5.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，明曜百貨實體消費享 5.0% 小樹點（無上限）！',
       '⚠️【館內 UNIQLO / GU 獨立發票地雷】館內 B1~2F 的 UNIQLO 全球旗艦店與 GU 門市為獨立收銀機台，回饋為 UNIQLO 的 3.0%（平日僅 0.3%），非明曜百貨的 5.0%！',
       '【台新雙方案】實體刷卡切【大筆刷】享 3.3% 無上限；支援 LINE Pay 專櫃出示 LINE Pay 切【Pay著刷】享 3.8%！',
-      '【永豐 SPORT 7.0%】實體櫃位使用 Apple Pay / Google Pay 感應結帳，運動達標享 7.0% 豐點（月刷 $6,000 封頂）！'
+      '【永豐 SPORT 7.0%】實體櫃位使用 Samsung Pay / Google Pay / Apple Pay 感應結帳，運動達標享 7.0% 豐點（月刷 $6,000 封頂）！'
     ]
   },
 
@@ -641,7 +641,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '💄',
     description: '康是美、屈臣氏、寶雅 POYA、松本清、Tomod\'s 等連鎖生活藥妝（⚠️ 日藥本舖請見專屬 3.5% 通路）',
     pitfalls: [
-      '👑【永豐 SPORT 7% 首選】門市使用 Apple Pay / Google Pay 感應付款，達標享最高 7% 回饋（月刷 $6,000 封頂）全場最高！',
+      '👑【永豐 SPORT 7% 首選】門市使用 Samsung Pay / Google Pay / Apple Pay 感應付款，達標享最高 7% 回饋（月刷 $6,000 封頂）全場最高！',
       '⚠️【國泰 CUBE 必須切【樂饗購】3.3%】大額醫美節採購切【樂饗購】享 3.3% 無上限！⚠️ 切勿切秋日遊（康是美/屈臣氏/寶雅切秋日遊只有 0.3% 慘死）！',
       '⚠️【日藥本舖 專屬 3.5%】10/01~11/30 日藥本舖切【秋日遊】享 3.5%（比樂饗購多0.2%），請改選「日藥本舖」專屬通路！',
       '【台新雙方案】門市出示 LINE Pay 切【Pay著刷】享 3.8%（每期上限 500 點）；實體刷卡切【天天刷】享 3.3% 無上限！',
@@ -676,7 +676,7 @@ export const CHANNELS: ScenarioChannel[] = [
       '【CUBE 秋日遊 3.0% 快閃】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，UNIQLO（網路商店/直營店）與 GU 台灣網路商店享 3.0% 小樹點無上限！',
       '【百貨店中櫃排除地雷】若在百貨館內專櫃門市消費，CUBE 卡條款明文排除快時尚品牌店中櫃（僅 0.3%），建議直營門市或切換秋日遊！',
       '【台新雙方案通吃】門市出示 LINE Pay 條碼切【Pay著刷】享 3.8%（每期上限 500 點）；實體刷卡切【大筆刷】享 3.3% 無上限！',
-      '【永豐 SPORT 7.0% 首選】實體門市結帳使用 Apple Pay / Google Pay 感應付款，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！'
+      '【永豐 SPORT 7.0% 首選】實體門市結帳使用 Samsung Pay / Google Pay / Apple Pay 感應付款，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！'
     ]
   },
   {
@@ -742,7 +742,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【台新 3.3% 首選】台新切換【大筆刷】（指定居家裝修：IKEA、特力屋）享 3.3% 台新Point！',
       '【CUBE 2.0%】國泰 CUBE 切換【集精選】享 2.0% 小樹點無上限！大額家具採購不封頂！',
-      '【永豐 SPORT 7%】門市使用 Apple Pay / Google Pay 感應付款，達標享最高 7% 回饋（月刷 $6,000 封頂）！',
+      '【永豐 SPORT 7%】門市使用 Samsung Pay / Google Pay / Apple Pay 感應付款，達標享最高 7% 回饋（月刷 $6,000 封頂）！',
       '【永豐 DAWAY 3%】出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶享 1.5% LINE POINTS。'
     ]
   },
@@ -755,7 +755,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '🔥【CUBE 秋日遊 8.0% 狂暴加碼】10/01~11/30 期間限定：國泰 CUBE 切換【秋日遊】方案，南港 LaLaport 旗艦店獨享全台最高 8.0% 小樹點（無上限）！',
       '⚠️【全台唯一指定門市】注意！全台灣十幾家台隆手創館中「只有南港 LaLaport 這家店」有 8.0%，其他所有門市通通沒有 8%！',
-      '【永豐 SPORT 7.0%】門市櫃台使用 Apple Pay / Google Pay 感應付款，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！',
+      '【永豐 SPORT 7.0%】門市櫃台使用 Samsung Pay / Google Pay / Apple Pay 感應付款，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！',
       '【台新 3.3%】門市實體刷卡切換【大筆刷】享 3.3% 台新Point無上限！'
     ]
   },
@@ -797,7 +797,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '👑【CUBE 趣旅行 3.3% 無上限】國泰 CUBE 切換【趣旅行】方案，高鐵官網、T-EX App、車站售票機/臨櫃享 3.3% 小樹點無上限！大額購票首選！',
       '【台新 天天刷 3.3%】台新卡切換【天天刷】，高鐵購票（線上/實體）享 3.3% 台新Point無上限！',
-      '🔥【永豐 SPORT 7.0% 車站感應首選】在車站自動售票機或售票窗口，使用 Apple Pay / Google Pay 感應結帳，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！⚠️ 注意：線上 T-EX App 購票無法感應，僅 1%~2%！',
+      '🔥【永豐 SPORT 7.0% 車站感應首選】在車站自動售票機或售票窗口，使用 Samsung Pay / Google Pay / Apple Pay 感應結帳，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！⚠️ 注意：線上 T-EX App 購票無法感應，僅 1%~2%！',
       '【永豐 DAWAY 3%】高鐵售票窗口出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶 1.5% LINE POINTS。'
     ]
   },
@@ -810,7 +810,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '⚠️【國泰 CUBE 0.3% 慘死大雷】國泰 CUBE【趣旅行】加碼「嚴格限定台灣高鐵」，台鐵「完全沒有列入加碼」！買台鐵票刷 CUBE 僅一般消費 0.3%，千萬別刷！',
       '👑【全場首選：台新 天天刷 3.3%】台新卡切換【天天刷】正面表列台灣鐵路，線上訂票或窗口實體刷卡通通享 3.3% 台新Point無上限！返鄉通勤第一神卡！',
-      '🔥【永豐 SPORT 7.0% 車站感應最高】在車站售票機或售票窗口使用 Apple Pay / Google Pay 感應購票，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！⚠️ 線上訂票無感應加碼僅 1%~2%！',
+      '🔥【永豐 SPORT 7.0% 車站感應最高】在車站售票機或售票窗口使用 Samsung Pay / Google Pay / Apple Pay 感應購票，達標享最高 7.0% 豐點（月刷 $6,000 封頂）！⚠️ 線上訂票無感應加碼僅 1%~2%！',
       '【永豐 DAWAY 3%】台鐵售票窗口若出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶 1.5% LINE POINTS。'
     ]
   },
@@ -876,7 +876,7 @@ export const CHANNELS: ScenarioChannel[] = [
     icon: '🚖',
     description: '台灣大車隊 55688、yoxi (和泰) 車內實體刷卡機感應、LINE Pay 條碼支付或車載設備付款',
     pitfalls: [
-      '🔥【永豐 SPORT 7.0% 車內感應首選】台灣大車隊、yoxi 車內刷卡機支援 Apple Pay / Google Pay / Samsung Pay 感應，運動達標享 7.0% 豐點（月刷 $6,000 封頂）全場最高！',
+      '🔥【永豐 SPORT 7.0% 車內感應首選】台灣大車隊、yoxi 車內刷卡機支援 Samsung Pay / Google Pay / Apple Pay 感應，運動達標享 7.0% 豐點（月刷 $6,000 封頂）全場最高！',
       '【台新 3.8% LINE Pay 掃碼】車載螢幕若出示 LINE Pay 條碼付款，台新切換【Pay著刷】享 3.8% 台新Point！實體過卡切【天天刷】享 3.3%！',
       '【CUBE 3.3% 無上限】國泰 CUBE 切換【趣旅行】，台灣大車隊與 yoxi 享 3.3% 小樹點無上限！',
       '【永豐 DAWAY 3%】出示 LINE Pay 條碼結帳，新戶享 3% / 舊戶 1.5% LINE POINTS。'
@@ -904,7 +904,7 @@ export const CHANNELS: ScenarioChannel[] = [
     pitfalls: [
       '【CUBE 3.3% 首選】國泰 CUBE 切換【趣旅行】，指定租車（和運、格上、iRent）享 3.3% 小樹點無上限！',
       '【台新 3.3%】台新切換【天天刷】（交通出行租車）享 3.3% 台新Point！',
-      '【永豐 SPORT 7% 限門市櫃檯】和運/格上實體門市臨櫃使用 Apple Pay / Google Pay 感應享 7%（$6,000 封頂）；iRent App 內扣款無感應加碼僅 1%~2%。',
+      '【永豐 SPORT 7% 限門市櫃檯】和運/格上實體門市臨櫃使用 Samsung Pay / Google Pay / Apple Pay 感應享 7%（$6,000 封頂）；iRent App 內扣款無感應加碼僅 1%~2%。',
       '【DAWAY】一般消費 1%（若門市支援 LINE Pay 享新戶 3%）。'
     ]
   },
@@ -943,7 +943,7 @@ export const CHANNELS: ScenarioChannel[] = [
     description: '日本、韓國、美國、東南亞等實體店面外幣消費、東京迪士尼/USJ園內現場刷卡（需扣 1.5% 國際手續費；歐洲實體請選歐洲專用通道）',
     pitfalls: [
       '【CUBE 趣旅行 / 日本賞 3%~3.5% 無上限】國泰 CUBE 切換【趣旅行】海外實體享 3.0%~3.3% 無上限；若去日本切換【日本賞】精選實體與名店高達 3.5%~8%！',
-      '【永豐 SPORT 7% 限額 $6,000】國外實體店若支援 Apple Pay / Google Pay 感應，達標享最高 7% 豐點（月刷 $6,000 封頂），超過後換 CUBE！',
+      '【永豐 SPORT 7% 限額 $6,000】國外實體店若支援 Samsung Pay / Google Pay / Apple Pay 感應，達標享最高 7% 豐點（月刷 $6,000 封頂），超過後換 CUBE！',
       '【台新 玩旅刷 3.3%】台新切換【玩旅刷】，日韓美加海外實體消費享 3.3% 台新Point！',
       '【永豐 DAWAY 3%】海外外幣實體消費最高享 3% LINE POINTS 無上限！',
       '【⚠️ 避開 DCC 雙幣陷阱】在國外刷卡若店員詢問「要刷台幣還是當地貨幣」，務必堅定回答「當地貨幣（日圓/韓元/美金等）」，避免被收取高達 4%~5% DCC 匯差！'
@@ -1184,7 +1184,7 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     requiredSchemeName = '台塑家';
     requiredSchemeTag = '方案：【台塑家】';
     bestPaymentLabel = channelId === 'gas_smile'
-      ? '💳 實體感應 / Apple Pay / Google Pay'
+      ? '💳 實體感應 / Samsung Pay / Google Pay / Apple Pay'
       : '💳 實體感應 / Apple Pay / 台塑石油 Pay';
     bestPaymentNote = channelId === 'gas_smile'
       ? '切換至【台塑家】享 2.0% 小樹點無上限 + 汽油天天降價（⚠️ 速邁樂不適用台塑石油Pay與OPEN錢包）'
@@ -1438,7 +1438,7 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
         '【樂饗購方案】台灣壽司郎實體門市：3.3% 小樹點（無上限）',
         '🎂 壽星神卡【慶生日方案】：生日當月切換【慶生日】方案，台灣壽司郎享狂暴 10.0% 小樹點無上限！',
         '⚠️ 避雷警告：台灣壽司郎「未列入」秋日遊 5% 名單，切勿切換秋日遊，否則僅享一般消費！',
-        '支援門市實體插卡與 Apple Pay / Google Pay / Samsung Pay 感應付款'
+        '支援門市實體插卡與 Samsung Pay / Google Pay / Apple Pay 感應付款'
       ];
     } else if (channelId === 'dining_sushiexpress') {
       rate = 5.0;
@@ -1885,7 +1885,7 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     details = [
       '【趣旅行方案】指定計程車：3.3% 小樹點（無上限）',
       '涵蓋台灣大車隊 (55688)、yoxi 車內刷卡與 App 扣款',
-      '🔥 強烈推薦：車內實體刷卡機改用永豐 SPORT 卡使用 Apple Pay / Google Pay / Samsung Pay 感應享最高 7.0% 豐點！'
+      '🔥 強烈推薦：車內實體刷卡機改用永豐 SPORT 卡使用 Samsung Pay / Google Pay / Apple Pay 感應享最高 7.0% 豐點！'
     ];
   } else if (channelId === 'transit_taxi_app') {
     rate = 3.3;
@@ -2171,7 +2171,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【Chill刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 門市現場實體刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 門市現場實體刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【Chill刷官方名店】詹記全門市享 10%！⚠️ 現場不支援 LINE Pay'
       },
       details: [
@@ -2244,7 +2244,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【Chill刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 門市實體刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【Chill刷 10%】指定熱門連鎖火鍋燒肉享 10%！'
       },
       details: [
@@ -2267,7 +2267,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【好饗刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 門市實體刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【好饗刷】橘色餐飲享 3.3%'
       },
       details: [
@@ -2331,7 +2331,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【好饗刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 門市實體刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 門市實體刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【好饗刷】餐飲享 3.3%'
       },
       details: [
@@ -2395,7 +2395,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【好饗刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 門市實體卡刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 門市實體卡刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【好饗刷】餐飲 3.3%！⚠️ 現場完全不支援 LINE Pay'
       },
       details: [
@@ -3031,7 +3031,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【天天刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 實體刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 實體刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【天天刷】萬家福/大全聯指定量販 3.3%'
       },
       details: [`【天天刷】萬家福/大全聯等指定量販：${isLinked ? 3.3 : baseRate}% 台新Point`],
@@ -3467,7 +3467,7 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
       requiredSchemeTag: '方案：【大筆刷】',
       bestPaymentMethod: {
         method: 'physical',
-        label: '💳 專櫃實體刷卡或 Apple/Samsung Pay 感應',
+        label: '💳 專櫃實體刷卡或 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '【大筆刷】商場專櫃消費享 3.3%'
       },
       details: [
@@ -3785,12 +3785,12 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'apple_pay',
-        label: '📱 百貨實體專櫃使用 Apple Pay / Google Pay 感應付款享 7.0%',
-        note: '實體專櫃感應享最高 7.0% 豐點；官網線上買無 Apple Pay 加碼僅 1%~2%'
+        method: 'samsung_pay',
+        label: '📱 百貨實體專櫃使用 Samsung Pay / Google Pay 感應付款享 7.0%',
+        note: '實體專櫃感應享最高 7.0% 豐點；官網線上買無感應加碼僅 1%~2%'
       },
       details: [
-        `【實體專櫃行動支付】微風/SOGO等實體專櫃使用 Apple Pay 感應：${rate}% 豐點`,
+        `【實體專櫃行動支付】微風/SOGO等實體專櫃使用 Samsung Pay / Google Pay 感應：${rate}% 豐點`,
         '⚠️ 官網線上購物提醒：UNITED ARROWS 官方購物網站線上刷卡無感應加碼，僅享一般消費 1%~2%！',
         '💡 官網線上購物首選：國泰 CUBE 卡切換【秋日遊】享 5.0% 小樹點無上限！'
       ],
@@ -3808,8 +3808,8 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'apple_pay',
-        label: '📱 門市臨櫃使用 Apple Pay / Google Pay 感應結帳',
+        method: 'samsung_pay',
+        label: '📱 門市臨櫃使用 Samsung Pay / Google Pay 感應結帳',
         note: 'H&M 全場唯一救星神卡！嗶手機感應享最高 7.0% 豐點！'
       },
       details: [
@@ -3817,7 +3817,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         '🔥 救星神招：H&M 同時被國泰 CUBE (0.3%) 與台新大筆刷 (0.3%~1%) 雙重排除！永豐 SPORT 是全台唯一能拿 7.0% 的神卡！',
         '每月消費滿 NT$6,000 封頂（可拿滿 350 豐點）'
       ],
-      capWarning: rate === 7.0 ? '🔥 H&M 唯一神卡！Apple Pay 感應 7%（$6,000 封頂）' : undefined,
+      capWarning: rate === 7.0 ? '🔥 H&M 唯一神卡！Samsung Pay 感應 7%（$6,000 封頂）' : undefined,
       isSchemeDependent: false
     };
   }
@@ -3831,13 +3831,13 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'physical',
-        label: '💳 實體卡直接刷 / 官網線上刷 / 手機 Apple Pay 感應通通享 7%',
+        method: 'samsung_pay',
+        label: '💳 實體卡直接刷 / 官網線上刷 / 手機 Samsung Pay 感應通通享 7%',
         note: '官方直接特約通路！無腦過卡、官網結帳、手機感應通通穩拿 7%'
       },
       details: [
         `【官方特約裝備通路】摩曼頓 (Momentum)、喬山健康科技：${rate}% 豐點`,
-        '🔥 官方直接特約：實體卡插卡、官網線上刷卡、Apple Pay 感應通通享 7.0%！',
+        '🔥 官方直接特約：實體卡插卡、官網線上刷卡、Samsung Pay 感應通通享 7.0%！',
         '每月消費滿 NT$6,000 封頂（可拿滿 350 豐點）'
       ],
       capWarning: rate === 7.0 ? '🔥 官方特約通路！實體卡/官網/感應通通 7%（$6,000 封頂）' : undefined,
@@ -4034,12 +4034,12 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'apple_pay',
-        label: `${isThsr ? '🚄' : '🚆'} 車站自動售票機或窗口 Apple Pay / Google Pay 感應購票`,
+        method: 'samsung_pay',
+        label: `${isThsr ? '🚄' : '🚆'} 車站自動售票機或窗口 Samsung Pay / Google Pay 感應購票`,
         note: '機台感應享最高 7%（$6,000 封頂）；線上 App 購票僅 1%~2%'
       },
       details: [
-        `車站機台/臨櫃使用 Apple Pay / Google Pay 感應：${rate}% 豐點`,
+        `車站機台/臨櫃使用 Samsung Pay / Google Pay 感應：${rate}% 豐點`,
         `⚠️ 線上購票提醒：若使用${isThsr ? '高鐵 T-EX App' : '台鐵官網/App'}線上刷卡，屬於線上交易無感應加碼，僅享 1%~2%！`,
         `💡 想拿 7% 務必至${name}車站實體機台或售票窗口使用手機感應付款！`
       ],
@@ -4057,12 +4057,12 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'apple_pay',
-        label: '🚖 台灣大車隊 / yoxi 車上機台使用 Apple Pay / Google Pay / Samsung Pay 感應',
+        method: 'samsung_pay',
+        label: '🚖 台灣大車隊 / yoxi 車上機台使用 Samsung Pay / Google Pay / Apple Pay 感應',
         note: '車上實體機感應享最高 7.0% 豐點（$6,000 封頂）'
       },
       details: [
-        `車內實體刷卡機使用 Apple Pay / Google Pay / Samsung Pay 感應：${rate}% 豐點`,
+        `車內實體刷卡機使用 Samsung Pay / Google Pay / Apple Pay 感應：${rate}% 豐點`,
         '台灣大車隊 55688、yoxi 車內均配備感應式刷卡機，運動達標享 7% 封頂',
         '💡 下車請主動向司機說明要使用手機感應支付嗶卡！'
       ],
@@ -4123,17 +4123,17 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardRate: rate,
       rewardType: '豐點',
       bestPaymentMethod: {
-        method: 'apple_pay',
-        label: '📱 歐洲門市使用 4大行動支付 (Apple/Google/Samsung/Garmin Pay) 感應結帳',
-        note: 'SPORT卡未列入歐盟排除！手機/手錶感應享最高 7%（$6,000封頂）'
+        method: 'samsung_pay',
+        label: '📱 歐洲門市使用 4大行動支付 (Samsung/Google/Garmin/Apple Pay) 感應結帳',
+        note: 'SPORT卡未列入歐盟排除！三星手機 (Samsung Pay) 感應享最高 7%（$6,000封頂）'
       },
       details: [
-        `【歐洲實體感應神操作】門市使用 Apple Pay / Google Pay / Samsung Pay / Garmin Pay 4大感應支付：${rate}% 豐點`,
-        '👑 永豐唯一特例：SPORT 卡並未列入永豐銀行「歐盟實體交易排除名單」（DAWAY 等卡才被排除），在歐洲支援 4 大行動支付的門市嗶手機或手錶依然享指定支付加碼！',
+        `【歐洲實體感應神操作】門市使用 Samsung Pay / Google Pay / Garmin Pay / Apple Pay 4大感應支付：${rate}% 豐點`,
+        '👑 永豐唯一特例：SPORT 卡並未列入永豐銀行「歐盟實體交易排除名單」（DAWAY 等卡才被排除），在歐洲支援 4 大行動支付的門市嗶 Samsung Pay 依然享指定支付加碼！',
         '⚠️ 致命限制：每月加碼額度僅約 $6,000 封頂，超過後降為 1%~2%；且若店家不支援行動感應而改用實體塑膠卡插卡，僅享一般消費 1%~2%！',
         '💡 歐洲大額精品（LV/Chanel等）：超過 $6,000 請務必改刷國泰 CUBE【趣旅行】(3.3% 無上限) 或台新【玩旅刷】(3.3%)！'
       ],
-      capWarning: rate === 7.0 ? '歐洲小額感應神招！4大行動支付享 7%（$6,000 封頂）' : undefined,
+      capWarning: rate === 7.0 ? '歐洲小額感應神招！Samsung Pay 享 7%（$6,000 封頂）' : undefined,
       isSchemeDependent: false
     };
   }
@@ -4160,7 +4160,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       },
       details: [
         `${channelNames[channelId] || '本通路'}多為線上付款：僅享一般消費 ${onlineRate}% 豐點`,
-        '無 Apple Pay / Google Pay 實體感應支付 +5% 加碼',
+        '無 Samsung Pay / Google Pay / Apple Pay 實體感應支付 +5% 加碼',
         '💡 建議改刷國泰 CUBE（趣旅行 3.3% 無上限）或台新卡（玩旅刷 3.3%）！'
       ],
       warning: '⚠️ 線上消費無法觸發 7% 感應加碼！機票/訂房/旅行社建議刷 CUBE (3.3%) 或台新 (3.3%)！'
@@ -4176,14 +4176,14 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardRate: 7.0,
         rewardType: '豐點',
         bestPaymentMethod: {
-          method: 'apple_pay',
-          label: '📱 務必使用 4大感應支付 (Apple / Google / Samsung / Garmin Pay)',
+          method: 'samsung_pay',
+          label: '📱 務必使用 4大感應支付 (Samsung / Google / Garmin / Apple Pay)',
           note: '感應即享 7% 封頂，切勿出示 LINE Pay 或實體刷'
         },
         details: [
           '基本回饋：1%（無上限）',
           '運動達標加碼：+1%（上限 50 點，限額 $5,000）',
-          '指定行動支付（Apple/Google/Samsung/Garmin Pay 感應）：+5%（上限 300 點，限額 $6,000）',
+          '指定行動支付（Samsung/Google/Garmin/Apple Pay 感應）：+5%（上限 300 點，限額 $6,000）',
           '合計最高 7.0% 豐點！'
         ],
         capWarning: '🔥 每月消費 NT$6,000 內享 7%，超過後降為 1%~2%'
@@ -4196,8 +4196,8 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardRate: 2.0,
         rewardType: '豐點',
         bestPaymentMethod: {
-          method: 'apple_pay',
-          label: 'Apple / Google / Samsung / Garmin Pay 4大感應',
+          method: 'samsung_pay',
+          label: 'Samsung / Google / Garmin / Apple Pay 4大感應',
           note: '本月 $6,000 額度已用盡，降為 2%'
         },
         details: [
@@ -4214,8 +4214,8 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardRate: 1.0,
         rewardType: '豐點',
         bestPaymentMethod: {
-          method: 'apple_pay',
-          label: 'Apple / Google / Samsung / Garmin Pay 4大感應',
+          method: 'samsung_pay',
+          label: 'Samsung / Google / Garmin / Apple Pay 4大感應',
           note: '尚未達標運動門檻'
         },
         details: [

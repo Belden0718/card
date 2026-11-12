@@ -32,6 +32,7 @@ export interface UserCardConfig {
   gogoRichartLinked: boolean;     // 已綁定 Richart 自動扣繳 + 數位帳單
   taishinScheme: TaishinScheme;   // 台新完整 7+1 權益自選方案
   ownedCards?: Record<CardId, boolean>; // 我持有的卡片開關（未持有者不推薦為 No.1）
+  preferredMobilePay?: 'samsung_pay' | 'google_pay' | 'apple_pay'; // 偏好行動支付載具 (預設: samsung_pay 三星手機)
 }
 
 export type PaymentMethod = 

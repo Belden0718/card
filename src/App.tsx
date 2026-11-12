@@ -24,6 +24,7 @@ const DEFAULT_CONFIG: UserCardConfig = {
   dawayIsNewUser: false,       // 已非新戶，預設舊戶 1.5%
   gogoRichartLinked: true,     // 預設有綁 Richart 自動扣繳
   taishinScheme: 'pay',        // 本月已領取 Pay著刷（LINE Pay 3.8% / 超商台新Pay 3.8%）
+  preferredMobilePay: 'samsung_pay', // 預設使用者為三星手機 (Samsung Pay 首位)
   ownedCards: {
     cube: true,
     gogo: true,
