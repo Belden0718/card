@@ -117,23 +117,13 @@ export const ChannelDrawer: React.FC<Props> = ({
     ...(validRecentsCount > 0 ? [{ id: 'recents', label: '🕒 最近查詢', icon: History }] : []),
     { id: 'gas', label: '⛽ 加油充電', icon: Fuel },
     { id: 'convenience', label: '🏪 超商消費', icon: Store },
-    { id: 'online', label: '🛍️ 網購數位', icon: ShoppingBag },
     { id: 'food', label: '🍱 美食飲品/聚餐', icon: Utensils },
     { id: 'supermarket', label: '🛒 超市量販', icon: ShoppingCart },
+    { id: 'online', label: '🛍️ 網購數位', icon: ShoppingBag },
     { id: 'department', label: '🏬 百貨服飾/藥妝', icon: Building2 },
     { id: 'travel', label: '✈️ 旅遊出行/交通', icon: Plane },
     { id: 'general', label: '🏋️ 運動健身/裝備', icon: Dumbbell }
   ];
-
-  // 將分類整理為自然左右讀取的雙排結構
-  const mid = Math.ceil(categories.length / 2);
-  const row1 = categories.slice(0, mid);
-  const row2 = categories.slice(mid);
-  const twoRowCategories: typeof categories = [];
-  for (let i = 0; i < mid; i++) {
-    if (row1[i]) twoRowCategories.push(row1[i]);
-    if (row2[i]) twoRowCategories.push(row2[i]);
-  }
 
   let channelsToFilter = CHANNELS;
   // 只有在未輸入搜尋字詞時，才受分類標籤限制；一旦搜尋，全庫檢索避免用戶找不到
@@ -266,10 +256,10 @@ export const ChannelDrawer: React.FC<Props> = ({
             </form>
           </div>
 
-          {/* 雙排橫向滾動分類列：若正在文字搜尋，自動隱藏以保留最大高度給搜尋結果 */}
+          {/* 雙排橫向滾動分類列 / 桌面自然換行：若正在文字搜尋，自動隱藏以保留最大高度給搜尋結果 */}
           {!searchQuery.trim() && (
-            <div className="px-3 py-2 border-b border-slate-100 grid grid-rows-2 grid-flow-col auto-cols-max gap-1.5 overflow-x-auto no-scrollbar shrink-0 bg-white">
-              {twoRowCategories.map((cat) => {
+            <div className="px-3 py-2 border-b border-slate-100 grid grid-rows-2 grid-flow-col auto-cols-max gap-1.5 overflow-x-auto no-scrollbar shrink-0 bg-white sm:flex sm:flex-wrap">
+              {categories.map((cat) => {
                 const isSelected = activeCategory === cat.id;
                 return (
                   <button
