@@ -16,6 +16,19 @@ const RECENTS_KEY = 'credit_card_advisor_recents_v1';
 
 const DEFAULT_FAVORITES = ['supermarket_px', 'convenience_711', 'convenience_family', 'gas_cpc', 'drink_chill', 'transit_thsr'];
 
+// 歷史舊通路 ID 自動遷移與相容轉換
+const migrateChannelIds = (ids: string[]): string[] => {
+  const result: string[] = [];
+  for (const id of ids) {
+    if (id === 'ev_charging_parking') {
+      result.push('ev_charging', 'parking_smart');
+    } else if (CHANNELS.some((c) => c.id === id)) {
+      result.push(id);
+    }
+  }
+  return Array.from(new Set(result));
+};
+
 const DEFAULT_CONFIG: UserCardConfig = {
   cubeScheme: 'selected',      // 預設集精選（涵蓋加油與超商 2.0%）
   cubeLevel: 2,                // CUBE 會員等級 Lv2 (3.0% 無上限)
@@ -72,8 +85,9 @@ export function App() {
   const [selectedChannelId, setSelectedChannelId] = useState<string>(() => {
     try {
       const saved = localStorage.getItem(LAST_CHANNEL_KEY);
-      if (saved && CHANNELS.some((c) => c.id === saved)) {
-        return saved;
+      if (saved) {
+        if (saved === 'ev_charging_parking') return 'ev_charging';
+        if (CHANNELS.some((c) => c.id === saved)) return saved;
       }
     } catch {
       // ignore
@@ -83,7 +97,14 @@ export function App() {
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem(FAVORITES_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const migrated = migrateChannelIds(parsed);
+          localStorage.setItem(FAVORITES_KEY, JSON.stringify(migrated));
+          return migrated;
+        }
+      }
     } catch {
       // ignore
     }
@@ -93,7 +114,14 @@ export function App() {
   const [recents, setRecents] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem(RECENTS_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const migrated = migrateChannelIds(parsed).slice(0, 8);
+          localStorage.setItem(RECENTS_KEY, JSON.stringify(migrated));
+          return migrated;
+        }
+      }
     } catch {
       // ignore
     }

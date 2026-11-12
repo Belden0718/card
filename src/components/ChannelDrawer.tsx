@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { CHANNELS } from '../data/cardData';
 import type { ScenarioChannel } from '../types/card';
 import { Search, X, Sparkles, Fuel, Store, ShoppingBag, Utensils, ShoppingCart, Building2, Plane, Dumbbell, Check, Star, History, ChevronDown } from 'lucide-react';
@@ -31,6 +31,15 @@ export const ChannelDrawer: React.FC<Props> = ({
 
   const drawerSelectedRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const validFavoritesCount = useMemo(
+    () => favorites.filter(id => CHANNELS.some(ch => ch.id === id)).length,
+    [favorites]
+  );
+  const validRecentsCount = useMemo(
+    () => recents.filter(id => CHANNELS.some(ch => ch.id === id)).length,
+    [recents]
+  );
 
   const handleClose = useCallback(() => {
     if (inputRef.current) {
@@ -104,8 +113,8 @@ export const ChannelDrawer: React.FC<Props> = ({
 
   const categories = [
     { id: 'all', label: '全部通路', icon: Sparkles },
-    ...(favorites.length > 0 ? [{ id: 'favorites', label: `⭐ 常用 (${favorites.length})`, icon: Star }] : []),
-    ...(recents.length > 0 ? [{ id: 'recents', label: '🕒 最近查詢', icon: History }] : []),
+    ...(validFavoritesCount > 0 ? [{ id: 'favorites', label: `⭐ 常用 (${validFavoritesCount})`, icon: Star }] : []),
+    ...(validRecentsCount > 0 ? [{ id: 'recents', label: '🕒 最近查詢', icon: History }] : []),
     { id: 'gas', label: '⛽ 加油充電', icon: Fuel },
     { id: 'convenience', label: '🏪 超商消費', icon: Store },
     { id: 'online', label: '🛍️ 網購數位', icon: ShoppingBag },

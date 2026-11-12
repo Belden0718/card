@@ -36,10 +36,19 @@ export const QuickScenarioGrid: React.FC<Props> = ({
     }
   }, [selectedChannelId]);
 
+  const validFavoritesCount = React.useMemo(
+    () => favorites.filter(id => CHANNELS.some(ch => ch.id === id)).length,
+    [favorites]
+  );
+  const validRecentsCount = React.useMemo(
+    () => recents.filter(id => CHANNELS.some(ch => ch.id === id)).length,
+    [recents]
+  );
+
   const categories = [
     { id: 'all', label: '全部通路', icon: Sparkles },
-    ...(favorites.length > 0 ? [{ id: 'favorites', label: `⭐ 常用 (${favorites.length})`, icon: Star }] : []),
-    ...(recents.length > 0 ? [{ id: 'recents', label: '🕒 最近查詢', icon: History }] : []),
+    ...(validFavoritesCount > 0 ? [{ id: 'favorites', label: `⭐ 常用 (${validFavoritesCount})`, icon: Star }] : []),
+    ...(validRecentsCount > 0 ? [{ id: 'recents', label: '🕒 最近查詢', icon: History }] : []),
     { id: 'gas', label: '⛽ 加油充電', icon: Fuel },
     { id: 'convenience', label: '🏪 超商消費', icon: Store },
     { id: 'online', label: '🛍️ 網購數位', icon: ShoppingBag },
