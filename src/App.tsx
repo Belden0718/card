@@ -14,7 +14,7 @@ const LAST_CHANNEL_KEY = 'credit_card_advisor_last_channel_v1';
 const FAVORITES_KEY = 'credit_card_advisor_favorites_v1';
 const RECENTS_KEY = 'credit_card_advisor_recents_v1';
 
-const DEFAULT_FAVORITES = ['pay_linepay', 'supermarket_px', 'convenience_711', 'gas_cpc', 'drink_chill', 'transit_rail'];
+const DEFAULT_FAVORITES = ['supermarket_px', 'convenience_711', 'convenience_family', 'gas_cpc', 'drink_chill', 'transit_thsr'];
 
 const DEFAULT_CONFIG: UserCardConfig = {
   cubeScheme: 'selected',      // 預設集精選（涵蓋加油與超商 2.0%）
@@ -32,31 +32,29 @@ const DEFAULT_CONFIG: UserCardConfig = {
   }
 };
 
-// 精選高頻熱門捷徑 (23 大核心場景)
+// 精選高頻熱門捷徑 (21 大核心生活消費通路)
 const HOT_SHORTCUTS = [
-  { id: 'pay_apple_google', label: '📱 Apple/Google Pay' },
-  { id: 'pay_linepay', label: '📱 LINE Pay' },
-  { id: 'pay_taishin_twqr', label: '⚡ 台新Pay/TWQR' },
-  { id: 'pay_jko', label: '📱 街口支付' },
   { id: 'convenience_711', label: '🏪 7-11' },
   { id: 'convenience_family', label: '🏪 全家' },
   { id: 'supermarket_px', label: '🛒 全聯' },
-  { id: 'supermarket_amart', label: '🛒 愛買量販' },
-  { id: 'store_muji', label: '🛋️ 無印良品' },
-  { id: 'store_showba_hardware', label: '🐧 小北百貨' },
-  { id: 'gas_cpc', label: '⛽ 中油' },
-  { id: 'gas_formosa', label: '⛽ 台塑/台亞' },
-  { id: 'ev_charging', label: '⚡ 特斯拉/充電' },
-  { id: 'transit_rail', label: '🚄 高鐵/台鐵' },
-  { id: 'online_shopee', label: '🦐 蝦皮' },
-  { id: 'online_momo', label: '🍑 momo' },
-  { id: 'food_delivery', label: '🛵 外送' },
-  { id: 'supermarket_rtmart', label: '🏬 大潤發' },
-  { id: 'drugstore_poya', label: '🎀 寶雅' },
-  { id: 'entertainment_tickets', label: '🎫 拓元售票' },
-  { id: 'entertainment_ktv', label: '🎤 錢櫃/KTV' },
-  { id: 'hotel_star_resorts', label: '🏨 星級飯店' },
-  { id: 'insurance_payment', label: '🛡️ 繳保費' }
+  { id: 'supermarket_carrefour', label: '🏬 家樂福/大潤發' },
+  { id: 'fastfood_mcdonalds', label: '🍟 麥當勞' },
+  { id: 'fastfood_kfc', label: '🍗 肯德基' },
+  { id: 'fastfood_burgerking', label: '🍔 漢堡王' },
+  { id: 'food_delivery', label: '🛵 Uber Eats/熊貓' },
+  { id: 'drink_chill', label: '🍹 50嵐/得正手搖' },
+  { id: 'dining_sushiro', label: '🍣 壽司郎' },
+  { id: 'gas_cpc', label: '⛽ 中油加油' },
+  { id: 'transit_thsr', label: '🚄 台灣高鐵' },
+  { id: 'transit_tra', label: '🚆 台鐵火車' },
+  { id: 'online_shopee', label: '🦐 蝦皮購物' },
+  { id: 'online_momo', label: '🍑 momo購物' },
+  { id: 'streaming_video', label: '🎬 Netflix/Disney+' },
+  { id: 'streaming_music', label: '🎵 YouTube/Spotify' },
+  { id: 'digital_stores', label: '📱 App Store/課金' },
+  { id: 'department_store', label: '🏬 新光/微風/百貨' },
+  { id: 'fashion_uniqlo_gu', label: '👕 UNIQLO/GU' },
+  { id: 'drugstore_cosmetics', label: '💄 康是美/屈臣氏/寶雅' }
 ];
 
 export function App() {
