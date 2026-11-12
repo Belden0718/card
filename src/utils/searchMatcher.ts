@@ -7,9 +7,11 @@ export const CHANNEL_ALIASES: Record<string, string[]> = {
   gas_formosa: ['台塑', '台亞', '台塑石油', 'formosa', '福懋', '福懋加油站'],
   gas_smile: ['速邁樂', '統一精工', 'smile'],
   gas_national: ['全國', '全國加油站'],
-  ev_charging_parking: [
-    '特斯拉', 'tesla', 'u-power', 'evoasis', 'evalue', '特爾', '充電樁', '超充', '電動車',
-    '車麻吉', 'utaggo', '嘟嘟房', '城市車旅', 'times', 'uspace', '停車費', '停車場', 'autopass', 'vivipark'
+  ev_charging: [
+    '充電', '電動車', '特斯拉', 'tesla', 'u-power', 'upower', 'evoasis', 'evalue', '特爾', '特爾電力', 'tail', 'icharging', '充電樁', '超充', '超級充電站', '快充', '慢充', 'ev'
+  ],
+  parking_smart: [
+    '停車', '停車費', '停車場', '智慧停車', '車麻吉', 'autopass', 'utaggo', '嘟嘟房', '中興嘟嘟房', '城市車旅', 'times', 'times24', 'uspace', 'vivipark', '俥酷', 'iparking', '自動繳費機', '停車繳費'
   ],
 
   // --- 超商消費 (3) ---

@@ -81,16 +81,31 @@ export const CHANNELS: ScenarioChannel[] = [
   },
   // 充電與行車出行
   {
-    id: 'ev_charging_parking',
-    name: '電動車充電 / 智慧停車 (EVOASIS/U-POWER/車麻吉/uTagGo)',
+    id: 'ev_charging',
+    name: '電動車充電站 (U-POWER / EVOASIS / 特爾電力 / Tesla 超充)',
     category: 'gas',
     icon: '⚡',
-    description: 'U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging充電站；車麻吉、uTagGo智慧停車',
+    description: 'U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging、Tesla 超充等電動車充電營運商',
     pitfalls: [
-      '【CUBE 2.0%】國泰 CUBE 切換【集精選】，指定充電站與車麻吉/uTagGo享 2.0% 小樹點無上限！',
-      '【台新 3.3%】台新切換【天天刷】（加油/充電/交通出行）享 3.3% 台新Point！',
-      '【避雷注意】車麻吉中油加油消費不列入集精選（加油請直接刷中油直營）；uTagGo 月租停車排除。',
-      '【永豐 DAWAY 3%】App 內付款若支援 LINE Pay 享新戶 3% / 舊戶 1.5%。'
+      '【Tesla 超充踩雷注意】Tesla 超充扣款為海外線上消費（荷蘭實體），「不在」國泰 CUBE【集精選】名單中！若切集精選僅 0.3%，需切換至【玩數位】或【趣旅行】才享 3.3% 小樹點！',
+      '【CUBE 集精選 2.0%】第三方充電營運商（U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging）在 CUBE【集精選】享 2.0% 小樹點無上限！',
+      '【台新 3.3% 天天刷】台新切換【天天刷】（充電/加油）享 3.3% 台新Point；Tesla 超充亦可切【玩旅刷】/【數趣刷】享 3.3%！',
+      '【永豐 SPORT 避雷】充電站多為 App 內建線上綁卡自動扣繳，無 Samsung Pay / Apple Pay 實體感應加碼，僅享基本 1%~2% 豐點，不建議作為充電主力卡！',
+      '【永豐 DAWAY 1%】App 內綁卡線上刷卡僅享國內一般消費 1% LINE POINTS。'
+    ]
+  },
+  {
+    id: 'parking_smart',
+    name: '智慧停車與現場繳費 (車麻吉 / uTagGo / 嘟嘟房 / 城市車旅 / Times)',
+    category: 'gas',
+    icon: '🅿️',
+    description: '車麻吉(Autopass)、uTagGo、俥酷iParking智慧停車，以及嘟嘟房、城市車旅、Times停車場現場自動繳費機',
+    pitfalls: [
+      '【現場繳費機首選 7%】嘟嘟房、城市車旅、Times 現場繳費機若支援感應，使用 Samsung Pay（三星首選）/ Apple Pay 感應享永豐 SPORT 最高 7.0% 豐點（$6,000 封頂）！',
+      '【車麻吉加油 0.3% 地雷】車麻吉支援路邊/智慧停車與加油自動扣款，但國泰 CUBE「集精選 2.0%」明文排除車麻吉加油，加油扣款會直接降為 0.3%！',
+      '【CUBE 集精選 2.0%】車麻吉停車、uTagGo 停車（不含月租）在 CUBE【集精選】享 2.0% 小樹點無上限！',
+      '【台新 3.8% LINE Pay】車麻吉 App 內支援 LINE Pay 支付，台新切換【Pay著刷】走 LINE Pay 掃碼享 3.8%（天天刷方案亦享 3.3%）！',
+      '【DAWAY 3%】車麻吉 App 內以 LINE Pay 付款，新戶享 3% / 舊戶 1.5% LINE POINTS！'
     ]
   },
   // 超商
@@ -1285,17 +1300,28 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
       '【集精選方案】IKEA 宜家家居全門市與官網：2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
       '涵蓋實體家具賣場、IKEA 餐廳用餐、官網線上購物'
     ];
-  } else if (channelId === 'ev_charging_parking') {
+  } else if (channelId === 'ev_charging') {
+    rate = 2.0;
+    isTargetScheme = true;
+    requiredSchemeName = '集精選';
+    requiredSchemeTag = '方案：【集精選】(第三方充電站) / 【玩數位/趣旅行】(Tesla超充)';
+    bestPaymentLabel = '📱 各充電 App 綁定線上刷卡 / Tesla 帳號扣款';
+    bestPaymentNote = '第三方充電站切【集精選】2.0%；Tesla 超充請切【玩數位】或【趣旅行】3.3%';
+    details = [
+      '【集精選方案 2.0%】指定第三方充電站：U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging 享 2.0% 小樹點（無上限）',
+      '⚠️ Tesla 超充專屬避雷：Tesla 超充扣款為海外線上交易（荷蘭實體），不在【集精選】名單中！若切集精選僅 0.3%，請切換至【玩數位】或【趣旅行】享 3.3% 小樹點無上限！'
+    ];
+  } else if (channelId === 'parking_smart') {
     rate = 2.0;
     isTargetScheme = true;
     requiredSchemeName = '集精選';
     requiredSchemeTag = '方案：【集精選】';
-    bestPaymentLabel = '📱 綁定各 App 自動扣款 / 現場感應';
-    bestPaymentNote = '切換至【集精選】方案享 2.0% 無上限';
+    bestPaymentLabel = '📱 車麻吉/uTagGo App 自動扣款 / 現場繳費機刷卡';
+    bestPaymentNote = '切換至【集精選】方案享 2.0% 小樹點無上限';
     details = [
-      '【集精選方案】指定智慧出行享 2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
-      '指定充電站：U-POWER、EVOASIS、EVALUE、TAIL特爾電力、iCharging',
-      '指定智慧停車：車麻吉（不含加油）、uTagGo（不含月租）'
+      '【集精選方案 2.0%】車麻吉停車（路邊停車/合作停車場）、uTagGo 停車（不含月租）享 2.0% 小樹點（無上限，一般0.3%+加碼1.7%）',
+      '⚠️ 車麻吉中油加油避坑：車麻吉 App 內之中油加油自動扣款明文排除 2% 加碼，扣款僅享 0.3%！',
+      '💡 實體停車場現場繳費機首選：嘟嘟房/城市車旅現場機台支援感應，強烈建議改用「永豐 SPORT 卡以 Samsung Pay 感應結帳享 7.0% 豐點」！'
     ];
   } else if (channelId === 'food_delivery') {
     rate = 3.3;
@@ -1988,6 +2014,7 @@ function calculateCubeReward(channelId: string, config: UserCardConfig): CardRew
     requiredSchemeTag,
     bestPaymentMethod: {
       method: (
+        channelId === 'ev_charging' ||
         channelId === 'food_delivery' ||
         channelId.startsWith('online') ||
         channelId === 'streaming_video' ||
@@ -3666,25 +3693,86 @@ function calculateTaishinReward(channelId: string, config: UserCardConfig): Card
     };
   }
 
-  // 11.9. 充電與智慧停車 (天天刷支援)
-  if (channelId === 'ev_charging_parking') {
+  // 11.9.1. 電動車充電站 (天天刷 3.3% / Tesla 玩旅刷 3.3%)
+  if (channelId === 'ev_charging') {
     return {
       cardId: 'gogo',
       cardName: '台新卡 (Richart / @GoGo)',
       cardColor: 'from-zinc-800 to-neutral-950',
       rewardRate: isLinked ? 3.3 : baseRate,
       rewardType: '台新Point',
-      requiredSchemeName: '天天刷',
-      requiredSchemeTag: '方案：【天天刷】',
+      requiredSchemeName: '天天刷 / 玩旅刷',
+      requiredSchemeTag: '方案：【天天刷 / 玩旅刷】',
       bestPaymentMethod: {
         method: 'online',
-        label: '📱 綁定各 App 自動扣繳或充電掃碼',
-        note: '【天天刷】加油充電與交通享 3.3%'
+        label: '📱 國內充電 App 綁定扣繳切【天天刷】；Tesla 超充扣繳切【玩旅刷】/【數趣刷】享 3.3%',
+        note: '天天刷涵蓋國內第三方充電；玩旅刷涵蓋 Tesla 海外線上扣款'
       },
+      schemeBranches: [
+        {
+          schemeName: '天天刷',
+          schemeTag: '方案：【天天刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '📱 綁定國內充電 App (U-POWER/EVOASIS等)',
+          paymentMethod: 'online',
+          note: '國內第三方充電站 3.3% 台新Point（無上限）'
+        },
+        {
+          schemeName: '玩旅刷',
+          schemeTag: '方案：【玩旅刷 / 數趣刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '📱 Tesla 帳號綁定扣繳（海外線上）',
+          paymentMethod: 'online',
+          note: 'Tesla 海外線上扣款 3.3% 台新Point（無上限）'
+        }
+      ],
       details: [
-        `【天天刷方案】指定充電站與行車交通：${isLinked ? 3.3 : baseRate}% 台新Point`,
-        '涵蓋 U-POWER、EVOASIS、車麻吉等智慧出行',
+        `【天天刷方案】指定充電站：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '涵蓋 U-POWER、EVOASIS、TAIL 特爾電力、EVALUE 等國內營運商',
+        `【玩旅刷/數趣刷方案】Tesla 超充海外線上扣款：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
         '需綁定 Richart / 台新帳戶自動扣繳'
+      ],
+      isSchemeDependent: true
+    };
+  }
+
+  // 11.9.2. 智慧停車與現場繳費 (Pay著刷 3.8% / 天天刷 3.3%)
+  if (channelId === 'parking_smart') {
+    return {
+      cardId: 'gogo',
+      cardName: '台新卡 (Richart / @GoGo)',
+      cardColor: 'from-zinc-800 to-neutral-950',
+      rewardRate: isLinked ? 3.8 : baseRate,
+      rewardType: '台新Point',
+      requiredSchemeName: 'Pay著刷 / 天天刷',
+      requiredSchemeTag: '方案：【Pay著刷 / 天天刷】',
+      bestPaymentMethod: {
+        method: 'line_pay',
+        label: '📱 車麻吉 App 內結帳選擇 LINE Pay 掃碼享 3.8%（亦支援天天刷 3.3%）',
+        note: '【Pay著刷】走 LINE Pay 享 3.8%；【天天刷】自動扣繳享 3.3%'
+      },
+      schemeBranches: [
+        {
+          schemeName: 'Pay著刷',
+          schemeTag: '方案：【Pay著刷】',
+          rewardRate: isLinked ? 3.8 : baseRate,
+          paymentLabel: '📱 車麻吉 App 內選用 LINE Pay 支付',
+          paymentMethod: 'line_pay',
+          note: 'LINE Pay 付款享 3.8%（每期上限 500 點）'
+        },
+        {
+          schemeName: '天天刷',
+          schemeTag: '方案：【天天刷】',
+          rewardRate: isLinked ? 3.3 : baseRate,
+          paymentLabel: '📱 智慧停車 App (車麻吉/uTagGo) 自動扣款',
+          paymentMethod: 'online',
+          note: '天天刷交通出行享 3.3%（無上限）'
+        }
+      ],
+      details: [
+        `【Pay著刷方案】車麻吉 App 內以 LINE Pay 付款：${isLinked ? 3.8 : baseRate}% 台新Point（每期上限 500 點）`,
+        `【天天刷方案】車麻吉 / uTagGo 綁卡自動扣款：${isLinked ? 3.3 : baseRate}% 台新Point（無上限）`,
+        '💡 停車場現場繳費機提示：嘟嘟房/城市車旅現場機台若支援感應，可優先改用「永豐 SPORT 卡以 Samsung Pay 感應結帳享 7.0% 豐點」！'
       ],
       isSchemeDependent: true
     };
@@ -3775,6 +3863,51 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
     channelId === 'store_momentum' ||
     channelId === 'fitness_gym'
   );
+
+  if (channelId === 'parking_smart') {
+    const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: rate,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'samsung_pay',
+        label: '📱 停車場現場自動繳費機使用 Samsung Pay 感應結帳享 7.0%',
+        note: '嘟嘟房/城市車旅/Times 現場繳費機感應享最高 7.0% 豐點；App 自動扣繳無感應加碼僅 1%~2%'
+      },
+      details: [
+        `【實體繳費機行動支付】嘟嘟房/城市車旅/Times 現場繳費機使用 Samsung Pay / Google Pay 感應：${rate}% 豐點`,
+        '🔥 現場停車首選：實體停車場繳費機只要支援感應，拿出 Samsung Pay 嗶一下即可拿滿最高 7.0% 豐點（每月 $6,000 封頂）！',
+        '⚠️ App 自動扣繳提醒：若使用車麻吉或 uTagGo 車牌辨識線上自動扣繳，屬於線上消費無感應加碼，僅享一般消費 1%~2%！',
+        '💡 App 自動扣繳推薦：車麻吉請以 LINE Pay 扣款搭台新【Pay著刷】享 3.8% 或 DAWAY 享 3.0%！'
+      ],
+      capWarning: rate === 7.0 ? '現場繳費機 Samsung Pay 感應享 7%（$6,000 封頂）' : undefined,
+      isSchemeDependent: false
+    };
+  }
+
+  if (channelId === 'ev_charging') {
+    return {
+      cardId: 'sport',
+      cardName: '永豐銀行 SPORT 卡',
+      cardColor: 'from-emerald-600 to-teal-700',
+      rewardRate: isCalorieMet ? 2.0 : 1.0,
+      rewardType: '豐點',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '📱 各充電 App 內線上刷卡扣繳（無感應加碼）',
+        note: '線上自動扣款僅享一般消費 1%~2%，無法觸發感應 +5%'
+      },
+      details: [
+        `充電 App 內線上刷卡扣款：${isCalorieMet ? 2.0 : 1.0}% 豐點`,
+        '⚠️ 無感應加碼避雷：充電站多為 App 內建線上扣款，無法使用 Samsung Pay 實體感應，因此沒有 +5% 加碼！',
+        '💡 充電推薦改刷：國泰 CUBE 卡【集精選】(2.0% 無上限) 或台新卡【天天刷】(3.3% 無上限)！Tesla 超充請切 CUBE【玩數位】/【趣旅行】(3.3%)！'
+      ],
+      warning: '線上自動扣款無 Samsung Pay 感應加碼，僅享一般 1%~2%！建議改用台新天天刷 3.3% 或 CUBE 集精選 2%！'
+    };
+  }
 
   if (channelId === 'store_united_arrows') {
     const rate = isCalorieMet && hasQuota ? 7.0 : (isCalorieMet ? 2.0 : 1.0);
@@ -4643,7 +4776,27 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
     };
   }
 
-  if (channelId === 'ev_charging_parking') {
+  if (channelId === 'ev_charging') {
+    return {
+      cardId: 'daway',
+      cardName: '永豐銀行 DAWAY 卡',
+      cardColor: 'from-sky-500 to-blue-600',
+      rewardRate: 1.0,
+      rewardType: 'LINE POINTS',
+      bestPaymentMethod: {
+        method: 'online',
+        label: '💳 充電 App 內線上綁卡刷卡（僅一般消費 1%）',
+        note: '充電營運商普遍不支援 LINE Pay，僅享國內一般消費 1%'
+      },
+      details: [
+        '充電 App 內線上刷卡：1.0% LINE POINTS（無上限）',
+        '⚠️ 避雷注意：U-POWER、EVOASIS、特爾電力等充電 App 不支援 LINE Pay 扣款，僅能作為一般消費 1%！',
+        '💡 充電推薦改刷：台新卡切換【天天刷】(3.3%) 或國泰 CUBE 卡切換【集精選】(2.0%)！Tesla 超充請刷 CUBE【玩數位】(3.3%)！'
+      ]
+    };
+  }
+
+  if (channelId === 'parking_smart') {
     return {
       cardId: 'daway',
       cardName: '永豐銀行 DAWAY 卡',
@@ -4652,13 +4805,14 @@ function calculateDawayReward(channelId: string, config: UserCardConfig): CardRe
       rewardType: 'LINE POINTS',
       bestPaymentMethod: {
         method: 'line_pay',
-        label: '📱 App 內結帳選擇 LINE Pay 支付',
-        note: '車麻吉等 App 支援 LINE Pay'
+        label: '📱 車麻吉 App 內結帳選擇 LINE Pay 支付',
+        note: '車麻吉支援 LINE Pay 支付'
       },
       details: [
-        `智慧出行綁定 LINE Pay 支付：${lpRate}% LINE POINTS`,
+        `車麻吉智慧停車綁定 LINE Pay 支付：${lpRate}% LINE POINTS`,
         isNew ? '新戶加碼享 3%（加碼上限每期 800 點）' : '舊戶享 1.5% LINE POINTS',
-        '若走直接輸入卡號線上刷僅 1%'
+        '⚠️ 現場繳費機或直接輸入卡號線上刷僅 1% 一般消費',
+        '💡 現場繳費機首選：嘟嘟房/城市車旅現場機台支援感應，可改用「永豐 SPORT 卡以 Samsung Pay 感應結帳享 7.0% 豐點」！'
       ],
       capWarning: isNew ? '新戶加碼每期上限 800 點' : undefined
     };
