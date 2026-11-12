@@ -4124,16 +4124,16 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
       rewardType: '豐點',
       bestPaymentMethod: {
         method: 'apple_pay',
-        label: '📱 歐洲門市使用 Apple Pay / Google Pay 感應結帳',
-        note: 'SPORT卡未列入歐盟排除！嗶手機感應享最高 7%（$6,000封頂）'
+        label: '📱 歐洲門市使用 4大行動支付 (Apple/Google/Samsung/Garmin Pay) 感應結帳',
+        note: 'SPORT卡未列入歐盟排除！手機/手錶感應享最高 7%（$6,000封頂）'
       },
       details: [
-        `【歐洲實體感應神操作】門市使用 Apple Pay 感應付款：${rate}% 豐點`,
-        '👑 永豐唯一特例：SPORT 卡並未列入永豐銀行「歐盟實體交易排除名單」（DAWAY 等卡才被排除），在歐洲支援 Apple Pay 的門市嗶手機依然享指定支付加碼！',
-        '⚠️ 致命限制：每月加碼額度僅約 $6,000 封頂，超過後降為 1%~2%；且若店家不支援 Apple Pay 而改用實體塑膠卡插卡，僅享一般消費 1%~2%！',
+        `【歐洲實體感應神操作】門市使用 Apple Pay / Google Pay / Samsung Pay / Garmin Pay 4大感應支付：${rate}% 豐點`,
+        '👑 永豐唯一特例：SPORT 卡並未列入永豐銀行「歐盟實體交易排除名單」（DAWAY 等卡才被排除），在歐洲支援 4 大行動支付的門市嗶手機或手錶依然享指定支付加碼！',
+        '⚠️ 致命限制：每月加碼額度僅約 $6,000 封頂，超過後降為 1%~2%；且若店家不支援行動感應而改用實體塑膠卡插卡，僅享一般消費 1%~2%！',
         '💡 歐洲大額精品（LV/Chanel等）：超過 $6,000 請務必改刷國泰 CUBE【趣旅行】(3.3% 無上限) 或台新【玩旅刷】(3.3%)！'
       ],
-      capWarning: rate === 7.0 ? '歐洲小額感應神招！Apple Pay 享 7%（$6,000 封頂）' : undefined,
+      capWarning: rate === 7.0 ? '歐洲小額感應神招！4大行動支付享 7%（$6,000 封頂）' : undefined,
       isSchemeDependent: false
     };
   }
@@ -4177,13 +4177,13 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardType: '豐點',
         bestPaymentMethod: {
           method: 'apple_pay',
-          label: '📱 務必使用 Samsung Pay / Apple Pay / Google Pay 感應支付',
+          label: '📱 務必使用 4大感應支付 (Apple / Google / Samsung / Garmin Pay)',
           note: '感應即享 7% 封頂，切勿出示 LINE Pay 或實體刷'
         },
         details: [
           '基本回饋：1%（無上限）',
           '運動達標加碼：+1%（上限 50 點，限額 $5,000）',
-          '指定行動支付（Samsung/Apple/Google Pay 感應）：+5%（上限 300 點，限額 $6,000）',
+          '指定行動支付（Apple/Google/Samsung/Garmin Pay 感應）：+5%（上限 300 點，限額 $6,000）',
           '合計最高 7.0% 豐點！'
         ],
         capWarning: '🔥 每月消費 NT$6,000 內享 7%，超過後降為 1%~2%'
@@ -4197,7 +4197,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardType: '豐點',
         bestPaymentMethod: {
           method: 'apple_pay',
-          label: 'Samsung Pay / Apple Pay / Google Pay 感應',
+          label: 'Apple / Google / Samsung / Garmin Pay 4大感應',
           note: '本月 $6,000 額度已用盡，降為 2%'
         },
         details: [
@@ -4215,7 +4215,7 @@ function calculateSportReward(channelId: string, config: UserCardConfig): CardRe
         rewardType: '豐點',
         bestPaymentMethod: {
           method: 'apple_pay',
-          label: 'Samsung Pay / Apple Pay / Google Pay 感應',
+          label: 'Apple / Google / Samsung / Garmin Pay 4大感應',
           note: '尚未達標運動門檻'
         },
         details: [

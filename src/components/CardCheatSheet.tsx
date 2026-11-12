@@ -41,7 +41,7 @@ export const CardCheatSheet: React.FC<Props> = ({ isOpen, onClose }) => {
             <ul className="text-xs text-emerald-950 space-y-1.5">
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong>實體感應神卡</strong>：全台加油站、連鎖餐飲、量販超市（家樂福/大潤發/愛買）、生活門市（無印良品、誠品生活、小北百貨、大創、迪卡儂）出示 <strong>Apple Pay / Google Pay / Samsung Pay 感應</strong>，享最高 7%（月刷 $6,000 封頂）！</span>
+                <span><strong>實體感應神卡</strong>：全台加油站、連鎖餐飲、量販超市（家樂福/大潤發/愛買）、生活門市（無印良品、誠品生活、小北百貨、大創、迪卡儂）出示 <strong>Apple Pay / Google Pay / Samsung Pay / Garmin Pay 4大感應支付</strong>，享最高 7%（月刷 $6,000 封頂）！</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
